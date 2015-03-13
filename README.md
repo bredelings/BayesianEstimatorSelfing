@@ -1,4 +1,4 @@
-# BayesianEstimatorSelfing (BES)
+# Bayesian Estimator of Selfing (BES)
 A Bayesian method for estimating self-fertilization rates and other mating system parameters
 
 BES is distributed as a collection of modules for bali-phy.  Each
