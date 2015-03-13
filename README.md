@@ -18,7 +18,7 @@ Before installing BES, you should first install
 ### Downloading BES
 
 To download BES, simply download the modules that you want to use:
-* Selfing.hs https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Selfing.hs
+* [Selfing.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Selfing.hs)
 
 
 ## Quick Start
