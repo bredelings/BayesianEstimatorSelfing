@@ -103,32 +103,43 @@ BAli-Phy write the following output files inside the directory that it creates:
 | Selfing.Theta*!!l | This is the effective scaled mutation rate for locus l. |
 | Selfing.Theta!!l | This is the effective scaled mutation rate for locus l = 2Nu. |
 
-Generic
+##### Generic
+
 * no additional parameters
 
-Pure Hermaphrodite (I)
+##### Pure Hermaphrodite (I)
+
 * no additional parameters
 
-Pure Hermaphrodite (II)
-* Selfing.Herm.s~ - fraction of uniparental individuals at conception.
-* Selfing.Herm.tau - relative viability of selfed individuals = 1 - (inbreeding depression).
+##### Pure Hermaphrodite (II)
 
-Androdioecy (I)
+| Variable | Description |
+| -------  | ---------- |
+| Selfing.Herm.s~ | fraction of uniparental individuals at conception. |
+| Selfing.Herm.tau | relative viability of selfed individuals = 1 - (inbreeding depression). |
 
-* Selfing.Andro.p_m - fraction of males
+##### Androdioecy (I)
 
-Androdioecy (II)
+| Variable | Description |
+| -------  | ---------- |
+| Selfing.Andro.p_m | fraction of males |
 
-* Selfing.Andro.p_m - fraction of males
-* s~ - fraction of uniparental individuals at conception.
-* tau - relative viability of selfed individuals = 1 - (inbreeding depression).
+##### Androdioecy (II)
 
-Gynodioecy
+| Variable | Description |
+| -------  | ---------- |
+| Selfing.Andro.p_m | fraction of males |
+| s~ | fraction of uniparental individuals at conception. |
+| tau | relative viability of selfed individuals = 1 - (inbreeding depression). |
 
-* Selfing.Gyno.p_f - fraction of females
-* Selfing.Gyno.a - fraction of uniparental individuals a conception.
-* Selfing.Gyno.tau - relative viability of selfed individuals = 1 - (inbreeding depression).
-* Selfing.Gyno.sigma - relative seed production of females
+##### Gynodioecy
+
+| Variable | Description |
+| -------  | ---------- |
+| Selfing.Gyno.p_f | fraction of females |
+| Selfing.Gyno.a | fraction of uniparental individuals a conception. |
+| Selfing.Gyno.tau | relative viability of selfed individuals = 1 - (inbreeding depression). |
+| Selfing.Gyno.sigma | relative seed production of females |
 
 ## Models
 
