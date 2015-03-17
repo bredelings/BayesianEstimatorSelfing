@@ -55,6 +55,7 @@ To download BES, simply download the modules that you want to use:
 Input files must be in PHASE format.  Both alleles for each locus should be specified, with NA given to indicate missing data.
 
 A PHASE file contains a 3-line header, followed by a single line for each observed individual.  The header consists of
+
 1. The number of individuals, on a line by itself.
 2. The number of loci, on a line by itself.
 3. A sequence of 'M's (for microsatellite) on a line by itself.  The number of M's should equal the number of loci.
