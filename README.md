@@ -96,9 +96,37 @@ BAli-Phy write the following output files inside the directory that it creates:
 
 #### Variables
 
-* Selfing.s - This is the selfing rate.
+* Selfing.s - This is the selfing rate = fraction of uniparental individuals at the time of breeding.
 * Selfing.DiploidAFS.t!!k - Number of generations of selfing for individual k
 * Selfing.Theta*!!l - This is the effective scaled mutation rate for locus l.
+* Selfing.Theta!!l - This is the effective scaled mutation rate for locus l = 2Nu.
+
+Generic
+* no additional parameters
+
+Pure Hermaphrodite (I)
+* no additional parameters
+
+Pure Hermaphrodite (II)
+* Selfing.Herm.s~ - fraction of uniparental individuals at conception.
+* Selfing.Herm.tau - relative viability of selfed individuals = 1 - (inbreeding depression).
+
+Androdioecy (I)
+
+* Selfing.Andro.p_m - fraction of males
+
+Androdioecy (II)
+
+* Selfing.Andro.p_m - fraction of males
+* s~ - fraction of uniparental individuals at conception.
+* tau - relative viability of selfed individuals = 1 - (inbreeding depression).
+
+Gynodioecy
+
+* Selfing.Gyno.p_f - fraction of females
+* Selfing.Gyno.a - fraction of uniparental individuals a conception.
+* Selfing.Gyno.tau - relative viability of selfed individuals = 1 - (inbreeding depression).
+* Selfing.Gyno.sigma - relative seed production of females
 
 ## Models
 
@@ -114,11 +142,13 @@ is not the fault of the BES software or its author.
 ```
 
 ### Fix a variable to a constant
+If you know the value of a variable, you can fix it to a constant:
 ```
   let {tau = 1.0};
 ```
 
 ### Place a subjective prior on a variable
+This is best avoided:
 ```
   tau <- beta 2.0 8.0;
 ```
