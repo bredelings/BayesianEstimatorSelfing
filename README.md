@@ -4,7 +4,7 @@ A Bayesian method for estimating self-fertilization rates and other mating syste
 ## Introduction
 BES is a Unix command line program that is developed primarily on Linux.  BES also runs on Windows and Mac OS X,
 but it is not a GUI program.  Instead, you must run it in a terminal.  Therefore, you might want to keep a
-[Unix Tutorial](A Bayesian method for estimating self-fertilization rates and other mating system parameters) or
+[Unix Tutorial](http://www.ee.surrey.ac.uk/Teaching/Unix) or
 [Unix cheat sheet](http://www.rain.org/~mkummel/unix.html) handy while you work.
 
 BES is distributed as a collection of plugins for BAli-Phy.  BAli-Phy provides a framework for developing graphical
