@@ -79,7 +79,7 @@ sample.2	23	20	1	1	4	5
 
 BAli-Phy creates a new directory to store its output files each time it is run.  By default, the directory
 name is the name of the model file, with a number added to the end to make it unique.  BAli-Phy first checks
-if there is already a directory called <file>-1/, and then moves on to <file>-2/, etc. until it find an unused
+if there is already a directory called *file*-1/, and then moves on to *file*-2/, etc. until it find an unused
 directory name.
 
 You can specify a different name to use instead of the model file name by using the **--name--** option.
@@ -97,4 +97,5 @@ BAli-Phy write the following output files inside the directory that it creates:
 #### Variables
 
 * Selfing.s - This is the selfing rate.
-* Selfing.Theta*!!<i> - This is the effective scaled mutation rate for locus i.
+* Selfing.DiploidAFS.t!!k - Number of generations of selfing for individual k
+* Selfing.Theta*!!l - This is the effective scaled mutation rate for locus l.
