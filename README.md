@@ -96,10 +96,12 @@ BAli-Phy write the following output files inside the directory that it creates:
 
 #### Variables
 
-* Selfing.s - This is the selfing rate = fraction of uniparental individuals at the time of breeding.
-* Selfing.DiploidAFS.t!!k - Number of generations of selfing for individual k
-* Selfing.Theta*!!l - This is the effective scaled mutation rate for locus l.
-* Selfing.Theta!!l - This is the effective scaled mutation rate for locus l = 2Nu.
+| Variable | Description |
+| -------  | ---------- |
+| Selfing.s | This is the selfing rate = fraction of uniparental individuals at the time of breeding. |
+| Selfing.DiploidAFS.t!!k | Number of generations of selfing for individual k |
+| Selfing.Theta*!!l | This is the effective scaled mutation rate for locus l. |
+| Selfing.Theta!!l | This is the effective scaled mutation rate for locus l = 2Nu. |
 
 Generic
 * no additional parameters
