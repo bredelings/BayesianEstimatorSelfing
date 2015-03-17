@@ -31,8 +31,8 @@ the [installation instructions for BAli-Phy](http://www.bali-phy.org/README.html
 
 ### Installing additional software
 
-In addition to BAli-Phy, we recommend additional software.
-* [Tracer](http://tree.bio.ed.ac.uk/software/tracer/) help to visualize the results of MCMC runs.
+You should also install the following software:
+* [Tracer](http://tree.bio.ed.ac.uk/software/tracer/) helps to visualize the results of MCMC runs.
 
 ### Installing BES
 
