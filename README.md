@@ -28,3 +28,29 @@ To download BES, simply download the modules that you want to use:
 % statreport --select=Selfing.s --mode --HPD Selfing-1/C1.p
 % tracer Selfing-1/C1.p
 ```
+
+## Input
+
+## Output
+
+### Output directory
+
+BAli-Phy creates a new directory to store its output files each time it is run.  By default, the directory
+name is the name of the model file, with a number added to the end to make it unique.  BAli-Phy first checks
+if there is already a directory called <file>-1/, and then moves on to <file>-2/, etc. until it find an unused
+directory name.
+
+You can specify a different name to use instead of the model file name by using the **--name--** option.
+
+### Output files
+
+BAli-Phy write the following output files inside the directory that it creates:
+
+| File name | Description |
+| --------- | ----------- |
+| C1.out    | General information: command line, start time, etc. |
+| C1.err    | May contain error messages. |
+| C1.p      | MCMC samples for different variables. |
+
+#### Variables
+
