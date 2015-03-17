@@ -18,7 +18,7 @@ depression (Herm.hs) can be run without modification to estimate the selfing rat
 
 However, the gynodioecious model module (Gyno.hs) and the androdiecious model module (Andro.hs) require
 additional information, such as (for example) field observations on the fraction of hermaphrodites.  Therefore,
-the user most modify these modules to add this information before attempting to run these models.  This manual
+the user most edit these modules to add this information before attempting to run these models.  This manual
 describes how to add information, but is not a substitute for understanding something about the structure of the
 model.
 
@@ -153,6 +153,6 @@ This is best avoided:
   tau <- beta 2.0 8.0;
 ```
 
+## TODO
 
-
-
+* Allow distributing PopGen.hs as part of BES!
