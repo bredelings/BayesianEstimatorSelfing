@@ -129,8 +129,8 @@ BAli-Phy write the following output files inside the directory that it creates:
 | Variable | Description |
 | -------  | ---------- |
 | Selfing.Andro.p_m | fraction of males |
-| s~ | fraction of uniparental individuals at conception. |
-| tau | relative viability of selfed individuals = 1 - (inbreeding depression). |
+| Selfing.Andro.s~ | fraction of uniparental individuals at conception. |
+| Selfing.Andro.tau | relative viability of selfed individuals = 1 - (inbreeding depression). |
 
 ##### Gynodioecy
 
