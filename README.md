@@ -82,7 +82,7 @@ name is the name of the model file, with a number added to the end to make it un
 if there is already a directory called *file*-1/, and then moves on to *file*-2/, etc. until it find an unused
 directory name.
 
-You can specify a different name to use instead of the model file name by using the **--name--** option.
+You can specify a different name to use instead of the model file name by using the **--name** option.
 
 ### Output files
 
@@ -99,3 +99,30 @@ BAli-Phy write the following output files inside the directory that it creates:
 * Selfing.s - This is the selfing rate.
 * Selfing.DiploidAFS.t!!k - Number of generations of selfing for individual k
 * Selfing.Theta*!!l - This is the effective scaled mutation rate for locus l.
+
+## Models
+
+BES contains modules for estimating parameters under models for pure hermaphroditism, androdioecy,
+and gynodioecy.  In order to use these models, you must modify the module files to specify
+information on parameters in one of three ways.  This requires judgement, and bad judgement here
+is not the fault of the BES software or its author.
+
+### Introduce a variable with a prior and place observations on it.
+```
+  tau <- uniform 0.0 1.0;
+  Observe 10 (binomial 20 tau);
+```
+
+### Fix a variable to a constant
+```
+  let {tau = 1.0};
+```
+
+### Place a subjective prior on a variable
+```
+  tau <- beta 2.0 8.0;
+```
+
+
+
+
