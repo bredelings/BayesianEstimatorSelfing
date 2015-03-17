@@ -156,3 +156,8 @@ This is best avoided:
 ## TODO
 
 * Allow distributing PopGen.hs as part of BES!
+* Search .local/share/bali-phy/lib (for plugins)
+* Search .local/share/bali-phy/lib/modules (for modules)
+* Prepend user-specified search paths BEFORE these, unless
+  user search path ends with :
+* See bali-phy.C:setup_module_loader( )
