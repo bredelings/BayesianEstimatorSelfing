@@ -82,7 +82,7 @@ name is the name of the model file, with a number added to the end to make it un
 if there is already a directory called *file*-1/, and then moves on to *file*-2/, etc. until it find an unused
 directory name.
 
-You can specify a different name to use instead of the model file name by using the **--name** option.
+You can specify a different name to use instead of the model file name by using the `--name` option.
 
 ### Output files
 
