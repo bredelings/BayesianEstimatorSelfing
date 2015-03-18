@@ -41,7 +41,7 @@ You should also install the following software:
 
 ### Installing BES
 
-To install BES, first create a directory called `.local/share/bali-phy/modules` in your home directory:
+To install BES, first create a directory called `.local/share/bali-phy/modules/PopGen` in your home directory:
 ```
 % mkdir -p ~/.local/share/bali-phy/modules/PopGen/
 ```
@@ -53,6 +53,10 @@ places under the `.local/share/bali-phy/` directory, but may be place anywhere e
 * [Generic.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Generic.hs)
 * [Herm.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Herm.hs)
 * [HermID.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/HermID.hs)
+* Andro.hs
+* AndroID.hs
+* Gyno.hs
+* GynoID.hs
 
 Keep in mind that only the `Generic.hs` and `Herm.hs` modules can be used to run an analysis without any
 modification.
