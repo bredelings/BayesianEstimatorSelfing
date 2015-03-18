@@ -1,6 +1,7 @@
 module Herm where
 {
 import PopGen;
+import PopGen.Selfing;
 import Distributions;
 import System.Environment;
 

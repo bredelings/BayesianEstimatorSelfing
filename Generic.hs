@@ -1,6 +1,7 @@
 module Generic where
 {
 import PopGen;
+import PopGen.Selfing;
 import Distributions;
 import System.Environment;
 
