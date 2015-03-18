@@ -62,7 +62,8 @@ A PHASE file contains a 3-line header, followed by a single line for each observ
 
 The line describing each individual should contain an individual name, followed by a list of integer allele names.
 The name and the numbers should be tab-delimited, and there should be twice the number of alleles as loci, since
-there are 2 alleles per locus.
+there are 2 alleles per locus.  Integer allele names must be positive.  The purpose of this is to avoid confusion,
+since 0 and negative numbers are often used to indicate missing data.
 
 Here is a very small PHASE file as an illustration:
 ```
@@ -100,8 +101,8 @@ BAli-Phy write the following output files inside the directory that it creates:
 | -------  | ---------- |
 | Selfing.s | This is the selfing rate = fraction of uniparental individuals at the time of breeding. |
 | Selfing.DiploidAFS.t!!k | Number of generations of selfing for individual k |
-| Selfing.Theta*!!l | This is the effective scaled mutation rate for locus l. |
-| Selfing.Theta!!l | This is the effective scaled mutation rate for locus l = 2Nu. |
+| Selfing.Theta*!!l | This is the effective scaled mutation rate for locus l = 2(Ne)u. |
+| Selfing.Theta!!l | This is the scaled mutation rate for locus l = 2Nu. |
 
 ##### Generic
 
