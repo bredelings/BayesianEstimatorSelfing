@@ -1,4 +1,4 @@
-module Herm where
+module Selfing where
 {
 import PopGen;
 import Distributions;

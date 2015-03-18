@@ -1,4 +1,4 @@
-module Test where
+module Gyno where
 {
 import PopGen;
 import Distributions;

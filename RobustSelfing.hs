@@ -1,4 +1,4 @@
-module Herm where
+module RobustSelfing where
 {
 import PopGen;
 import Distributions;
