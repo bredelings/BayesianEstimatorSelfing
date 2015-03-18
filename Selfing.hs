@@ -27,7 +27,7 @@ main = Prefix "Selfing" $ do
 
   Observe observed_alleles afs_dist;
 
-  Log "s" s;
+  Log "s*" s;
   Log "theta*" theta_effective;
 };
 }
