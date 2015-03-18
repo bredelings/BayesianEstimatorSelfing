@@ -43,13 +43,13 @@ You should also install the following software:
 
 To install BES, first create a directory called `.local/share/bali-phy/modules` in your home directory:
 ```
-% mkdir -p ~/.local/share/bali-phy/modules
+% mkdir -p ~/.local/share/bali-phy/modules/PopGen/
 ```
-
-First, download the PopGen module and place it this directory:
+First, download the PopGen.Selfing module `PopGen.hs` and place it this directory:
 * [PopGen.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/PopGen.hs)
 
-Next, download one of the modules corresponding to a particular mating system, and place it anywhere.
+Next, download one of the modules corresponding to a particular mating system.  These files should not be
+places under the `.local/share/bali-phy/` directory, but may be place anywhere else.
 * [Generic.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Generic.hs)
 * [Herm.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Herm.hs)
 * [HermID.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/HermID.hs)
