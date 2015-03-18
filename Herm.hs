@@ -12,16 +12,18 @@ n_individuals = length (observed_alleles!!0)/2;
 
 main = Prefix "Selfing" $ do 
 {
--- Uncomment to estimate alpha:
---  alpha <- gamma 0.5 0.05;
---  Log "alpha" alpha;
   let {alpha = 0.10};
 
   theta_effective <- dp n_loci alpha (gamma 0.25 2.0); 
-  -- Alternatively, one can use a dirichlet process mixture:
-  --  theta_effective <- dpm n_loci (gamma 0.5 1.0) (gamma 1.05 0.1); 
 
   s <- uniform 0.0 1.0;
+
+  let {c = 1.0};
+  
+  -- theta* = herm_factor * theta
+  let {herm_factor = (1.0 - s*0.5)/c};
+
+  let {theta = map (/herm_factor) theta_effective};
 
   afs_dist <- diploid_afs n_individuals n_loci s theta_effective;
 
@@ -29,5 +31,6 @@ main = Prefix "Selfing" $ do
 
   Log "s" s;
   Log "theta*" theta_effective;
+  Log "theta" theta;
 };
 }
