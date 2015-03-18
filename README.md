@@ -18,7 +18,7 @@ every platform that BALi-Phy runs on, which currently includes Linux, Mac OS X, 
 to the [BAli-Phy Documentation](http://www.bali-phy.org/README.html) as well.
 
 Each module of BES corresponds to a different mating system, and therefore allows estimating a different set of
-parameters.  The generic module (Selfing.hs) and one version of the pure hermaphrodite model with no inbreeding
+parameters.  The generic module (Generic.hs) and one version of the pure hermaphrodite model with no inbreeding
 depression (Herm.hs) can be run without modification to estimate the selfing rate and locus-specific mutation rates.
 
 However, the gynodioecious model module (Gyno.hs) and the androdiecious model module (Andro.hs) require
@@ -50,11 +50,11 @@ First, download the PopGen module and place it this directory:
 * [PopGen.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/PopGen.hs)
 
 Next, download one of the modules corresponding to a particular mating system, and place it anywhere.
-* [Selfing.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Selfing.hs)
+* [Generic.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Generic.hs)
 * [Herm.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Herm.hs)
 * [HermID.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/HermID.hs)
 
-Keep in mind that only the `Selfing.hs` and `Herm.hs` modules can be used to run an analysis without any
+Keep in mind that only the `Generic.hs` and `Herm.hs` modules can be used to run an analysis without any
 modification.
 
 ## Running the program
@@ -62,7 +62,7 @@ modification.
 ### Quick Start
 
 ```
-% bali-phy -m Selfing.hs --iter=10000 --- Examples/outfile.001.70.001.phase &
+% bali-phy -m Generic.hs --iter=10000 --- Examples/outfile.001.70.001.phase &
 % statreport --select=Selfing.s --mode --HPD Selfing-1/C1.p
 % tracer Selfing-1/C1.p
 ```

@@ -1,4 +1,4 @@
-module Selfing where
+module Generic where
 {
 import PopGen;
 import Distributions;
