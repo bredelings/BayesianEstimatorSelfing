@@ -54,6 +54,9 @@ Next, download one of the modules corresponding to a particular mating system, a
 * [Herm.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Herm.hs)
 * [HermID.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/HermID.hs)
 
+Keep in mind that only the `Selfing.hs` and `Herm.hs` modules can be used to run an analysis without any
+modification.
+
 ## Running the program
 
 ### Quick Start

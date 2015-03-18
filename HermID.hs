@@ -13,19 +13,19 @@ n_individuals = length (observed_alleles!!0)/2;
 herm_model _ = Prefix "Herm" $ do
 {
 -- You must define tau here somehow in order to use this model.
-  tau <- uniform 0.0 1.0;  -- (uninformative prior)
+--  tau <- uniform 0.0 1.0;
 --  Observe tau ???          -- (some kind of observation?)
-  Log "tau" tau;
+--  Log "tau" tau;
 
   ss <- uniform 0.0 1.0;
   Log "s~" ss;
 
   let {s = (tau * ss)/(tau*ss + 1.0 - ss)};
 
-  let {c = 1.0;}
+  let {c = 1.0};
   
   return (tau, ss, s, c);
-}
+};
 
 main = Prefix "Selfing" $ do 
 {
