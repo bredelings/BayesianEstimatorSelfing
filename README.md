@@ -2,6 +2,11 @@
 A Bayesian method for estimating self-fertilization rates and other mating system parameters
 
 ## Introduction
+BES is a software package for estimating self-fertilization (selfing) rates and other mating system parameters.
+BES contains models of pure hermaphroditism, androdioecy, and gynodioecy.  BES also contains a generic
+model for estimating selfing rates independent of a mating system.  BES estimates parameters in a Bayesian framework
+using MCMC.
+
 BES is a Unix command line program that is developed primarily on Linux.  BES also runs on Windows and Mac OS X,
 but it is not a GUI program.  Instead, you must run it in a terminal.  Therefore, you might want to keep a
 [Unix Tutorial](http://www.ee.surrey.ac.uk/Teaching/Unix) or
@@ -36,9 +41,18 @@ You should also install the following software:
 
 ### Installing BES
 
-To download BES, simply download the modules that you want to use:
-* [Selfing.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Selfing.hs)
+To install BES, first create a directory called `.local/share/bali-phy/modules` in your home directory:
+```
+% mkdir -p ~/.local/share/bali-phy/modules
+```
 
+First, download the PopGen module and place it this directory:
+* [PopGen.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/PopGen.hs)
+
+Next, download one of the modules corresponding to a particular mating system, and place it anywhere.
+* [Selfing.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Selfing.hs)
+* [Herm.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Herm.hs)
+* [HermID.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/HermID.hs)
 
 ## Running the program
 
