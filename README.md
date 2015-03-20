@@ -2,20 +2,19 @@
 A Bayesian method for estimating self-fertilization rates and other mating system parameters
 
 ## Introduction
-BES is a software package for estimating self-fertilization (selfing) rates and other mating system parameters.
-BES contains models of pure hermaphroditism, androdioecy, and gynodioecy.  BES also contains a generic
-model for estimating selfing rates independent of a mating system.  BES estimates parameters in a Bayesian framework
-using MCMC.
+BES is a software package for estimating self-fertilization (selfing) rates and other mating system parameters
+from genotype data.  BES estimates parameters in a Bayesian framework using Markov chain Monte Carlo (MCMC).
+BES contains models of pure hermaphroditism, androdioecy (hermaphrodites + males), and gynodioecy (hermaphrodites
++ females). Under each model, BES estimates selfing rates, mutation rates, and mating-system specific parameters.
+BES also contains a generic model for estimating selfing rates and mutation rates independent of a mating system.
+Additional non-genetic information, such as field observations of the number of females or males, is required for
+estimating parameters under the gynodioecious model and the androdioecious model.
 
-BES is a Unix command line program that is developed primarily on Linux.  BES also runs on Windows and Mac OS X,
+BES is a Unix command line program that is is developed primarily on Linux.  BES also runs on Windows and Mac OS X,
 but it is not a GUI program.  Instead, you must run it in a terminal.  Therefore, you might want to keep a
 [Unix Tutorial](http://www.ee.surrey.ac.uk/Teaching/Unix) or
-[Unix cheat sheet](http://www.rain.org/~mkummel/unix.html) handy while you work.
-
-BES is distributed as a collection of plugins for BAli-Phy.  BAli-Phy provides a framework for developing graphical
-models and corresponding Markov chain Monte Carlo (MCMC) algorithms similar to BUGS.  BES therefore runs on
-every platform that BALi-Phy runs on, which currently includes Linux, Mac OS X, and Windows.  You might wish to refer
-to the [BAli-Phy Documentation](http://www.bali-phy.org/README.html) as well.
+[Unix cheat sheet](http://www.rain.org/~mkummel/unix.html) handy while you work.  BES is distributed as an extension
+package for BAli-Phy.  You might wish to refer to the [BAli-Phy Documentation](http://www.bali-phy.org/README.html) as well.
 
 Each module of BES corresponds to a different mating system, and therefore allows estimating a different set of
 parameters.  The generic module (Generic.hs) and one version of the pure hermaphrodite model with no inbreeding
@@ -31,8 +30,8 @@ model.
 
 ### Installing BAli-Phy
 
-Since BES runs as plugins inside BALi-Phy, you must first install BAli-Phy.  To install BAli-Phy, follow
-the [installation instructions for BAli-Phy](http://www.bali-phy.org/README.html#installation).
+Since BES is an extension package for BALi-Phy, you must first install BAli-Phy before you can use BES.
+To install BAli-Phy, follow the [installation instructions for BAli-Phy](http://www.bali-phy.org/README.html#installation).
 
 ### Installing additional software
 
