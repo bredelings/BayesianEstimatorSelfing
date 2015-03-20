@@ -1,4 +1,4 @@
-module Generic where
+module PopGen.Selfing.Generic where
 {
 import PopGen;
 import PopGen.Selfing;

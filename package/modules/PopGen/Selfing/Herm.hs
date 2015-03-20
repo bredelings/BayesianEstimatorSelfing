@@ -1,4 +1,4 @@
-module Herm where
+module PopGen.Selfing.Herm where
 {
 import PopGen;
 import PopGen.Selfing;

@@ -1,4 +1,4 @@
-module RobustSelfing where
+module PopGen.Selfing.RobustGeneric where
 {
 import PopGen;
 import Distributions;
