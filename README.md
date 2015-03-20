@@ -4,8 +4,8 @@ A Bayesian method for estimating self-fertilization rates and other mating syste
 ## Introduction
 BES is a software package for estimating self-fertilization (selfing) rates and other mating system parameters
 from genotype data.  BES estimates parameters in a Bayesian framework using Markov chain Monte Carlo (MCMC).
-BES contains models of pure hermaphroditism, androdioecy (hermaphrodites + males), and gynodioecy (hermaphrodites
-+ females). Under each model, BES estimates selfing rates, mutation rates, and mating-system specific parameters.
+BES contains models of pure hermaphroditism, androdioecy (hermaphrodites + males), and gynodioecy (hermaphrodites +
+females). Under each model, BES estimates selfing rates, mutation rates, and mating-system specific parameters.
 BES also contains a generic model for estimating selfing rates and mutation rates independent of a mating system.
 Additional non-genetic information, such as field observations of the number of females or males, is required for
 estimating parameters under the gynodioecious model and the androdioecious model.
