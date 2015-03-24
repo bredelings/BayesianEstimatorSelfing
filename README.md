@@ -43,6 +43,7 @@ You should also install the following software:
 
 First, install the BES package:
 ```
+% bali-phy-pkg help
 % bali-phy-pkg install BES_0.0.1.tar.gz
 ```
 To check that the package is installed, run:
