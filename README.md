@@ -10,19 +10,20 @@ BES also contains a generic model for estimating selfing rates and mutation rate
 Additional non-genetic information, such as field observations of the number of females or males, is required for
 estimating parameters under the gynodioecious model and the androdioecious model.
 
-BES is a Unix command line program that is is developed primarily on Linux.  BES also runs on Windows and Mac OS X,
-but it is not a GUI program.  Instead, you must run it in a terminal.  Therefore, you might want to keep a
-[Unix Tutorial](http://www.ee.surrey.ac.uk/Teaching/Unix) or
-[Unix cheat sheet](http://www.rain.org/~mkummel/unix.html) handy while you work.  BES is distributed as an extension
-package for BAli-Phy.  You might wish to refer to the [BAli-Phy Documentation](http://www.bali-phy.org/README.html) as well.
+BES is run as a Unix command line program.  It is not a GUI program; instead you must run it in a terminal.
+Therefore, you might want to keep a [Unix Tutorial](http://www.ee.surrey.ac.uk/Teaching/Unix) or
+[Unix cheat sheet](http://www.rain.org/~mkummel/unix.html) handy while you work.
 
-Each module of BES corresponds to a different mating system, and therefore allows estimating a different set of
-parameters.  The generic module (Generic.hs) and one version of the pure hermaphrodite model with no inbreeding
-depression (Herm.hs) can be run without modification to estimate the selfing rate and locus-specific mutation rates.
+BES runs in Linux, Mac OS X, and Windows.  BES is distributed as an extension package for the BAli-Phy inference framework.
+You might therefore wish to refer to the [BAli-Phy Documentation](http://www.bali-phy.org/README.html) as well.
 
-However, the gynodioecious model module (Gyno.hs) and the androdiecious model module (Andro.hs) require
+BES contains a number of modules that corresponds to different mating system models.  Each model therefore allows
+estimating a different set of parameters.  The generic model (Generic.hs) and the pure hermaphrodite model without
+inbreeding depression (Herm.hs) can be run without modification to estimate the selfing rate and locus-specific mutation rates.
+
+However, the gynodioecious model (Gyno.hs/GynoID.hs) and the androdiecious model module (Andro.hs/AndroID.hs) require
 additional information, such as (for example) field observations on the fraction of hermaphrodites.  Therefore,
-the user most edit these modules to add this information before attempting to run these models.  This manual
+the user must edit these modules to add this information before attempting to run these models.  This manual
 describes how to add information, but is not a substitute for understanding something about the structure of the
 model.
 
