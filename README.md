@@ -40,22 +40,26 @@ You should also install the following software:
 
 ### Installing BES
 
-To install BES, first create a directory called `.local/share/bali-phy/modules/PopGen` in your home directory:
+First run the command to install the BES package:
 ```
-% mkdir -p ~/.local/share/bali-phy/modules/PopGen/
+% bali-phy-pkg install BES_0.0.1.tar.gz
 ```
-First, download the PopGen.Selfing module `Selfing.hs` and place it this directory:
-* [Selfing.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Selfing.hs)
+To check that the package is installed, run:
+```
+% bali-phy-pkg packages
+```
+To see what modules were installed, run:
+```
+% bali-phy-pkg files BES
+```
 
-Next, download one of the modules corresponding to a particular mating system.  These files should not be
-places under the `.local/share/bali-phy/` directory, but may be place anywhere else.
-* [Generic.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Generic.hs)
-* [Herm.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Herm.hs)
+Next, download some additional modules for particular mating systems.  These files are not installed
+into the package directory because they must be manually modified before they are used.
 * [HermID.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/HermID.hs)
-* Andro.hs
-* AndroID.hs
-* Gyno.hs
-* GynoID.hs
+* [Andro.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Andro.hs)
+* [AndroID.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/AndroID.hs)
+* [Gyno.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Gyno.hs)
+* [GynoID.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/GynoID.hs)
 
 Keep in mind that only the `Generic.hs` and `Herm.hs` modules can be used to run an analysis without any
 modification.
