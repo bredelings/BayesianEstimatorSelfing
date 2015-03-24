@@ -40,7 +40,7 @@ You should also install the following software:
 
 ### Installing BES
 
-First run the command to install the BES package:
+First, install the BES package:
 ```
 % bali-phy-pkg install BES_0.0.1.tar.gz
 ```
