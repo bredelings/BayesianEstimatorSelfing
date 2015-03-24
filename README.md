@@ -68,11 +68,22 @@ modification.
 
 ### Quick Start
 
+First, run the MCMC using the generic model:
 ```
-% bali-phy -m Generic.hs --iter=10000 --- Examples/outfile.001.70.001.phase &
-% statreport --select=Selfing.s --mode --HPD Selfing-1/C1.p
-% tracer Selfing-1/C1.p
+% bali-phy -M PopGen.Selfing.Generic --iter=1000 --- Examples/outfile.001.70.001.phase &
 ```
+This should create a directory called `Generic-1/` (or `Generic-2/`, etc.) that contains the output files.
+
+Second, load the output file `Generic-1/C1.p` using the GUI program Tracer.  On Unix, you can run this from
+the command line as follows:
+```
+% tracer Selfing-1/C1.p &
+```
+It is also possible to use a non-graphical program statreport to view the estimates of the selfing rate
+```
+% statreport --select="Selfing.s*" --mode --HPD Selfing-1/C1.p
+```
+This can be useful when analyzing data in a terminal.
 
 ## Input
 
