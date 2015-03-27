@@ -14,7 +14,7 @@ BES is run as a Unix command line program.  It is not a GUI program; instead you
 Therefore, you might want to keep a [Unix Tutorial](http://www.ee.surrey.ac.uk/Teaching/Unix) or
 [Unix cheat sheet](http://www.rain.org/~mkummel/unix.html) handy while you work.
 
-BES runs in Linux, Mac OS X, and Windows.  BES is distributed as an extension package for the BAli-Phy inference framework.
+BES runs on Linux, Mac OS X, and Windows.  BES is distributed as an extension package for the BAli-Phy inference framework.
 You might therefore wish to refer to the [BAli-Phy Documentation](http://www.bali-phy.org/README.html) as well.
 
 BES contains a number of modules that corresponds to different mating system models.  Each model therefore allows
@@ -137,9 +137,9 @@ BAli-Phy write the following output files inside the directory that it creates:
 | Variable | Description |
 | -------  | ---------- |
 | Selfing.s | This is the selfing rate = fraction of uniparental individuals at the time of breeding. |
-| Selfing.DiploidAFS.t!!k | Number of generations of selfing for individual k |
-| Selfing.Theta*!!l | This is the effective scaled mutation rate for locus l = 2(Ne)u. |
-| Selfing.Theta!!l | This is the scaled mutation rate for locus l = 2Nu. |
+| Selfing.DiploidAFS.t!!k | Number of generations of selfing for individual k                |
+| Selfing.Theta\*!!l       | This is the effective scaled mutation rate for locus l = 2(Ne)u. |
+| Selfing.Theta!!l        | This is the scaled mutation rate for locus l = 2Nu.              |
 
 ##### Generic
 
@@ -207,3 +207,6 @@ This is best avoided:
 ## DONE
 
 * Allow distributing PopGen.hs as part of BES.
+
+## Test
+ Here is some test math: $s^2 = x+1$.
