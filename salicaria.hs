@@ -34,11 +34,11 @@ gyno_model _ = Prefix "Gyno" $ do
   Log "h" h;
 
   let {hh = (1.0+h)/2.0;
-        c = (2.0*s + (1.0-s)*(1.0+h))^2 /(4.0*p_h) + ((1.0-s)*(1.0-h))^2/(4.0*p_f);
-           gyno_factor = (1.0 - s*0.5)/c};
-  Log "C" c;
+        c = (2.0*s + (1.0-s)*(1.0+h))^2 /(4.0*p_h) + ((1.0-s)*(1.0-h))^2/(4.0*p_f)};
 
-  return (tau, a, p_f, s, c, gyno_factor);
+      Log "C" c;
+
+  return (tau, a, p_f, s, c);
 };
 
 main = Prefix "Selfing" $ do 
@@ -47,12 +47,11 @@ main = Prefix "Selfing" $ do
 
           theta_effective <- dp n_loci alpha (gamma 0.5 0.5); 
 
-          (tau, a, p_f, s, c, gyno_factor) <- gyno_model ();
+          (tau, a, p_f, s, c) <- gyno_model ();
 
-          let {herm_factor = (1.0 - s*0.5)};
+          let {factor = (1.0 - s*0.5)/c};
   
-          let {theta_herm = map (/herm_factor) theta_effective};
-          let {theta_gyno = map (/gyno_factor) theta_effective};
+          let {theta = map (/factor) theta_effective};
 
           Observe 27 $ binomial 221 p_f;
 
@@ -62,7 +61,7 @@ main = Prefix "Selfing" $ do
 
 	  Log "s" s;
 	  Log "theta*" theta_effective;
-	  Log "theta" theta_gyno;
+	  Log "theta" theta;
 };
 
 
