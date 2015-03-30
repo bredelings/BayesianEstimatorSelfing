@@ -15,14 +15,11 @@ gyno_model _ = Prefix "Gyno" $ do
 {
 -- tau ~ beta( 16.0, 64.0 ); tau = 0.205;
   tau <- beta 2.0 8.0;
-  Log "tau" tau;
 
 -- a = 1.0; a = 0.99; a = 0.95; a = 0.9; a = 0.8; a = 0.6; a = 0.5; a = 0.4;
   a <- uniform 0.0 1.0;
-  Log "a" a;
 
   p_f <- uniform 0.0 1.0;
-  Log "p_f" p_f;
 
   let {sigma = 1.0};
 
@@ -31,14 +28,11 @@ gyno_model _ = Prefix "Gyno" $ do
   let {s = let {x1=tau*p_h*a; x2=p_h*(1.0-a); x3=p_f*sigma} in x1/(x1+x2+x3)};
 
   let {h = let {n2 = p_h * (1.0-a);n3 = p_f * sigma} in n2/(n2 + n3)};
-  Log "h" h;
 
   let {hh = (1.0+h)/2.0;
-        c = (2.0*s + (1.0-s)*(1.0+h))^2 /(4.0*p_h) + ((1.0-s)*(1.0-h))^2/(4.0*p_f)};
+        r = (2.0*s + (1.0-s)*(1.0+h))^2 /(4.0*p_h) + ((1.0-s)*(1.0-h))^2/(4.0*p_f)};
 
-      Log "C" c;
-
-  return (tau, a, p_f, s, c);
+  return (tau, a, p_f, sigma, s, h, r);
 };
 
 main = Prefix "Selfing" $ do 
@@ -47,9 +41,9 @@ main = Prefix "Selfing" $ do
 
           theta_effective <- dp n_loci alpha (gamma 0.5 0.5); 
 
-          (tau, a, p_f, s, c) <- gyno_model ();
+          (tau, a, p_f, sigma, s, h, r) <- gyno_model ();
 
-          let {factor = (1.0 - s*0.5)/c};
+          let {factor = (1.0 - s*0.5)/r};
   
           let {theta = map (/factor) theta_effective};
 
@@ -59,9 +53,16 @@ main = Prefix "Selfing" $ do
 
           Observe observed_alleles afs_dist;
 
-	  Log "s" s;
+          Log "a" a;
+          Log "p_f" p_f;
+          Log "tau" tau;
+          Log "sigma" sigma;
+              
+	  Log "s*" s;
 	  Log "theta*" theta_effective;
 	  Log "theta" theta;
+          Log "H" h;
+          Log "R" r;
 };
 
 
