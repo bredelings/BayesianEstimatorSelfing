@@ -37,9 +37,6 @@ gyno_model _ = Prefix "Gyno" $ do
         c = (2.0*s + (1.0-s)*(1.0+h))^2 /(4.0*p_h) + ((1.0-s)*(1.0-h))^2/(4.0*p_f);
            gyno_factor = (1.0 - s*0.5)/c};
   Log "C" c;
-  Log "gyno_factor" gyno_factor;
-
-  Log "a_times_tau" (a*tau);
 
   return (tau, a, p_f, s, c, gyno_factor);
 };
@@ -64,10 +61,8 @@ main = Prefix "Selfing" $ do
           Observe observed_alleles afs_dist;
 
 	  Log "s" s;
-	  Log "theta_herm" theta_herm;
-	  Log "theta_gyno" theta_gyno;
-	  Log "herm_factor" herm_factor;
-	  Log "herm_factor_div_gyno_factor" (herm_factor/gyno_factor);
+	  Log "theta*" theta_effective;
+	  Log "theta" theta_gyno;
 };
 
 
