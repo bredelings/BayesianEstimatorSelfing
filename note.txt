@@ -1,0 +1,30 @@
+OK, so we really have
+
+Generic
+Herm (s* basic)
+HermID (s* composite)
+Andro (s* basic, p_m only affects N*/N)
+AndroID (s* composite, p_m affects s*)
+GynoID (s* composite, p_f affects s*)
+
+We can change a to s~.
+
+Change C to R.
+
+Mention that people should use the Generic model (under Gyno) if
+they don't have tau.
+
+Q: Why is the generic model different than the Herm model?
+
+The Herm model prints N*/N, but the generic model doesn't.
+
+If you don't have info about the Gyno model, using the Herm model
+(which is wrong) and setting tau to 1 (which is wrong) and printing
+N*/N=1 (which is wrong) would be weird.
+
+Q: Can you do a Gyno model w/o ID?
+A: No.  Because the idea is that you could place a uniform prior on s*,
+but then s* would not be composite anymore.
+
+A: Yes, you COULD if you can information on everything that effects N*/N,
+if you ONLY want to estimate N*/N.
