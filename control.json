@@ -1,6 +1,6 @@
 {
     "Package": "BES",
-    "Version": "0.0.2",
+    "Version": "0.0.3",
     "Source": "http://www.bali-phy.org/packages/",
     "Maintainer": "Ben Redelings <benjamin.redelings@duke.edu>",
     "Description": "Estimate self-fertilization rates and other mating system parameters",
