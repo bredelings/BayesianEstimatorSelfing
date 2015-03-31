@@ -5,6 +5,7 @@ use JSON::PP;
 use Archive::Tar;
 use File::Find;
 use Digest::SHA;
+use Digest::MD5;
 use Cwd 'abs_path';
 
 my $info = read_JSON_file("control.json");
@@ -18,14 +19,33 @@ find({wanted => \&findstuff, no_chdir=> 1}, "files");
 
 Archive::Tar->create_archive($filename,COMPRESS_GZIP, @files);
 
-${$info}{"SHA1"} = sha1sum($filename);
+${$info}{"SHA1"} = shasum(1,$filename);
+${$info}{"SHA256"} = shasum(256,$filename);
+${$info}{"MD5sum"} = md5sum($filename);
 my $json = JSON::PP->new;
 $json->indent();
 my $json_text = $json->utf8->encode($info,1);
 print "$json_text";
 
 
-sub sha1sum
+sub shasum
+{
+    my $arg = shift;
+    my $filename = shift;
+    my $fh;
+    unless (open $fh,$filename) {
+	print STDERR "$0: open $filename: $!";
+	exit(1);
+    }
+
+    my $sha1 = Digest::SHA->new($arg);
+    $sha1->addfile($fh);
+    my $digest = $sha1->hexdigest;
+    close $fh;
+    return $digest;
+}
+    
+sub md5sum
 {
     my $filename = shift;
     my $fh;
@@ -34,9 +54,9 @@ sub sha1sum
 	exit(1);
     }
 
-    my $sha1 = Digest::SHA->new(1);
-    $sha1->addfile($fh);
-    my $digest = $sha1->hexdigest;
+    my $md5 = Digest::MD5->new();
+    $md5->addfile($fh);
+    my $digest = $md5->hexdigest;
     close $fh;
     return $digest;
 }
