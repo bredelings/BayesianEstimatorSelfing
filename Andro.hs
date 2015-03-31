@@ -37,6 +37,8 @@ main = Prefix "Selfing" $ do
   Log "R" (herm_factor/andro_factor);
 };
 
+andro_mating_system s p_m = (1.0+s)^2 /(4.0*p_h) + (1.0-s)^2/(4.0*p_m) where {p_h = 1.0-p_m};
+
 andro_model _ = Prefix "Andro" $ do
 {
   s <- uniform 0.0 1.0;
@@ -45,9 +47,7 @@ andro_model _ = Prefix "Andro" $ do
   p_m <- uniform 0.0 1.0;
   Log "p_m" p_m;
   
-  let {p_h = 1.0 - p_m};
-
-  let {r = ( (1.0+s)^2 /(4.0*p_h) + (1.0-s)^2/(4.0*p_m))};
+  let {r = andro_mating_system s  p_m};
 
   let {andro_factor = (1.0 - s*0.5)/r};
   Log "andro_factor" andro_factor;
