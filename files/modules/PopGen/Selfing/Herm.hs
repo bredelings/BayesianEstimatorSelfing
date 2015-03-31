@@ -19,12 +19,12 @@ main = Prefix "Selfing" $ do
 
   s <- uniform 0.0 1.0;
 
-  let {c = 1.0};
+  let {r = 1.0};
   
-  -- theta* = herm_factor * theta
-  let {herm_factor = (1.0 - s*0.5)/c};
+  -- theta* = factor * theta
+  let {factor = (1.0 - s*0.5)/r};
 
-  let {theta = map (/herm_factor) theta_effective};
+  let {theta = map (/factor) theta_effective};
 
   afs_dist <- diploid_afs n_individuals n_loci s theta_effective;
 
@@ -33,5 +33,6 @@ main = Prefix "Selfing" $ do
   Log "s*" s;
   Log "theta*" theta_effective;
   Log "theta" theta;
+  Log "R" r;
 };
 }
