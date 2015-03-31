@@ -37,8 +37,8 @@ main = Prefix "Selfing" $ do
 };
 
 andro_mating_system1 s p_m = (1.0+s)^2 /(4.0*p_h) + (1.0-s)^2/(4.0*p_m) where {p_h = 1.0-p_m};
-                                                                                             
-andro_mating_system2 s' tau p_m = (s,r) where {s = (tau*s)/(tau*s+1.0-s);
+
+andro_mating_system2 s' tau p_m = (s,r) where {s = (tau*s')/(tau*s'+1.0-s');
                                                r = andro_mating_system1 s p_m};
 andro_model _ = Prefix "Andro" $ do
 {
@@ -48,7 +48,7 @@ andro_model _ = Prefix "Andro" $ do
   p_m <- uniform 0.0 1.0;
   Log "p_m" p_m;
   
-  let {r = andro_mating_system1 s p_m};
+  let {(a,r) = andro_mating_system2 s 1.0 p_m};
 
   return (p_m, s, r);
 };
