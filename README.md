@@ -1,7 +1,4 @@
-# Bayesian Estimator of Selfing (BES)
-A Bayesian method for estimating self-fertilization rates and other mating system parameters
-
-## Introduction
+# Introduction
 BES is a software package for estimating self-fertilization (selfing) rates and other mating system parameters
 from genotype data.  BES estimates parameters in a Bayesian framework using Markov chain Monte Carlo (MCMC).
 BES contains models of pure hermaphroditism, androdioecy (hermaphrodites + males), and gynodioecy (hermaphrodites +
@@ -27,19 +24,19 @@ the user must edit these modules to add this information before attempting to ru
 describes how to add information, but is not a substitute for understanding something about the structure of the
 model.
 
-## Installation
+# Installation
 
-### Installing BAli-Phy
+## Installing BAli-Phy
 
 Since BES is an extension package for BALi-Phy, you must first install BAli-Phy before you can use BES.
 To install BAli-Phy, follow the [installation instructions for BAli-Phy](http://www.bali-phy.org/README.html#installation).
 
-### Installing additional software
+## Installing additional software
 
 You should also install the following software:
 * [Tracer](http://tree.bio.ed.ac.uk/software/tracer/) helps to visualize the results of MCMC runs.
 
-### Installing BES
+## Installing BES
 
 First, install the BES package:
 ```
@@ -66,9 +63,9 @@ into the package directory because they must be manually modified before they ar
 Keep in mind that only the `Generic.hs` and `Herm.hs` modules can be used to run an analysis without any
 modification.
 
-## Running the program
+# Running the program
 
-### Quick Start
+## Quick Start
 
 First, run the MCMC using the generic model:
 ```
@@ -87,7 +84,7 @@ It is also possible to use a non-graphical program statreport to view the estima
 ```
 This can be useful when analyzing data in a terminal.
 
-## Input
+# Input
 
 Input files must be in PHASE format.  Both alleles for each locus should be specified, with NA given to indicate missing data.
 
@@ -111,9 +108,9 @@ sample.1	23	23	2	1	NA	NA
 sample.2	23	20	1	1	4	5
 ```
 
-## Output
+# Output
 
-### Output directory
+## Output directory
 
 BAli-Phy creates a new directory to store its output files each time it is run.  By default, the directory
 name is the name of the model file, with a number added to the end to make it unique.  BAli-Phy first checks
@@ -122,7 +119,7 @@ directory name.
 
 You can specify a different name to use instead of the model file name by using the `--name` option.
 
-### Output files
+## Output files
 
 BAli-Phy write the following output files inside the directory that it creates:
 
@@ -132,7 +129,7 @@ BAli-Phy write the following output files inside the directory that it creates:
 | C1.err    | May contain error messages. |
 | C1.p      | MCMC samples for different variables. |
 
-#### Variables
+### Variables
 
 | Variable | Description |
 | -------  | ---------- |
@@ -141,28 +138,28 @@ BAli-Phy write the following output files inside the directory that it creates:
 | Selfing.Theta\*!!l       | This is the effective scaled mutation rate for locus l = 2(Ne)u. |
 | Selfing.Theta!!l        | This is the scaled mutation rate for locus l = 2Nu.              |
 
-##### Generic
+#### Generic
 
 * no additional parameters
 
-##### Pure Hermaphrodite (I)
+#### Pure Hermaphrodite (I)
 
 * no additional parameters
 
-##### Pure Hermaphrodite (II)
+#### Pure Hermaphrodite (II)
 
 | Variable | Description |
 | -------  | ---------- |
 | Selfing.Herm.s~ | fraction of uniparental individuals at conception. |
 | Selfing.Herm.tau | relative viability of selfed individuals = 1 - (inbreeding depression). |
 
-##### Androdioecy (I)
+#### Androdioecy (I)
 
 | Variable | Description |
 | -------  | ---------- |
 | Selfing.Andro.p_m | fraction of males |
 
-##### Androdioecy (II)
+#### Androdioecy (II)
 
 | Variable | Description |
 | -------  | ---------- |
@@ -170,7 +167,7 @@ BAli-Phy write the following output files inside the directory that it creates:
 | Selfing.Andro.s~ | fraction of uniparental individuals at conception. |
 | Selfing.Andro.tau | relative viability of selfed individuals = 1 - (inbreeding depression). |
 
-##### Gynodioecy
+#### Gynodioecy
 
 | Variable | Description |
 | -------  | ---------- |
@@ -179,34 +176,34 @@ BAli-Phy write the following output files inside the directory that it creates:
 | Selfing.Gyno.tau | relative viability of selfed individuals = 1 - (inbreeding depression). |
 | Selfing.Gyno.sigma | relative seed production of females |
 
-## Models
+# Models
 
 BES contains modules for estimating parameters under models for pure hermaphroditism, androdioecy,
 and gynodioecy.  In order to use these models, you must modify the module files to specify
 information on parameters in one of three ways.  This requires judgement, and bad judgement here
 is not the fault of the BES software or its author.
 
-### Introduce a variable with a prior and place observations on it.
+## Introduce a variable with a prior and place observations on it.
 ```
   tau <- uniform 0.0 1.0;
   Observe 10 (binomial 20 tau);
 ```
 
-### Fix a variable to a constant
+## Fix a variable to a constant
 If you know the value of a variable, you can fix it to a constant:
 ```
   let {tau = 1.0};
 ```
 
-### Place a subjective prior on a variable
+## Place a subjective prior on a variable
 This is best avoided:
 ```
   tau <- beta 2.0 8.0;
 ```
 
-## DONE
+# DONE
 
 * Allow distributing PopGen.hs as part of BES.
 
-## Test
+# Test
  Here is some test math: $s^2 = x+1$.
