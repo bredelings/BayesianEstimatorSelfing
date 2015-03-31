@@ -12,6 +12,38 @@ n_loci = length observed_alleles;
 
 n_individuals = length (observed_alleles!!0)/2;
 
+main = Prefix "Selfing" $ do 
+{
+  let {alpha = 0.10};
+
+  theta_effective <- dp n_loci alpha (gamma 0.5 0.5); 
+
+  (tau, a, p_f, sigma) <- gyno_model ();
+
+  let {(s, h, r) = gyno_mating_system tau a p_f sigma};
+
+  let {factor = (1.0 - s*0.5)/r};
+  
+  let {theta = map (/factor) theta_effective};
+
+  afs_dist <- diploid_afs n_individuals n_loci s theta_effective;
+
+  Observe observed_alleles afs_dist;
+
+  Observe 27 $ binomial 221 p_f;
+
+  Log "a" a;
+  Log "p_f" p_f;
+  Log "tau" tau;
+  Log "sigma" sigma;
+              
+  Log "s*" s;
+  Log "theta*" theta_effective;
+  Log "theta" theta;
+  Log "H" h;
+  Log "R" r;
+};
+
 gyno_model _ = Prefix "Gyno" $ do
 {
   tau <- beta 2.0 8.0;
@@ -24,38 +56,5 @@ gyno_model _ = Prefix "Gyno" $ do
 
   return (tau, a, p_f, sigma);
 };
-
-main = Prefix "Selfing" $ do 
-{
-          let {alpha = 0.10};
-
-          theta_effective <- dp n_loci alpha (gamma 0.5 0.5); 
-
-          (tau, a, p_f, sigma) <- gyno_model ();
-
-          let {(s, h, r) = gyno_mating_system tau a p_f sigma};
-
-          let {factor = (1.0 - s*0.5)/r};
-  
-          let {theta = map (/factor) theta_effective};
-
-          Observe 27 $ binomial 221 p_f;
-
-          afs_dist <- diploid_afs n_individuals n_loci s theta_effective;
-
-          Observe observed_alleles afs_dist;
-
-          Log "a" a;
-          Log "p_f" p_f;
-          Log "tau" tau;
-          Log "sigma" sigma;
-              
-	  Log "s*" s;
-	  Log "theta*" theta_effective;
-	  Log "theta" theta;
-          Log "H" h;
-          Log "R" r;
-};
-
 
 }
