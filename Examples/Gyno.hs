@@ -1,4 +1,4 @@
-module Gynot where
+module Gyno where
 {
 import PopGen;
 import PopGen.Selfing;
@@ -18,9 +18,9 @@ main = Prefix "Selfing" $ do
 
   theta_effective <- dp n_loci alpha (gamma 0.5 0.5); 
 
-  (tau, a, p_f, sigma) <- gyno_model ();
+  (s', tau, p_f, sigma) <- gyno_model ();
 
-  let {(s, h, r) = gyno_mating_system tau a p_f sigma};
+  let {(s, h, r) = gyno_mating_system tau s' p_f sigma};
 
   let {factor = (1.0 - s*0.5)/r};
   
@@ -32,9 +32,9 @@ main = Prefix "Selfing" $ do
 
   Observe 27 $ binomial 221 p_f;
 
-  Log "a" a;
-  Log "p_f" p_f;
+  Log "s~" s';
   Log "tau" tau;
+  Log "p_f" p_f;
   Log "sigma" sigma;
               
   Log "s*" s;
@@ -46,15 +46,15 @@ main = Prefix "Selfing" $ do
 
 gyno_model _ = Prefix "Gyno" $ do
 {
-  tau <- beta 2.0 8.0;
+  s' <- uniform 0.0 1.0;
 
-  a <- uniform 0.0 1.0;
+  tau <- beta 2.0 8.0;
 
   p_f <- uniform 0.0 1.0;
 
   let {sigma = 1.0};
 
-  return (tau, a, p_f, sigma);
+  return (s', tau, p_f, sigma);
 };
 
 }
