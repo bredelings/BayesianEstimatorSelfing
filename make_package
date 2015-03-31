@@ -4,6 +4,7 @@ use strict;
 use JSON::PP;
 use Archive::Tar;
 use File::Find;
+use Digest::SHA;
 
 my $info = read_JSON_file("control.json");
 my $name = ${$info}{"Package"};
@@ -13,20 +14,33 @@ my $filename = "${name}_${version}.tar.gz";
 
 my @files = ("control.json");
 find(sub {push @files, $File::Find::name if (!ignore_name($File::Find::name))}, "files");
-for my $file (@files)
-{
-    if (-d $file)
-    {
-	if ($file !~ m|/$|)
-	{
-	    $file = "${file}/";
-	}
-    }
-}
 
 Archive::Tar->create_archive($filename,COMPRESS_GZIP, @files);
 
 
+${$info}{"SHA1"} = sha1sum($filename);
+my $json = JSON::PP->new;
+$json->indent();
+my $json_text = $json->utf8->encode($info,1);
+print "$json_text";
+
+
+sub sha1sum
+{
+    my $filename = shift;
+    my $fh;
+    unless (open $fh,$filename) {
+	print STDERR "$0: open $filename: $!";
+	exit(1);
+    }
+
+    my $sha1 = Digest::SHA->new(1);
+    $sha1->addfile($fh);
+    my $digest = $sha1->hexdigest;
+    close $fh;
+    return $digest;
+}
+    
 sub ignore_name
 {
     my $filename = shift;
