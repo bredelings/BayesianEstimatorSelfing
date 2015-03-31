@@ -5,6 +5,7 @@ use JSON::PP;
 use Archive::Tar;
 use File::Find;
 use Digest::SHA;
+use Cwd 'abs_path';
 
 my $info = read_JSON_file("control.json");
 my $name = ${$info}{"Package"};
@@ -13,10 +14,9 @@ my $version = ${$info}{"Version"};
 my $filename = "${name}_${version}.tar.gz";
 
 my @files = ("control.json");
-find(sub {push @files, $File::Find::name if (!ignore_name($File::Find::name))}, "files");
+find({wanted => \&findstuff, no_chdir=> 1}, "files");
 
 Archive::Tar->create_archive($filename,COMPRESS_GZIP, @files);
-
 
 ${$info}{"SHA1"} = sha1sum($filename);
 my $json = JSON::PP->new;
@@ -41,12 +41,16 @@ sub sha1sum
     return $digest;
 }
     
-sub ignore_name
+sub findstuff
 {
-    my $filename = shift;
-    return 1 if ($filename =~ /.*flymake.*/);
-    return 1 if ($filename =~ /~$/);
-    return 0;
+    my $file = $File::Find::name;
+    my $d = Cwd::cwd();
+    my $dir = $File::Find::dir;
+    return unless -f "$file";
+    return if (-d "$file");
+    return if ($file =~ /.*flymake.*/);
+    return if ($file =~ /\~$/);
+    push @files,$file;
 }
 
 sub read_JSON_file
