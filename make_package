@@ -1,0 +1,53 @@
+#!/usr/bin/perl -w
+
+use strict;
+use JSON::PP;
+use Archive::Tar;
+use File::Find;
+
+my $info = read_JSON_file("control.json");
+my $name = ${$info}{"Package"};
+my $version = ${$info}{"Version"};
+
+my $filename = "${name}_${version}.tar.gz";
+
+my @files = ("control.json");
+find(sub {push @files, $File::Find::name if (!ignore_name($File::Find::name))}, "files");
+for my $file (@files)
+{
+    if (-d $file)
+    {
+	if ($file !~ m|/$|)
+	{
+	    $file = "${file}/";
+	}
+    }
+}
+
+Archive::Tar->create_archive($filename,COMPRESS_GZIP, @files);
+
+
+sub ignore_name
+{
+    my $filename = shift;
+    return 1 if ($filename =~ /.*flymake.*/);
+    return 1 if ($filename =~ /~$/);
+    return 0;
+}
+
+sub read_JSON_file
+{
+    my $filename = shift;
+
+    my $json;
+    {
+	local $/; # Enable 'slurp' mode
+	open my $fh, "<", $filename or error_exit("Can't open \"$filename\": $!");
+	$json = <$fh>;
+	close $fh;
+    };
+    
+    return decode_json($json);
+}
+
+    
