@@ -18,9 +18,9 @@ main = Prefix "Selfing" $ do
 
   theta_effective <- dp n_loci alpha (gamma 0.25 2.0); 
 
-  (p_m, s) <- andro_model ();
+  (p_m, tau, s') <- andro_model ();
 
-  let {r = andro_mating_system' s p_m};
+  let {(s,r) = andro_mating_system s' tau p_m};
 
   let {factor = (1.0 - s*0.5)/r};
 
@@ -30,11 +30,13 @@ main = Prefix "Selfing" $ do
 
   Observe observed_alleles afs_dist;
 
-  Observe <males> $ binomial <toal> p_m;
+  Observe <males> $ binomial <total> p_m;
 
   Log "p_m" p_m;
-  Log "s*" s;
+  Log "s~" s';
+  Log "tau" tau;
 
+  Log "s*" s;
   Log "theta*" theta_effective;
   Log "theta" theta;
   Log "R" r;
@@ -42,11 +44,14 @@ main = Prefix "Selfing" $ do
 
 andro_model _ = Prefix "Andro" $ do
 {
---  s <- uniform 0.0 1.0;
+--  s' <- uniform 0.0 1.0;
 
+--  tau_inverse <- uniform 0.0 1.0;
+--  let {tau = 1.0/tau_inverse};
+       
 --  p_m <- uniform 0.0 1.0;
   
-  return (p_m, s);
+  return (p_m, tau, s');
 };
 
 }

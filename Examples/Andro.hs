@@ -30,7 +30,7 @@ main = Prefix "Selfing" $ do
 
   Observe observed_alleles afs_dist;
 
-  Observe <males> $ binomial <toal> p_m;
+  Observe 20 $ binomial 2000 p_m;
 
   Log "p_m" p_m;
   Log "s*" s;
@@ -42,9 +42,9 @@ main = Prefix "Selfing" $ do
 
 andro_model _ = Prefix "Andro" $ do
 {
---  s <- uniform 0.0 1.0;
+  s <- uniform 0.0 1.0;
 
---  p_m <- uniform 0.0 1.0;
+  p_m <- uniform 0.0 1.0;
   
   return (p_m, s);
 };
