@@ -14,9 +14,9 @@ n_individuals = length (observed_alleles!!0)/2;
 
 herm_model _ = Prefix "Herm" $ do
 {
---  tau <- uniform 0.0 1.0;
+  tau <- uniform 0.0 1.0;
 
---  ss <- uniform 0.0 1.0;
+  ss <- uniform 0.0 1.0;
 
   return (tau, ss);
 };
