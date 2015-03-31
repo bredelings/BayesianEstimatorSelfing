@@ -20,9 +20,9 @@ main = Prefix "Selfing" $ do
 
   (p_m, s, r) <- andro_model ();
 
-  let {andro_factor = (1.0 - s*0.5)/r};
+  let {factor = (1.0 - s*0.5)/r};
 
-  let {theta = map (/andro_factor) theta_effective};
+  let {theta = map (/factor) theta_effective};
 
   afs_dist <- diploid_afs n_individuals n_loci s theta_effective;
 
