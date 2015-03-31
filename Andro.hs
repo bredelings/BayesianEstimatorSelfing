@@ -18,12 +18,11 @@ main = Prefix "Selfing" $ do
   --  theta_effective <- dpm n_loci (gamma 0.5 1.0) (gamma 1.05 0.1); 
   theta_effective <- dp n_loci alpha (gamma 0.25 2.0); 
 
-  (p_m, s, r, andro_factor) <- andro_model ();
+  (p_m, s, r) <- andro_model ();
 
-  let {herm_factor = (1.0 - s*0.5)};
-  
-  let {theta_herm = map (/herm_factor) theta_effective};
-  let {theta_andro = map (/andro_factor) theta_effective};
+  let {andro_factor = (1.0 - s*0.5)/r};
+
+  let {theta = map (/andro_factor) theta_effective};
 
   afs_dist <- diploid_afs n_individuals n_loci s theta_effective;
 
@@ -33,8 +32,8 @@ main = Prefix "Selfing" $ do
 
   Log "s*" s;
   Log "theta*" theta_effective;
-  Log "theta" theta_andro;
-  Log "R" (herm_factor/andro_factor);
+  Log "theta" theta;
+  Log "R" r;
 };
 
 andro_mating_system s p_m = (1.0+s)^2 /(4.0*p_h) + (1.0-s)^2/(4.0*p_m) where {p_h = 1.0-p_m};
@@ -49,10 +48,7 @@ andro_model _ = Prefix "Andro" $ do
   
   let {r = andro_mating_system s  p_m};
 
-  let {andro_factor = (1.0 - s*0.5)/r};
-  Log "andro_factor" andro_factor;
-
-  return (p_m, s, r, andro_factor);
+  return (p_m, s, r);
 };
 
 }
