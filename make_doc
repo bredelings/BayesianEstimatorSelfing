@@ -1,0 +1,2 @@
+#!/bin/sh
+pandoc --standalone --toc -N -o README.html README.md
