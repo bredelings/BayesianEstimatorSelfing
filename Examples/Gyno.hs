@@ -1,4 +1,4 @@
-module Test where
+module Gynot where
 {
 import PopGen;
 import PopGen.Selfing;
