@@ -2,6 +2,7 @@ module Test where
 {
 import PopGen;
 import PopGen.Selfing;
+import PopGen.Selfing.Gynodioecy;
 import Distributions;
 import System.Environment;
 
@@ -10,18 +11,6 @@ observed_alleles = read_phase_file (getArgs!!0);
 n_loci = length observed_alleles;
 
 n_individuals = length (observed_alleles!!0)/2;
-
-gyno_mating_system tau a p_f sigma = (s, h, r) where
-    {p_h = 1.0 - p_f;
-     x1  = p_h * a * tau;
-     x2  = p_h * (1.0-a);
-     x3  = p_f * sigma;
-     s   = x1/(x1+x2+x3);
-     h   = x2/(x2+x3);
-     hh  = (1.0+h)/2.0;
-     r   = (2.0*s + (1.0-s)*(1.0+h))^2 /(4.0*p_h) + ((1.0-s)*(1.0-h))^2/(4.0*p_f)
-    };
-
 
 gyno_model _ = Prefix "Gyno" $ do
 {
@@ -33,9 +22,7 @@ gyno_model _ = Prefix "Gyno" $ do
 
   let {sigma = 1.0};
 
-  let {(s, h, r) = gyno_mating_system tau a p_f sigma};
-
-  return (tau, a, p_f, sigma, s, h, r);
+  return (tau, a, p_f, sigma);
 };
 
 main = Prefix "Selfing" $ do 
@@ -44,7 +31,9 @@ main = Prefix "Selfing" $ do
 
           theta_effective <- dp n_loci alpha (gamma 0.5 0.5); 
 
-          (tau, a, p_f, sigma, s, h, r) <- gyno_model ();
+          (tau, a, p_f, sigma) <- gyno_model ();
+
+          let {(s, h, r) = gyno_mating_system tau a p_f sigma};
 
           let {factor = (1.0 - s*0.5)/r};
   
