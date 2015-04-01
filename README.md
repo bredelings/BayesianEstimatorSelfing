@@ -38,18 +38,25 @@ You should also install the following software:
 
 ## Installing BES
 
-First, install the BES package:
+First, check that the `bali-phy-pkg`  command works:
 ```
 % bali-phy-pkg help
-% bali-phy-pkg install BES_0.0.1.tar.gz
 ```
-To check that the package is installed, run:
+Download and install the BES package:
+```
+% bali-phy-pkg install BES
+```
+Check that the package is installed:
 ```
 % bali-phy-pkg packages
 ```
 To see what modules were installed, run:
 ```
 % bali-phy-pkg files BES
+```
+You can uninstall the package by running:
+```
+% bali-phy-pkg uninstall BES
 ```
 
 Next, download some additional modules for particular mating systems.  These files are not installed
@@ -210,7 +217,7 @@ This is best avoided:
 # Tasks
 1. Run the Generic model to estimate s and thetas*.
 2. Run the Herm model to estimate s and thetas and R.
-3. Run the HermID model to estimate s and thetas and s~ and \tau and R.
+3. Run the HermID model to estimate s and thetas and s~ and tau and R.
 4. Run the Andro model to estimate s and thetas and p_m and R.
-5. Run the AndroID model to estimate s and thetas and p_m and s~ and \tau and R.
-6. Run the Gyno model to estimate s and theta/theta* and s~ and \tau and p_f and sigma and H and R.
+5. Run the AndroID model to estimate s and thetas and p_m and s~ and tau and R.
+6. Run the Gyno model to estimate s and theta/theta* and s~ and tau and p_f and sigma and H and R.
