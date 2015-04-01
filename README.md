@@ -14,12 +14,12 @@ Therefore, you might want to keep a [Unix Tutorial](http://www.ee.surrey.ac.uk/T
 BES runs on Linux, Mac OS X, and Windows.  BES is distributed as an extension package for the BAli-Phy inference framework.
 You might therefore wish to refer to the [BAli-Phy Documentation](http://www.bali-phy.org/README.html) as well.
 
-BES contains a number of modules that corresponds to different mating system models.  Each model therefore allows
-estimating a different set of parameters.  The generic model (Generic.hs) and the pure hermaphrodite model without
-inbreeding depression (Herm.hs) can be run without modification to estimate the selfing rate and locus-specific mutation rates.
+BES contains a number of modules that corresponds to different mating system models.  Each model allows
+estimating a different set of parameters.  The generic model and the pure hermaphrodite model without
+inbreeding depression can be run without modification to estimate the selfing rate and locus-specific mutation rates.
 
-However, the gynodioecious model (Gyno.hs/GynoID.hs) and the androdiecious model module (Andro.hs/AndroID.hs) require
-additional information, such as (for example) field observations on the fraction of hermaphrodites.  Therefore,
+However, the gynodioecious model and the androdiecious model require additional information besides the genetic data,
+such as (for example) field observations on the fraction of hermaphrodites.  Therefore,
 the user must edit these modules to add this information before attempting to run these models.  This manual
 describes how to add information, but is not a substitute for understanding something about the structure of the
 model.
@@ -58,7 +58,6 @@ into the package directory because they must be manually modified before they ar
 * [Andro.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Andro.hs)
 * [AndroID.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/AndroID.hs)
 * [Gyno.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Gyno.hs)
-* [GynoID.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/GynoID.hs)
 
 Keep in mind that only the `Generic.hs` and `Herm.hs` modules can be used to run an analysis without any
 modification.
