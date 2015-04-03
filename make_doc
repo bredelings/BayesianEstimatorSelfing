@@ -1,4 +1,5 @@
 #!/bin/sh
-pandoc -s --toc -N -t html5 -o doc/README.html README.md
-pandoc -s --toc -N --mathml -o doc/README.xhtml README.md
+MATHJAX="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" 
+pandoc -s --toc -N -t html5 --mathjax="$MATHJAX" -o doc/README.html README.md
+pandoc -s --toc -N --mathjax="$MATHJAX" -o doc/README.xhtml README.md
 pandoc -s --toc -N -o doc/README.pdf README.md
