@@ -14,7 +14,7 @@ Therefore, you might want to keep a [Unix Tutorial](http://www.ee.surrey.ac.uk/T
 BES runs on Linux, Mac OS X, and Windows.  BES is distributed as an extension package for the BAli-Phy inference framework.
 You might therefore wish to refer to the [BAli-Phy Documentation](http://www.bali-phy.org/README.html) as well.
 
-BES contains a number of modules that corresponds to different mating system models.  Each model allows
+BES contains a number of modules that correspond to different mating system models.  Each model allows
 estimating a different set of parameters.  The generic model and the pure hermaphrodite model without
 inbreeding depression can be run without modification to estimate the selfing rate and locus-specific mutation rates.
 
@@ -34,6 +34,7 @@ To install BAli-Phy, follow the [installation instructions for BAli-Phy](http://
 ## Installing additional software
 
 You should also install the following software:
+
 * [Tracer](http://tree.bio.ed.ac.uk/software/tracer/) helps to visualize the results of MCMC runs.
 
 ## Installing BES
@@ -61,19 +62,25 @@ You can uninstall the package by running:
 
 Next, download some additional modules for particular mating systems.  These files are not installed
 into the package directory because they must be manually modified before they are used.
+
 * [HermID.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/HermID.hs)
 * [Andro.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Andro.hs)
 * [AndroID.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/AndroID.hs)
 * [Gyno.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Gyno.hs)
 
-Keep in mind that only the `Generic.hs` and `Herm.hs` modules can be used to run an analysis without any
+Keep in mind that only the generic model and the pure hermaphrodite
+model without inbreeding depression can be used to run an analysis without any
 modification.
 
 # Running the program
 
 ## Quick Start
 
-First, run the MCMC using the generic model:
+First, check that the model loads correctly:
+```
+% bali-phy -M PopGen.Selfing.Generic --test --- Examples/outfile.001.70.001.phase
+```
+If that works, then run the MCMC using the generic model:
 ```
 % bali-phy -M PopGen.Selfing.Generic --iter=1000 --- Examples/outfile.001.70.001.phase &
 ```
@@ -86,7 +93,7 @@ the command line as follows:
 ```
 It is also possible to use a non-graphical program statreport to view the estimates of the selfing rate
 ```
-% statreport --select="Selfing.s*" --mode --HPD Selfing-1/C1.p
+% statreport --select="Selfing.s*" Selfing-1/C1.p
 ```
 This can be useful when analyzing data in a terminal.
 
@@ -127,7 +134,7 @@ You can specify a different name to use instead of the model file name by using 
 
 ## Output files
 
-BAli-Phy write the following output files inside the directory that it creates:
+BAli-Phy writes the following output files inside the directory that it creates:
 
 | File name | Description |
 | --------- | ----------- |
@@ -135,59 +142,255 @@ BAli-Phy write the following output files inside the directory that it creates:
 | C1.err    | May contain error messages. |
 | C1.p      | MCMC samples for different variables. |
 
-### Variables
+The `C1.p` file contains MCMC samples for the variables that are being
+estimated.  For example, the variable `Selfing.s*` indicates the
+fraction of uniparental individuals at the time of breeding.
 
-| Variable | Description |
-| -------  | ---------- |
-| Selfing.s | This is the selfing rate = fraction of uniparental individuals at the time of breeding. |
-| Selfing.DiploidAFS.t!!k | Number of generations of selfing for individual k                |
-| Selfing.Theta\*!!l       | This is the effective scaled mutation rate for locus l = 2(Ne)u. |
-| Selfing.Theta!!l        | This is the scaled mutation rate for locus l = 2Nu.              |
+Since each mating system has a unique set of parameters, the variables
+for each model will be described in the section for that model.
 
-#### Generic
+# Analyzing output files
 
-* no additional parameters
+## Using `statreport`
 
-#### Pure Hermaphrodite (I)
+In order to determine estimates of parameters, you can use the program
+`statreport`:
 
-* no additional parameters
+```
+% statreport C1.p
+```
 
-#### Pure Hermaphrodite (II)
+You can plot the posterior distribution for specific parameters by
+using the select option:
+```
+% statreport --select "Selfing.s*" C1.p
+```
+Here quotes are necessary to make sure that the `*` is not interpreted
+by the command line shell, but is passed in to the `statreport`
+program unchanged.
 
-| Variable | Description |
-| -------  | ---------- |
-| Selfing.Herm.s~ | fraction of uniparental individuals at conception. |
-| Selfing.Herm.tau | relative viability of selfed individuals = 1 - (inbreeding depression). |
+You can also use the arguments `--mean`, `--mode`, and `--median` (the
+default) to exime different properties of the posterior distribution.
 
-#### Androdioecy (I)
 
-| Variable | Description |
-| -------  | ---------- |
-| Selfing.Andro.p_m | fraction of males |
+## Using `tracer`
 
-#### Androdioecy (II)
+Tracer is a graphical program for exploring posterior distributions.
 
-| Variable | Description |
-| -------  | ---------- |
-| Selfing.Andro.p_m | fraction of males |
-| Selfing.Andro.s~ | fraction of uniparental individuals at conception. |
-| Selfing.Andro.tau | relative viability of selfed individuals = 1 - (inbreeding depression). |
+Load the `C1.p` file using `tracer`.  On Unix, if `tracer` is in your
+`PATH`, you can do this by typing
 
-#### Gynodioecy
+```
+tracer C1.p &
+```
 
-| Variable | Description |
-| -------  | ---------- |
-| Selfing.Gyno.p_f | fraction of females |
-| Selfing.Gyno.a | fraction of uniparental individuals a conception. |
-| Selfing.Gyno.tau | relative viability of selfed individuals = 1 - (inbreeding depression). |
-| Selfing.Gyno.sigma | relative seed production of females |
+# Mating system models
 
-# Models
+The stochastic process that generates the genetic data is described in
+terms of mating system parameters $\Psi$ and the effective scaled mutation
+rates $\Theta^*_l$ for each locus $l$.  The set of variables $\Psi$ is
+specific for each mating system.
 
-BES contains modules for estimating parameters under models for pure hermaphroditism, androdioecy,
-and gynodioecy.  In order to use these models, you must modify the module files to specify
-information on parameters in one of three ways.  This requires judgement, and bad judgement here
-is not the fault of the BES software or its author.
+Some quantites are of interest for each mating system
+
+* $s^*$ is the fraction of uniparental adults (selfing rate).
+* $R = \lim_{N\to\infty} \frac{N^*}{N}$ is the decrease in effective
+  population size, as determined by the rate of parent-sharing.
+* ${T_k}$ is the number of generations of selfing in the immediate ancestry of individual $k$.
+* ${\Theta_l}$ is the scaled mutation rate $4Nu$ for locus $l$.
+* ${\Theta^*_l}$ is the *effective* scaled mutation rate for locus $l$.
+
+Here, $N$ is the population size, and $N^*$ is the effective
+population size.  The effective scaled mutation rate is
+
+* $\Theta^*_l = \Theta_l \cdot (1-s^*/2) / R$.
+
+In general, $s^*$ and $R$ are composite parameters: they are
+determined from the basic mating system parameters $\Psi$.
+
+It is important to note that the genetic data contain information
+directly only about $s^*$ and ${\Theta^*_l}$.  Therefore, the basic
+mating system parameters $\Psi$ may be unidentifiable on the basis of
+genetic data alone.  This can be solved by introducing additional data
+in the form on field observations on, for example, the fraction of
+males or the fraction of females in the population.  When such
+information is unavailable, the generic model should be used.
+
+## Generic model
+
+The generic model is agnostic about the particular mating system, and
+simply reports $s^*$, ${T_k}$ and ${\Theta^*_l}$ as estimated from the genetic
+data.  Since the mating system is not known, $R$ cannot be
+calculated.  This means that it is not possible to calculate
+${\Theta_l}$ from ${\Theta^*_l}$.
+
+The generic model characterizes the mating system simply in terms of
+the selfing rate $s^*$.  Thus, $\Psi=\{s^*\}$, and so $s^*$ is a basic
+parameter, instead of being calculated from other parameters.
+
+The following variables are estimated, with the field names given:
+
+| Variable | Name | Description |
+| -------  | -----| ----------- |
+| $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
+| ${T_k}$ | Selfing.DiploidAFS.t!!k | Number of generations of selfing for individual $k$. |
+| ${\Theta^*_l}$ | Selfing.Theta\*!!l       | *Effective* scaled mutation rate for locus $l$. |
+
+This variant is run by specifying `-M PopGen.Selfing.Generic` on the
+command line.
+
+## Pure Hermaphrodite
+
+In the pure hermaphrodite model, each individual contributes both
+male and female gametes to the gene pool.  There are two variants of
+this model.
+
+### Variant I
+
+The first variant has $\Psi=\{s^*\}$.  This variant treats $s^*$ as a
+basic parameter, and does not model inbreeding depression.  This
+variant is similar to the generic model, except that $R$ can be
+calculated because the mating system is known to be a pure
+hermaphrodite mating system.  This allows ${\Theta_l}$ to be
+calculated also.  However, note that $R$ is always $1$ for the pure
+hermaphrodite model.
+
+The following variables are estimated, with the field names given:
+
+| Variable | Name | Description |
+| -------  | -----| ----------- |
+| $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
+| ${T_k}$ | Selfing.DiploidAFS.t!!k | Number of generations of selfing for individual $k$. |
+| $R$ | Selfing.R | Decrease in parent-sharing effective population size |
+| ${\Theta^*_l}$ | Selfing.Theta\*!!l       | *Effective* scaled mutation rate for locus $l$. |
+| ${\Theta_l}$ | Selfing.Theta\!!l       | Scaled mutation rate $4Nu$ for locus $l$. |
+
+This variant is run by specifying `-M PopGen.Selfing.Herm` on the
+command line.
+
+### Variant II
+The second variant has $\Psi=\{\tilde{s},\tau\}$.  This variant treats
+$s^*$ as a composite parameter.
+
+The following variables are estimated, with the field names given:
+
+| Variable | Name | Description |
+| -------  | -----| ----------- |
+| $\tilde{s}$ | Selfing.s~ | Fraction of uniparental seeds. |
+| $\tau$ | Selfing.tau | Relative viability of selfed seeds. |
+| $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
+| ${T_k}$ | Selfing.DiploidAFS.t!!k | Number of generations of selfing for individual $k$. |
+| $R$ | Selfing.R | Decrease in parent-sharing effective population size |
+| ${\Theta^*_l}$ | Selfing.Theta\*!!l       | *Effective* scaled mutation rate for locus $l$. |
+| ${\Theta_l}$ | Selfing.Theta\!!l       | Scaled mutation rate $4Nu$ for locus $l$. |
+
+Here the user must modify `HermID.hs` to add additional information
+about $\tilde{s}$ or $\tau$.
+
+This variant is run by specifying `-m HermID.hs` on the
+command line.
+
+## Androdioecy
+
+In the androdioecious model, the population consist of some fraction
+$p_m$ of males, with the rest of the individuals being
+hermaphrodites.  Hermaphrodites produce males gametes, but only
+fertilize their own eggs. There are two variants of
+this model.
+
+### Variant I
+
+The first variant has $\Psi=\{s^*,p_m\}$.  This variant treats $s^*$ as a
+basic parameter, and does not model inbreeding depression.  
+
+The following variables are estimated, with the field names given:
+
+| Variable | Name | Description |
+| -------  | -----| ----------- |
+| $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
+| $p_m$ | Selfing.p_m | The fraction of males |
+| ${T_k}$ | Selfing.DiploidAFS.t!!k | Number of generations of selfing for individual $k$. |
+| $R$ | Selfing.R | Decrease in parent-sharing effective population size |
+| ${\Theta^*_l}$ | Selfing.Theta\*!!l       | *Effective* scaled mutation rate for locus $l$. |
+| ${\Theta_l}$ | Selfing.Theta\!!l       | Scaled mutation rate $4Nu$ for locus $l$. |
+
+Here the user must modify `Andro.hs` to add additional information
+about $p_m$.
+
+This variant is run by specifying `-m Andro.hs` on the
+command line.
+
+### Variant II
+The second variant has $\Psi=\{\tilde{s},\tau,p_m\}$.  This variant treats
+$s^*$ as a composite parameter.
+
+The following variables are estimated, with the field names given:
+
+| Variable | Name | Description |
+| -------  | -----| ----------- |
+| $\tilde{s}$ | Selfing.s~ | Fraction of uniparental zygotes. |
+| $\tau$ | Selfing.tau | Relative viability of selfed zygotes. |
+| $p_m$ | Selfing.p_m | The fraction of males |
+| $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
+| ${T_k}$ | Selfing.DiploidAFS.t!!k | Number of generations of selfing for individual $k$. |
+| $R$ | Selfing.R | Decrease in parent-sharing effective population size |
+| ${\Theta^*_l}$ | Selfing.Theta\*!!l       | *Effective* scaled mutation rate for locus $l$. |
+| ${\Theta_l}$ | Selfing.Theta\!!l       | Scaled mutation rate $4Nu$ for locus $l$. |
+
+Here the user must modify `AndroID.hs` to add additional information
+about $p_m$ and also about $\tilde{s}$ or $\tau$.
+
+This variant is run by specifying `-m AndroID.hs` on the
+command line.
+
+## Gynodioecy
+
+In the gynodioecious model, the population consist of some fraction
+$p_f$ of females, with the rest of the individuals being
+hermaphrodites.  Hermaphrodites produce pollen, and so can contribute
+male gametes to females, other hermaphrodites, and themselves.
+
+In this model $\Psi=\{\tilde{s},\tau,p_f,\sigma\}$.  Here $s^*$ is a
+composite parameter.
+
+The following variables are estimated, with the field names given:
+
+| Variable | Name | Description |
+| -------  | -----| ----------- |
+| $\tilde{s}$ | Selfing.s~ | Fraction of hermaphrodite seeds set by self-pollen. |
+| $\tau$ | Selfing.tau | Relative viability of selfed seeds. |
+| $p_f$ | Selfing.p_f | The fraction of females |
+| $\sigma$ | Selfing.sigma | The fraction of females |
+| $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
+| ${T_k}$ | Selfing.DiploidAFS.t!!k | Number of generations of selfing for individual $k$. |
+| $R$ | Selfing.R | Decrease in parent-sharing effective population size |
+| $H$ | Selfing.H | Fraction of non-selfed individuals with a hermaphrodite seed-parent. |
+| ${\Theta^*_l}$ | Selfing.Theta\*!!l       | *Effective* scaled mutation rate for locus $l$. |
+| ${\Theta_l}$ | Selfing.Theta\!!l       | Scaled mutation rate $4Nu$ for locus $l$. |
+
+Here the user must modify `Gyno.hs` to add additional information
+about 3 out of the 4 components of $\Psi$.
+
+This variant is run by specifying `-m Gyno.hs` on the
+command line.
+
+
+# Specifying additional information
+
+When the mating system parameters $\Psi$ contain more than one degree
+of freedom, the mating system parameters are not identifiable from
+genetic data alone.  Therefore, the user must obtain a
+model-description module (`HermID.hs`, `Andro.hs`, `AndroID.hs`, or
+`Gyno.hs`) and modify this module to add additional information to
+make the mating system parameters identifiable.  In general, if $\Psi$
+contains $n$ variables, then additional information about $n-1$ of
+them must be incorporated.
+
+Additional information about a variable can be added in 3 ways.
+
+1. Add observations that depends on that variable.
+2. Fix the variable to a known constant value.
+3. Place a subjective prior on the variable.
 
 ## Introduce a variable with a prior and place observations on it.
 ```
@@ -195,24 +398,65 @@ is not the fault of the BES software or its author.
   Observe 10 (binomial 20 tau);
 ```
 
-## Fix a variable to a constant
+## Fix a variable to a known constant value.
 If you know the value of a variable, you can fix it to a constant:
 ```
   let {tau = 1.0};
 ```
 
 ## Place a subjective prior on a variable
-This is best avoided:
+This approach doesn't actually make the parameter *identifiable*,
+since this approach affects only the prior, and not the likelihood.
 ```
   tau <- beta 2.0 8.0;
 ```
+As a result, it is not possible to compare the posterior (with data)
+and the prior (without data) to assess the impact of the data.  This
+approach is therefore not recommended.
 
-# DONE
+# Bayesian priors and posteriors
 
-* Allow distributing PopGen.hs as part of BES.
+In Bayesian parlance, *prior* means "before the data", and *posterior*
+means "after the data".  The Bayesian approach places prior
+distributions on parameters.  As a result, parameters become random
+variables, and can have distributions.  This differs from the maximum
+likelihood setting, where parameters are not random.  However, the
+researcher must interpret prior and posterior distributions carefully
+in order to avoid drawing erroneous conclusions.
 
-# Test
- Here is some test math: $s^2 = x+1$.
+## Uninformative priors
+
+We take the "objective Bayesian" approach, and seek priors that have
+minimal influence on the analysis.  In general, such priors have a
+broad range.  This range should not be characterized simply in terms
+of the mean or median, but in terms of the Bayesian Credible Interval
+(BCI), and in terms of the shapes of the tails of the distribution.
+
+Note that, although the goal is to obtain priors with minimal
+influence, such priors are not actually "uninformative".
+Specifically, a uniform prior is not "uninformative".  The choice of
+an appropriate prior should be undertaken with care in order to avoid
+ruling out any plausible outcome *a priori*.
+
+## Comparing the posterior and the prior
+
+The posterior distribution combines information the prior distribution
+and the likelihood.  In order to determine if the shape of the
+posterior is being largely driven by the prior, or largely driven by
+the likelihood, one should compare the posterior and the prior distributions.
+
+## Priors on composite parameters
+
+For models, such as the gynodioecious model, where $s^*$ is a
+composite parameter, no prior distribution is placed on $s^*$
+directly.  However, $s^*$ still has a prior distribution that is the
+combined result of the priors on all the basic parameters that it is
+computed from.
+
+In order to determine what the shape of the prior on $s^*$ is, one
+can run the model without data.  This can be done by commenting out
+the "Observe" statements.
+
 
 # Tasks
 1. Run the Generic model to estimate s and thetas*.
