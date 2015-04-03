@@ -1,4 +1,4 @@
 #!/bin/sh
-pandoc -s --toc -N -t html5 -o README.html README.md
-pandoc -s --toc -N --mathml -o README.xhtml README.md
-pandoc -s --toc -N -o README.pdf README.md
+pandoc -s --toc -N -t html5 -o doc/README.html README.md
+pandoc -s --toc -N --mathml -o doc/README.xhtml README.md
+pandoc -s --toc -N -o doc/README.pdf README.md
