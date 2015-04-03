@@ -1,3 +1,7 @@
+---
+title: Bayesian Estimator of Selfing (BES)
+---
+
 # Introduction
 BES is a software package for estimating self-fertilization (selfing) rates and other mating system parameters
 from genotype data.  BES estimates parameters in a Bayesian framework using Markov chain Monte Carlo (MCMC).
