@@ -186,7 +186,7 @@ Load the `C1.p` file using `tracer`.  On Unix, if `tracer` is in your
 `PATH`, you can do this by typing
 
 ```
-tracer C1.p &
+% tracer C1.p &
 ```
 
 # Mating system models
@@ -199,14 +199,17 @@ specific for each mating system.
 Some quantites are of interest for each mating system
 
 * $s^*$ is the fraction of uniparental adults (selfing rate).
-* $R = \lim_{N\to\infty} \frac{N^*}{N}$ is the decrease in effective
-  population size, as determined by the rate of parent-sharing.
+* $R$ is the decrease in effective population size caused by the mating system.
 * ${T_k}$ is the number of generations of selfing in the immediate ancestry of individual $k$.
 * ${\Theta_l}$ is the scaled mutation rate $4Nu$ for locus $l$.
 * ${\Theta^*_l}$ is the *effective* scaled mutation rate for locus $l$.
 
-Here, $N$ is the population size, and $N^*$ is the effective
-population size.  The effective scaled mutation rate is
+Here, $R$ is given by
+
+* $R = \lim_{N\to\infty} \frac{N^*}{N}$
+
+where $N$ is the population size, and $N^*$ is the effective
+population size defined by the rate of parent-sharing.  The effective scaled mutation rate is
 
 * $\Theta^*_l = \Theta_l \cdot (1-s^*/2) / R$.
 
@@ -238,8 +241,8 @@ The following variables are estimated, with the field names given:
 | Variable | Name | Description |
 | -------  | -----| ----------- |
 | $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
-| ${T_k}$ | Selfing.DiploidAFS.t!!k | Number of generations of selfing for individual $k$. |
-| ${\Theta^*_l}$ | Selfing.Theta\*!!l       | *Effective* scaled mutation rate for locus $l$. |
+| ${T_k}$ | Selfing.DiploidAFS.t!!$k$ | Number of generations of selfing for individual $k$. |
+| ${\Theta^*_l}$ | Selfing.Theta\*!!$l$       | *Effective* scaled mutation rate for locus $l$. |
 
 This variant is run by specifying `-M PopGen.Selfing.Generic` on the
 command line.
@@ -265,10 +268,10 @@ The following variables are estimated, with the field names given:
 | Variable | Name | Description |
 | -------  | -----| ----------- |
 | $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
-| ${T_k}$ | Selfing.DiploidAFS.t!!k | Number of generations of selfing for individual $k$. |
+| ${T_k}$ | Selfing.DiploidAFS.t!!$k$ | Number of generations of selfing for individual $k$. |
 | $R$ | Selfing.R | Decrease in parent-sharing effective population size |
-| ${\Theta^*_l}$ | Selfing.Theta\*!!l       | *Effective* scaled mutation rate for locus $l$. |
-| ${\Theta_l}$ | Selfing.Theta\!!l       | Scaled mutation rate $4Nu$ for locus $l$. |
+| ${\Theta^*_l}$ | Selfing.Theta\*!!$l$       | *Effective* scaled mutation rate for locus $l$. |
+| ${\Theta_l}$ | Selfing.Theta\!!$l$       | Scaled mutation rate $4Nu$ for locus $l$. |
 
 This variant is run by specifying `-M PopGen.Selfing.Herm` on the
 command line.
@@ -284,10 +287,10 @@ The following variables are estimated, with the field names given:
 | $\tilde{s}$ | Selfing.s~ | Fraction of uniparental seeds. |
 | $\tau$ | Selfing.tau | Relative viability of selfed seeds. |
 | $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
-| ${T_k}$ | Selfing.DiploidAFS.t!!k | Number of generations of selfing for individual $k$. |
+| ${T_k}$ | Selfing.DiploidAFS.t!!$k$ | Number of generations of selfing for individual $k$. |
 | $R$ | Selfing.R | Decrease in parent-sharing effective population size |
-| ${\Theta^*_l}$ | Selfing.Theta\*!!l       | *Effective* scaled mutation rate for locus $l$. |
-| ${\Theta_l}$ | Selfing.Theta\!!l       | Scaled mutation rate $4Nu$ for locus $l$. |
+| ${\Theta^*_l}$ | Selfing.Theta\*!!$l$       | *Effective* scaled mutation rate for locus $l$. |
+| ${\Theta_l}$ | Selfing.Theta\!!$l$       | Scaled mutation rate $4Nu$ for locus $l$. |
 
 Here the user must modify `HermID.hs` to add additional information
 about $\tilde{s}$ or $\tau$.
@@ -314,10 +317,10 @@ The following variables are estimated, with the field names given:
 | -------  | -----| ----------- |
 | $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
 | $p_m$ | Selfing.p_m | The fraction of males |
-| ${T_k}$ | Selfing.DiploidAFS.t!!k | Number of generations of selfing for individual $k$. |
+| ${T_k}$ | Selfing.DiploidAFS.t!!$k$ | Number of generations of selfing for individual $k$. |
 | $R$ | Selfing.R | Decrease in parent-sharing effective population size |
-| ${\Theta^*_l}$ | Selfing.Theta\*!!l       | *Effective* scaled mutation rate for locus $l$. |
-| ${\Theta_l}$ | Selfing.Theta\!!l       | Scaled mutation rate $4Nu$ for locus $l$. |
+| ${\Theta^*_l}$ | Selfing.Theta\*!!$l$       | *Effective* scaled mutation rate for locus $l$. |
+| ${\Theta_l}$ | Selfing.Theta\!!$l$       | Scaled mutation rate $4Nu$ for locus $l$. |
 
 Here the user must modify `Andro.hs` to add additional information
 about $p_m$.
@@ -337,10 +340,10 @@ The following variables are estimated, with the field names given:
 | $\tau$ | Selfing.tau | Relative viability of selfed zygotes. |
 | $p_m$ | Selfing.p_m | The fraction of males |
 | $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
-| ${T_k}$ | Selfing.DiploidAFS.t!!k | Number of generations of selfing for individual $k$. |
+| ${T_k}$ | Selfing.DiploidAFS.t!!$k$ | Number of generations of selfing for individual $k$. |
 | $R$ | Selfing.R | Decrease in parent-sharing effective population size |
-| ${\Theta^*_l}$ | Selfing.Theta\*!!l       | *Effective* scaled mutation rate for locus $l$. |
-| ${\Theta_l}$ | Selfing.Theta\!!l       | Scaled mutation rate $4Nu$ for locus $l$. |
+| ${\Theta^*_l}$ | Selfing.Theta\*!!$l$       | *Effective* scaled mutation rate for locus $l$. |
+| ${\Theta_l}$ | Selfing.Theta\!!$l$       | Scaled mutation rate $4Nu$ for locus $l$. |
 
 Here the user must modify `AndroID.hs` to add additional information
 about $p_m$ and also about $\tilde{s}$ or $\tau$.
@@ -367,11 +370,11 @@ The following variables are estimated, with the field names given:
 | $p_f$ | Selfing.p_f | The fraction of females |
 | $\sigma$ | Selfing.sigma | The fraction of females |
 | $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
-| ${T_k}$ | Selfing.DiploidAFS.t!!k | Number of generations of selfing for individual $k$. |
+| ${T_k}$ | Selfing.DiploidAFS.t!!$k$ | Number of generations of selfing for individual $k$. |
 | $R$ | Selfing.R | Decrease in parent-sharing effective population size |
 | $H$ | Selfing.H | Fraction of non-selfed individuals with a hermaphrodite seed-parent. |
-| ${\Theta^*_l}$ | Selfing.Theta\*!!l       | *Effective* scaled mutation rate for locus $l$. |
-| ${\Theta_l}$ | Selfing.Theta\!!l       | Scaled mutation rate $4Nu$ for locus $l$. |
+| ${\Theta^*_l}$ | Selfing.Theta\*!!$l$       | *Effective* scaled mutation rate for locus $l$. |
+| ${\Theta_l}$ | Selfing.Theta\!!$l$       | Scaled mutation rate $4Nu$ for locus $l$. |
 
 Here the user must modify `Gyno.hs` to add additional information
 about 3 out of the 4 components of $\Psi$.
