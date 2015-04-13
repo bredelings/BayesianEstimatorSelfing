@@ -45,23 +45,23 @@ You should also install the following software:
 ## Installing BES
 
 First, check that the `bali-phy-pkg`  command works:
-```
+``` bash
 % bali-phy-pkg help
 ```
 Download and install the BES package:
-```
+``` bash
 % bali-phy-pkg install BES
 ```
 Check that the package is installed:
-```
+``` bash
 % bali-phy-pkg packages
 ```
 To see what modules were installed, run:
-```
+``` bash
 % bali-phy-pkg files BES
 ```
 You can uninstall the package by running:
-```
+``` bash
 % bali-phy-pkg uninstall BES
 ```
 
@@ -82,22 +82,22 @@ modification.
 ## Quick Start
 
 First, check that the model loads correctly:
-```
+``` bash
 % bali-phy -M PopGen.Selfing.Generic --test --- Examples/outfile.001.70.001.phase
 ```
 If that works, then run the MCMC using the generic model:
-```
+``` bash
 % bali-phy -M PopGen.Selfing.Generic --iter=1000 --- Examples/outfile.001.70.001.phase &
 ```
 This should create a directory called `Generic-1/` (or `Generic-2/`, etc.) that contains the output files.
 
 Second, load the output file `Generic-1/C1.p` using the GUI program Tracer.  On Unix, you can run this from
 the command line as follows:
-```
+``` bash
 % tracer Generic-1/C1.p &
 ```
 It is also possible to use a non-graphical program statreport to view the estimates of the selfing rate
-```
+``` bash
 % statreport --select="Selfing.s*" Generic-1/C1.p
 ```
 This can be useful when analyzing data in a terminal.
@@ -161,13 +161,13 @@ for each model will be described in the section for that model.
 In order to determine estimates of parameters, you can use the program
 `statreport`:
 
-```
+``` bash
 % statreport C1.p
 ```
 
 You can plot the posterior distribution for specific parameters by
 using the select option:
-```
+``` bash
 % statreport --select "Selfing.s*" C1.p
 ```
 Here quotes are necessary to make sure that the `*` is not interpreted
@@ -185,7 +185,7 @@ Tracer is a graphical program for exploring posterior distributions.
 Load the `C1.p` file using `tracer`.  On Unix, if `tracer` is in your
 `PATH`, you can do this by typing
 
-```
+``` bash
 % tracer C1.p &
 ```
 
@@ -401,21 +401,21 @@ Additional information about a variable can be added in 3 ways.
 3. Place a subjective prior on the variable.
 
 ## Introduce a variable with a prior and place observations on it.
-```
+``` haskell
   tau <- uniform 0.0 1.0;
   Observe 10 (binomial 20 tau);
 ```
 
 ## Fix a variable to a known constant value.
 If you know the value of a variable, you can fix it to a constant:
-```
+``` haskell
   let {tau = 1.0};
 ```
 
 ## Place a subjective prior on a variable
 This approach doesn't actually make the parameter *identifiable*,
 since this approach affects only the prior, and not the likelihood.
-```
+``` haskell
   tau <- beta 2.0 8.0;
 ```
 As a result, it is not possible to compare the posterior (with data)

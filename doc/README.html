@@ -9,6 +9,25 @@
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
   <link rel="stylesheet" href="pandoc.css">
   <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
@@ -77,15 +96,15 @@
 </ul>
 <h2 id="installing-bes"><span class="header-section-number">2.3</span> Installing BES</h2>
 <p>First, check that the <code>bali-phy-pkg</code> command works:</p>
-<pre><code>% bali-phy-pkg help</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> bali-phy-pkg help</code></pre>
 <p>Download and install the BES package:</p>
-<pre><code>% bali-phy-pkg install BES</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> bali-phy-pkg install BES</code></pre>
 <p>Check that the package is installed:</p>
-<pre><code>% bali-phy-pkg packages</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> bali-phy-pkg packages</code></pre>
 <p>To see what modules were installed, run:</p>
-<pre><code>% bali-phy-pkg files BES</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> bali-phy-pkg files BES</code></pre>
 <p>You can uninstall the package by running:</p>
-<pre><code>% bali-phy-pkg uninstall BES</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> bali-phy-pkg uninstall BES</code></pre>
 <p>Next, download some additional modules for particular mating systems. These files are not installed into the package directory because they must be manually modified before they are used.</p>
 <ul>
 <li><a href="https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/HermID.hs">HermID.hs</a></li>
@@ -97,14 +116,14 @@
 <h1 id="running-the-program"><span class="header-section-number">3</span> Running the program</h1>
 <h2 id="quick-start"><span class="header-section-number">3.1</span> Quick Start</h2>
 <p>First, check that the model loads correctly:</p>
-<pre><code>% bali-phy -M PopGen.Selfing.Generic --test --- Examples/outfile.001.70.001.phase</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> bali-phy -M PopGen.Selfing.Generic --test --- Examples/outfile.001.70.001.phase</code></pre>
 <p>If that works, then run the MCMC using the generic model:</p>
-<pre><code>% bali-phy -M PopGen.Selfing.Generic --iter=1000 --- Examples/outfile.001.70.001.phase &amp;</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> bali-phy -M PopGen.Selfing.Generic --iter=1000 --- Examples/outfile.001.70.001.phase <span class="kw">&amp;</span></code></pre>
 <p>This should create a directory called <code>Generic-1/</code> (or <code>Generic-2/</code>, etc.) that contains the output files.</p>
 <p>Second, load the output file <code>Generic-1/C1.p</code> using the GUI program Tracer. On Unix, you can run this from the command line as follows:</p>
-<pre><code>% tracer Generic-1/C1.p &amp;</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> tracer Generic-1/C1.p <span class="kw">&amp;</span></code></pre>
 <p>It is also possible to use a non-graphical program statreport to view the estimates of the selfing rate</p>
-<pre><code>% statreport --select=&quot;Selfing.s*&quot; Generic-1/C1.p</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> statreport --select=<span class="st">&quot;Selfing.s*&quot;</span> Generic-1/C1.p</code></pre>
 <p>This can be useful when analyzing data in a terminal.</p>
 <h1 id="input"><span class="header-section-number">4</span> Input</h1>
 <p>Input files must be in PHASE format. Both alleles for each locus should be specified, with NA given to indicate missing data.</p>
@@ -154,15 +173,15 @@ sample.2    23  20  1   1   4   5</code></pre>
 <h1 id="analyzing-output-files"><span class="header-section-number">6</span> Analyzing output files</h1>
 <h2 id="using-statreport"><span class="header-section-number">6.1</span> Using <code>statreport</code></h2>
 <p>In order to determine estimates of parameters, you can use the program <code>statreport</code>:</p>
-<pre><code>% statreport C1.p</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> statreport C1.p</code></pre>
 <p>You can plot the posterior distribution for specific parameters by using the select option:</p>
-<pre><code>% statreport --select &quot;Selfing.s*&quot; C1.p</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> statreport --select <span class="st">&quot;Selfing.s*&quot;</span> C1.p</code></pre>
 <p>Here quotes are necessary to make sure that the <code>*</code> is not interpreted by the command line shell, but is passed in to the <code>statreport</code> program unchanged.</p>
 <p>You can also use the arguments <code>--mean</code>, <code>--mode</code>, and <code>--median</code> (the default) to exime different properties of the posterior distribution.</p>
 <h2 id="using-tracer"><span class="header-section-number">6.2</span> Using <code>tracer</code></h2>
 <p>Tracer is a graphical program for exploring posterior distributions.</p>
 <p>Load the <code>C1.p</code> file using <code>tracer</code>. On Unix, if <code>tracer</code> is in your <code>PATH</code>, you can do this by typing</p>
-<pre><code>% tracer C1.p &amp;</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> tracer C1.p <span class="kw">&amp;</span></code></pre>
 <h1 id="mating-system-models"><span class="header-section-number">7</span> Mating system models</h1>
 <p>The stochastic process that generates the genetic data is described in terms of mating system parameters <span class="math">\(\Psi\)</span> and the effective scaled mutation rates <span class="math">\(\Theta^*_l\)</span> for each locus <span class="math">\(l\)</span>. The set of variables <span class="math">\(\Psi\)</span> is specific for each mating system.</p>
 <p>Some quantites are of interest for each mating system</p>
@@ -487,14 +506,14 @@ sample.2    23  20  1   1   4   5</code></pre>
 <li>Place a subjective prior on the variable.</li>
 </ol>
 <h2 id="introduce-a-variable-with-a-prior-and-place-observations-on-it."><span class="header-section-number">8.1</span> Introduce a variable with a prior and place observations on it.</h2>
-<pre><code>  tau &lt;- uniform 0.0 1.0;
-  Observe 10 (binomial 20 tau);</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">  tau <span class="ot">&lt;-</span> uniform <span class="fl">0.0</span> <span class="fl">1.0</span>;
+  <span class="dt">Observe</span> <span class="dv">10</span> (binomial <span class="dv">20</span> tau);</code></pre>
 <h2 id="fix-a-variable-to-a-known-constant-value."><span class="header-section-number">8.2</span> Fix a variable to a known constant value.</h2>
 <p>If you know the value of a variable, you can fix it to a constant:</p>
-<pre><code>  let {tau = 1.0};</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">  <span class="kw">let</span> {tau <span class="fu">=</span> <span class="fl">1.0</span>};</code></pre>
 <h2 id="place-a-subjective-prior-on-a-variable"><span class="header-section-number">8.3</span> Place a subjective prior on a variable</h2>
 <p>This approach doesn't actually make the parameter <em>identifiable</em>, since this approach affects only the prior, and not the likelihood.</p>
-<pre><code>  tau &lt;- beta 2.0 8.0;</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">  tau <span class="ot">&lt;-</span> beta <span class="fl">2.0</span> <span class="fl">8.0</span>;</code></pre>
 <p>As a result, it is not possible to compare the posterior (with data) and the prior (without data) to assess the impact of the data. This approach is therefore not recommended.</p>
 <h1 id="bayesian-priors-and-posteriors"><span class="header-section-number">9</span> Bayesian priors and posteriors</h1>
 <p>In Bayesian parlance, <em>prior</em> means &quot;before the data&quot;, and <em>posterior</em> means &quot;after the data&quot;. The Bayesian approach places prior distributions on parameters. As a result, parameters become random variables, and can have distributions. This differs from the maximum likelihood setting, where parameters are not random. However, the researcher must interpret prior and posterior distributions carefully in order to avoid drawing erroneous conclusions.</p>
