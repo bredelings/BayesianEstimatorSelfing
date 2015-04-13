@@ -102,9 +102,9 @@
 <pre><code>% bali-phy -M PopGen.Selfing.Generic --iter=1000 --- Examples/outfile.001.70.001.phase &amp;</code></pre>
 <p>This should create a directory called <code>Generic-1/</code> (or <code>Generic-2/</code>, etc.) that contains the output files.</p>
 <p>Second, load the output file <code>Generic-1/C1.p</code> using the GUI program Tracer. On Unix, you can run this from the command line as follows:</p>
-<pre><code>% tracer Selfing-1/C1.p &amp;</code></pre>
+<pre><code>% tracer Generic-1/C1.p &amp;</code></pre>
 <p>It is also possible to use a non-graphical program statreport to view the estimates of the selfing rate</p>
-<pre><code>% statreport --select=&quot;Selfing.s*&quot; Selfing-1/C1.p</code></pre>
+<pre><code>% statreport --select=&quot;Selfing.s*&quot; Generic-1/C1.p</code></pre>
 <p>This can be useful when analyzing data in a terminal.</p>
 <h1 id="input"><span class="header-section-number">4</span> Input</h1>
 <p>Input files must be in PHASE format. Both alleles for each locus should be specified, with NA given to indicate missing data.</p>
@@ -162,7 +162,7 @@ sample.2    23  20  1   1   4   5</code></pre>
 <h2 id="using-tracer"><span class="header-section-number">6.2</span> Using <code>tracer</code></h2>
 <p>Tracer is a graphical program for exploring posterior distributions.</p>
 <p>Load the <code>C1.p</code> file using <code>tracer</code>. On Unix, if <code>tracer</code> is in your <code>PATH</code>, you can do this by typing</p>
-<pre><code>tracer C1.p &amp;</code></pre>
+<pre><code>% tracer C1.p &amp;</code></pre>
 <h1 id="mating-system-models"><span class="header-section-number">7</span> Mating system models</h1>
 <p>The stochastic process that generates the genetic data is described in terms of mating system parameters <span class="math">\(\Psi\)</span> and the effective scaled mutation rates <span class="math">\(\Theta^*_l\)</span> for each locus <span class="math">\(l\)</span>. The set of variables <span class="math">\(\Psi\)</span> is specific for each mating system.</p>
 <p>Some quantites are of interest for each mating system</p>

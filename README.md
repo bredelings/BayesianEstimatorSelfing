@@ -94,11 +94,11 @@ This should create a directory called `Generic-1/` (or `Generic-2/`, etc.) that 
 Second, load the output file `Generic-1/C1.p` using the GUI program Tracer.  On Unix, you can run this from
 the command line as follows:
 ```
-% tracer Selfing-1/C1.p &
+% tracer Generic-1/C1.p &
 ```
 It is also possible to use a non-graphical program statreport to view the estimates of the selfing rate
 ```
-% statreport --select="Selfing.s*" Selfing-1/C1.p
+% statreport --select="Selfing.s*" Generic-1/C1.p
 ```
 This can be useful when analyzing data in a terminal.
 
