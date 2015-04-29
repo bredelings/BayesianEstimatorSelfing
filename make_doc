@@ -1,6 +1,7 @@
 #!/bin/sh
 MATHJAX="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 CSS="pandoc.css"
+STYLE=espresso
 pandoc -s --toc -N -c "$CSS" --mathjax="$MATHJAX" -t html5 -o doc/README.html README.md
 pandoc -s --toc -N -c "$CSS" --mathjax="$MATHJAX" -o doc/README.xhtml README.md
-pandoc -s --toc -N -o doc/README.pdf README.md
+pandoc -s --toc -N --highlight-style="$STYLE" -o doc/README.pdf README.md
