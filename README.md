@@ -25,7 +25,7 @@ inbreeding depression can be run without modification to estimate the selfing ra
 
 However, the gynodioecious model and the androdiecious model require additional information besides the genetic data,
 such as (for example) field observations on the fraction of hermaphrodites.  Therefore,
-the user must edit these modules to add this information before attempting to run these models.  This manual
+the user must [edit these modules](#specifying-additional-information) to add this information before attempting to run these models.  This manual
 describes how to add information, but is not a substitute for understanding something about the structure of the
 model.
 
@@ -394,25 +394,43 @@ make the mating system parameters identifiable.  In general, if $\Psi$
 contains $n$ variables, then additional information about $n-1$ of
 them must be incorporated.
 
+## Modifying model-description modules
+
+BES model-description modules (such as `Andro.hs`) use a Haskell-like syntax.
+In this syntax,
+
+1. Function application `f(x,y)` is written `f x y`.
+2. Comments are introduced by `--`.
+3. In a `do` block, 
+
+In the model-description template files (e.g. `HermID.hs`), the comments illustrate possible ways to introduce
+variables.
+
+## Methods for adding additional information
+
 Additional information about a variable can be added in 3 ways.
 
 1. Add observations that depends on that variable.
 2. Fix the variable to a known constant value.
 3. Place a subjective prior on the variable.
 
-## Introduce a variable with a prior and place observations on it.
+### Introduce a variable with a prior and place observations on it.
 ```
   tau <- uniform 0.0 1.0;
   Observe 10 (binomial 20 tau);
 ```
 
-## Fix a variable to a known constant value.
+### Fix a variable to a known constant value.
 If you know the value of a variable, you can fix it to a constant:
 ```
   let {tau = 1.0};
 ```
+If you have observations about a variable (e.g. $p_m$) then do not fix that
+variable to a constant.  If you fix a variable to a constant, then that variable
+cannot be estimated since its value is already known.
 
-## Place a subjective prior on a variable
+
+### Place a subjective prior on a variable
 This approach doesn't actually make the parameter *identifiable*,
 since this approach affects only the prior, and not the likelihood.
 ```
