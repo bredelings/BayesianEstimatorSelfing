@@ -65,9 +65,12 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <li><a href="#gynodioecy"><span class="toc-section-number">7.4</span> Gynodioecy</a></li>
 </ul></li>
 <li><a href="#specifying-additional-information"><span class="toc-section-number">8</span> Specifying additional information</a><ul>
-<li><a href="#introduce-a-variable-with-a-prior-and-place-observations-on-it."><span class="toc-section-number">8.1</span> Introduce a variable with a prior and place observations on it.</a></li>
-<li><a href="#fix-a-variable-to-a-known-constant-value."><span class="toc-section-number">8.2</span> Fix a variable to a known constant value.</a></li>
-<li><a href="#place-a-subjective-prior-on-a-variable"><span class="toc-section-number">8.3</span> Place a subjective prior on a variable</a></li>
+<li><a href="#modifying-model-description-modules"><span class="toc-section-number">8.1</span> Modifying model-description modules</a></li>
+<li><a href="#methods-for-adding-additional-information"><span class="toc-section-number">8.2</span> Methods for adding additional information</a><ul>
+<li><a href="#introduce-a-variable-with-a-prior-and-place-observations-on-it."><span class="toc-section-number">8.2.1</span> Introduce a variable with a prior and place observations on it.</a></li>
+<li><a href="#fix-a-variable-to-a-known-constant-value."><span class="toc-section-number">8.2.2</span> Fix a variable to a known constant value.</a></li>
+<li><a href="#place-a-subjective-prior-on-a-variable"><span class="toc-section-number">8.2.3</span> Place a subjective prior on a variable</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#bayesian-priors-and-posteriors"><span class="toc-section-number">9</span> Bayesian priors and posteriors</a><ul>
 <li><a href="#uninformative-priors"><span class="toc-section-number">9.1</span> Uninformative priors</a></li>
@@ -82,7 +85,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>BES is run as a Unix command line program. It is not a GUI program; instead you must run it in a terminal. Therefore, you might want to keep a <a href="http://www.ee.surrey.ac.uk/Teaching/Unix">Unix Tutorial</a> or <a href="http://www.rain.org/~mkummel/unix.html">Unix cheat sheet</a> handy while you work.</p>
 <p>BES runs on Linux, Mac OS X, and Windows. BES is distributed as an extension package for the BAli-Phy inference framework. You might therefore wish to refer to the <a href="http://www.bali-phy.org/README.html">BAli-Phy Documentation</a> as well.</p>
 <p>BES contains a number of modules that correspond to different mating system models. Each model allows estimating a different set of parameters. The generic model and the pure hermaphrodite model without inbreeding depression can be run without modification to estimate the selfing rate and locus-specific mutation rates.</p>
-<p>However, the gynodioecious model and the androdiecious model require additional information besides the genetic data, such as (for example) field observations on the fraction of hermaphrodites. Therefore, the user must edit these modules to add this information before attempting to run these models. This manual describes how to add information, but is not a substitute for understanding something about the structure of the model.</p>
+<p>However, the gynodioecious model and the androdiecious model require additional information besides the genetic data, such as (for example) field observations on the fraction of hermaphrodites. Therefore, the user must <a href="#specifying-additional-information">edit these modules</a> to add this information before attempting to run these models. This manual describes how to add information, but is not a substitute for understanding something about the structure of the model.</p>
 <h1 id="installation"><span class="header-section-number">2</span> Installation</h1>
 <h2 id="installing-bali-phy"><span class="header-section-number">2.1</span> Installing BAli-Phy</h2>
 <p>Since BES is an extension package for BALi-Phy, you must first install BAli-Phy before you can use BES. To install BAli-Phy, follow the <a href="http://www.bali-phy.org/README.html#installation">installation instructions for BAli-Phy</a>.</p>
@@ -496,19 +499,29 @@ sample.2    23  20  1   1   4   5</code></pre>
 <p>This variant is run by specifying <code>-m Gyno.hs</code> on the command line.</p>
 <h1 id="specifying-additional-information"><span class="header-section-number">8</span> Specifying additional information</h1>
 <p>When the mating system parameters <span class="math">\(\Psi\)</span> contain more than one degree of freedom, the mating system parameters are not identifiable from genetic data alone. Therefore, the user must obtain a model-description module (<code>HermID.hs</code>, <code>Andro.hs</code>, <code>AndroID.hs</code>, or <code>Gyno.hs</code>) and modify this module to add additional information to make the mating system parameters identifiable. In general, if <span class="math">\(\Psi\)</span> contains <span class="math">\(n\)</span> variables, then additional information about <span class="math">\(n-1\)</span> of them must be incorporated.</p>
+<h2 id="modifying-model-description-modules"><span class="header-section-number">8.1</span> Modifying model-description modules</h2>
+<p>BES model-description modules (such as <code>Andro.hs</code>) use a Haskell-like syntax. In this syntax,</p>
+<ol style="list-style-type: decimal">
+<li>Function application <code>f(x,y)</code> is written <code>f x y</code>.</li>
+<li>Comments are introduced by <code>--</code>.</li>
+<li>In a <code>do</code> block, an <code>Observe</code> command introduces data. Commenting out the <code>Observe</code> statements removes the data from the model file.</li>
+</ol>
+<p>In the model-description template files (e.g. <code>HermID.hs</code>), the comments illustrate possible ways to introduce variables.</p>
+<h2 id="methods-for-adding-additional-information"><span class="header-section-number">8.2</span> Methods for adding additional information</h2>
 <p>Additional information about a variable can be added in 3 ways.</p>
 <ol style="list-style-type: decimal">
 <li>Add observations that depends on that variable.</li>
 <li>Fix the variable to a known constant value.</li>
 <li>Place a subjective prior on the variable.</li>
 </ol>
-<h2 id="introduce-a-variable-with-a-prior-and-place-observations-on-it."><span class="header-section-number">8.1</span> Introduce a variable with a prior and place observations on it.</h2>
+<h3 id="introduce-a-variable-with-a-prior-and-place-observations-on-it."><span class="header-section-number">8.2.1</span> Introduce a variable with a prior and place observations on it.</h3>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">  tau <span class="ot">&lt;-</span> uniform <span class="fl">0.0</span> <span class="fl">1.0</span>;
   <span class="dt">Observe</span> <span class="dv">10</span> (binomial <span class="dv">20</span> tau);</code></pre>
-<h2 id="fix-a-variable-to-a-known-constant-value."><span class="header-section-number">8.2</span> Fix a variable to a known constant value.</h2>
+<h3 id="fix-a-variable-to-a-known-constant-value."><span class="header-section-number">8.2.2</span> Fix a variable to a known constant value.</h3>
 <p>If you know the value of a variable, you can fix it to a constant:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">  <span class="kw">let</span> {tau <span class="fu">=</span> <span class="fl">1.0</span>};</code></pre>
-<h2 id="place-a-subjective-prior-on-a-variable"><span class="header-section-number">8.3</span> Place a subjective prior on a variable</h2>
+<p>If you have observations about a variable (e.g. <span class="math">\(p_m\)</span>) then do not fix that variable to a constant. If you fix a variable to a constant, then that variable cannot be estimated since its value is already known.</p>
+<h3 id="place-a-subjective-prior-on-a-variable"><span class="header-section-number">8.2.3</span> Place a subjective prior on a variable</h3>
 <p>This approach doesn't actually make the parameter <em>identifiable</em>, since this approach affects only the prior, and not the likelihood.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">  tau <span class="ot">&lt;-</span> beta <span class="fl">2.0</span> <span class="fl">8.0</span>;</code></pre>
 <p>As a result, it is not possible to compare the posterior (with data) and the prior (without data) to assess the impact of the data. This approach is therefore not recommended.</p>
