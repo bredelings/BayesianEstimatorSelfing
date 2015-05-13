@@ -482,12 +482,3 @@ computed from.
 In order to determine what the shape of the prior on $s^*$ is, one
 can run the model without data.  This can be done by commenting out
 the "Observe" statements.
-
-
-# Tasks
-1. Run the Generic model to estimate s and thetas*.
-2. Run the Herm model to estimate s and thetas and R.
-3. Run the HermID model to estimate s and thetas and s~ and tau and R.
-4. Run the Andro model to estimate s and thetas and p_m and R.
-5. Run the AndroID model to estimate s and thetas and p_m and s~ and tau and R.
-6. Run the Gyno model to estimate s and theta/theta* and s~ and tau and p_f and sigma and H and R.

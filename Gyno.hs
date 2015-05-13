@@ -22,7 +22,7 @@ main = Prefix "Selfing" $ do
 
   let {(s, h, r) = gyno_mating_system tau s' p_f sigma};
 
-  let {factor = (1.0 - s*0.5)/r};
+  let {factor = (1.0 - s*0.5)*r};
   
   let {theta = map (/factor) theta_effective};
 

@@ -22,7 +22,7 @@ main = Prefix "Selfing" $ do
 
   let {(s,r) = andro_mating_system s' tau p_m};
 
-  let {factor = (1.0 - s*0.5)/r};
+  let {factor = (1.0 - s*0.5)*r};
 
   let {theta = map (/factor) theta_effective};
 

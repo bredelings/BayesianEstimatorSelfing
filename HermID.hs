@@ -32,7 +32,7 @@ main = Prefix "Selfing" $ do
   let {s = herm_mating_system ss tau;
        r = 1.0};
 
-  let {factor = (1.0 - s*0.5)/r};
+  let {factor = (1.0 - s*0.5)*r};
 
   let {theta = map (/factor) theta_effective};
 
