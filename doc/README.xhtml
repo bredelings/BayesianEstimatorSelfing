@@ -77,7 +77,6 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <li><a href="#comparing-the-posterior-and-the-prior"><span class="toc-section-number">9.2</span> Comparing the posterior and the prior</a></li>
 <li><a href="#priors-on-composite-parameters"><span class="toc-section-number">9.3</span> Priors on composite parameters</a></li>
 </ul></li>
-<li><a href="#tasks"><span class="toc-section-number">10</span> Tasks</a></li>
 </ul>
 </div>
 <h1 id="introduction"><span class="header-section-number">1</span> Introduction</h1>
@@ -515,15 +514,15 @@ sample.2    23  20  1   1   4   5</code></pre>
 <li>Place a subjective prior on the variable.</li>
 </ol>
 <h3 id="introduce-a-variable-with-a-prior-and-place-observations-on-it."><span class="header-section-number">8.2.1</span> Introduce a variable with a prior and place observations on it.</h3>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">  tau <span class="ot">&lt;-</span> uniform <span class="dv">0</span><span class="fu">.</span><span class="dv">0</span> <span class="dv">1</span><span class="fu">.</span><span class="dv">0</span>;
+<pre class="sourceCode haskell"><code class="sourceCode haskell">  tau <span class="ot">&lt;-</span> uniform <span class="fl">0.0</span> <span class="fl">1.0</span>;
   <span class="dt">Observe</span> <span class="dv">10</span> (binomial <span class="dv">20</span> tau);</code></pre>
 <h3 id="fix-a-variable-to-a-known-constant-value."><span class="header-section-number">8.2.2</span> Fix a variable to a known constant value.</h3>
 <p>If you know the value of a variable, you can fix it to a constant:</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">  <span class="kw">let</span> {tau <span class="fu">=</span> <span class="dv">1</span><span class="fu">.</span><span class="dv">0</span>};</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">  <span class="kw">let</span> {tau <span class="fu">=</span> <span class="fl">1.0</span>};</code></pre>
 <p>If you have observations about a variable (e.g. <span class="math">\(p_m\)</span>) then do not fix that variable to a constant. If you fix a variable to a constant, then that variable cannot be estimated since its value is already known.</p>
 <h3 id="place-a-subjective-prior-on-a-variable"><span class="header-section-number">8.2.3</span> Place a subjective prior on a variable</h3>
 <p>This approach doesn't actually make the parameter <em>identifiable</em>, since this approach affects only the prior, and not the likelihood.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">  tau <span class="ot">&lt;-</span> beta <span class="dv">2</span><span class="fu">.</span><span class="dv">0</span> <span class="dv">8</span><span class="fu">.</span><span class="dv">0</span>;</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">  tau <span class="ot">&lt;-</span> beta <span class="fl">2.0</span> <span class="fl">8.0</span>;</code></pre>
 <p>As a result, it is not possible to compare the posterior (with data) and the prior (without data) to assess the impact of the data. This approach is therefore not recommended.</p>
 <h1 id="bayesian-priors-and-posteriors"><span class="header-section-number">9</span> Bayesian priors and posteriors</h1>
 <p>In Bayesian parlance, <em>prior</em> means &quot;before the data&quot;, and <em>posterior</em> means &quot;after the data&quot;. The Bayesian approach places prior distributions on parameters. As a result, parameters become random variables, and can have distributions. This differs from the maximum likelihood setting, where parameters are not random. However, the researcher must interpret prior and posterior distributions carefully in order to avoid drawing erroneous conclusions.</p>
@@ -535,14 +534,5 @@ sample.2    23  20  1   1   4   5</code></pre>
 <h2 id="priors-on-composite-parameters"><span class="header-section-number">9.3</span> Priors on composite parameters</h2>
 <p>For models, such as the gynodioecious model, where <span class="math">\(s^*\)</span> is a composite parameter, no prior distribution is placed on <span class="math">\(s^*\)</span> directly. However, <span class="math">\(s^*\)</span> still has a prior distribution that is the combined result of the priors on all the basic parameters that it is computed from.</p>
 <p>In order to determine what the shape of the prior on <span class="math">\(s^*\)</span> is, one can run the model without data. This can be done by commenting out the &quot;Observe&quot; statements.</p>
-<h1 id="tasks"><span class="header-section-number">10</span> Tasks</h1>
-<ol style="list-style-type: decimal">
-<li>Run the Generic model to estimate s and thetas*.</li>
-<li>Run the Herm model to estimate s and thetas and R.</li>
-<li>Run the HermID model to estimate s and thetas and s~ and tau and R.</li>
-<li>Run the Andro model to estimate s and thetas and p_m and R.</li>
-<li>Run the AndroID model to estimate s and thetas and p_m and s~ and tau and R.</li>
-<li>Run the Gyno model to estimate s and theta/theta* and s~ and tau and p_f and sigma and H and R.</li>
-</ol>
 </body>
 </html>
