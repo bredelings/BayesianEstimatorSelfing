@@ -300,7 +300,7 @@ command line.
 
 ## Androdioecy
 
-In the androdioecious model, the population consist of some fraction
+In the androdioecious model, the population consists of some fraction
 $p_m$ of males, with the rest of the individuals being
 hermaphrodites.  Hermaphrodites produce males gametes, but only
 fertilize their own eggs. There are two variants of
@@ -351,6 +351,65 @@ about $p_m$ and also about $\tilde{s}$ or $\tau$.
 This variant is run by specifying `-m AndroID.hs` on the
 command line.
 
+## Androdioecy 2
+
+This version of the androdioecy model differs from the previous one, because
+hermaphrodites can produce pollen.
+
+In this model, the population consists of some fraction
+$p_m$ of males, with the rest of the individuals being
+hermaphrodites.  Hermaphrodites and males both produce produce pollen.
+Males produce more pollen than hermaphrodites by a factor of ${\sigma}$.
+There are two variants of
+this model.
+
+### Variant I
+
+The first variant has $\Psi=\{s^*,p_m,\sigma\}$.  This variant treats $s^*$ as a
+basic parameter, and does not model inbreeding depression.  
+
+The following variables are estimated, with the field names given:
+
+| Variable | Name | Description |
+| -------  | -----| ----------- |
+| $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
+| $p_m$ | Selfing.p_m | The fraction of males |
+| $\sigma$ | Selfing.sigma | Pollen production rate of males relative to hermaphrodites. |
+| ${T_k}$ | Selfing.DiploidAFS.t!!$k$ | Number of generations of selfing for individual $k$. |
+| $R$ | Selfing.R | Decrease in parent-sharing effective population size |
+| ${\Theta^*_l}$ | Selfing.Theta\*!!$l$       | *Effective* scaled mutation rate for locus $l$. |
+| ${\Theta_l}$ | Selfing.Theta\!!$l$       | Scaled mutation rate $4Nu$ for locus $l$. |
+
+Here the user must modify `Andro2.hs` to add additional information
+about $p_m$.
+
+This variant is run by specifying `-m Andro2.hs` on the
+command line.
+
+### Variant II
+The second variant has $\Psi=\{\tilde{s},\tau,p_m,\sigma\}$.  This variant treats
+$s^*$ as a composite parameter.
+
+The following variables are estimated, with the field names given:
+
+| Variable | Name | Description |
+| -------  | -----| ----------- |
+| $\tilde{s}$ | Selfing.s~ | Fraction of uniparental zygotes. |
+| $\tau$ | Selfing.tau | Relative viability of selfed zygotes. |
+| $p_m$ | Selfing.p_m | The fraction of males |
+| $\sigma$ | Selfing.sigma | Pollen production rate of males relative to hermaphrodites. |
+| $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
+| ${T_k}$ | Selfing.DiploidAFS.t!!$k$ | Number of generations of selfing for individual $k$. |
+| $R$ | Selfing.R | Decrease in parent-sharing effective population size |
+| ${\Theta^*_l}$ | Selfing.Theta\*!!$l$       | *Effective* scaled mutation rate for locus $l$. |
+| ${\Theta_l}$ | Selfing.Theta\!!$l$       | Scaled mutation rate $4Nu$ for locus $l$. |
+
+Here the user must modify `Andro2ID.hs` to add additional information
+about $p_m$ and also about $\tilde{s}$ or $\tau$.
+
+This variant is run by specifying `-m Andro2ID.hs` on the
+command line.
+
 ## Gynodioecy
 
 In the gynodioecious model, the population consist of some fraction
@@ -368,7 +427,7 @@ The following variables are estimated, with the field names given:
 | $\tilde{s}$ | Selfing.s~ | Fraction of hermaphrodite seeds set by self-pollen. |
 | $\tau$ | Selfing.tau | Relative viability of selfed seeds. |
 | $p_f$ | Selfing.p_f | The fraction of females |
-| $\sigma$ | Selfing.sigma | The fraction of females |
+| $\sigma$ | Selfing.sigma | Seed production rate of females relative to hermaphrodites. |
 | $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
 | ${T_k}$ | Selfing.DiploidAFS.t!!$k$ | Number of generations of selfing for individual $k$. |
 | $R$ | Selfing.R | Decrease in parent-sharing effective population size |
