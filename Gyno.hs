@@ -6,6 +6,11 @@ import PopGen.Selfing.Gynodioecy;
 import Distributions;
 import System.Environment;
 
+-- This file is a template.  It using Haskell syntax to describe a model.
+-- Lines beginning with -- are comments.
+-- To use commented priors, remove the -- and add data on the correspond variable.
+-- Alternatively, remove the prior and set the variable to a constant using 'let'.
+
 observed_alleles = read_phase_file (getArgs!!0);
 
 n_loci = length observed_alleles;
