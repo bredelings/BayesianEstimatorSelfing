@@ -401,7 +401,8 @@ In this syntax,
 
 1. Function application `f(x,y)` is written `f x y`.
 2. Comments are introduced by `--`.
-3. In a `do` block, 
+3. In a `do` block, an `Observe` command introduces data.  Commenting out the
+`Observe` statements removes the data from the model file.
 
 In the model-description template files (e.g. `HermID.hs`), the comments illustrate possible ways to introduce
 variables.
