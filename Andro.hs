@@ -35,7 +35,8 @@ main = Prefix "Selfing" $ do
 
   Observe observed_alleles afs_dist;
 
-  Observe <males> $ binomial <toal> p_m;
+--  Insert specific numbers of males and total individuals in below:
+--  Observe <males> $ binomial <total> p_m;
 
   Log "p_m" p_m;
   Log "s*" s;

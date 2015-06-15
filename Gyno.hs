@@ -35,7 +35,8 @@ main = Prefix "Selfing" $ do
 
   Observe observed_alleles afs_dist;
 
-  Observe <females> $ binomial <total> p_f;
+--  Insert specific numbers of females and total individuals in below:
+--  Observe <females> $ binomial <total> p_f;
 
   Log "a" a;
   Log "tau" tau;
