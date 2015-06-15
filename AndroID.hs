@@ -51,8 +51,7 @@ andro_model _ = Prefix "Andro" $ do
 {
 --  s' <- uniform 0.0 1.0;
 
---  tau_inverse <- uniform 0.0 1.0;
---  let {tau = 1.0/tau_inverse};
+--  tau <- uniform 0.0 1.0;
        
 --  p_m <- uniform 0.0 1.0;
   
