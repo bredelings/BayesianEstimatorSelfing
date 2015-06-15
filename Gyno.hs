@@ -23,9 +23,9 @@ main = Prefix "Selfing" $ do
 
   theta_effective <- dp n_loci alpha (gamma 0.5 0.5); 
 
-  (s', tau, p_f, sigma) <- gyno_model ();
+  (a, tau, p_f, sigma) <- gyno_model ();
 
-  let {(s, h, r) = gyno_mating_system tau s' p_f sigma};
+  let {(s, h, r) = gyno_mating_system tau a p_f sigma};
 
   let {factor = (1.0 - s*0.5)*r};
   
@@ -37,7 +37,7 @@ main = Prefix "Selfing" $ do
 
   Observe <females> $ binomial <total> p_f;
 
-  Log "s~" s';
+  Log "a" a;
   Log "tau" tau;
   Log "p_f" p_f;
   Log "sigma" sigma;
@@ -51,7 +51,7 @@ main = Prefix "Selfing" $ do
 
 gyno_model _ = Prefix "Gyno" $ do
 {
---  s' <- uniform 0.0 1.0;
+--  a <- uniform 0.0 1.0;
 
 --  tau <- beta 2.0 8.0;
 
@@ -59,7 +59,7 @@ gyno_model _ = Prefix "Gyno" $ do
 
 --  let {sigma = 1.0};
 
-  return (s', tau, p_f, sigma);
+  return (a, tau, p_f, sigma);
 };
 
 }
