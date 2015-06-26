@@ -62,11 +62,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <li><a href="#variant-i-1"><span class="toc-section-number">7.3.1</span> Variant I</a></li>
 <li><a href="#variant-ii-1"><span class="toc-section-number">7.3.2</span> Variant II</a></li>
 </ul></li>
-<li><a href="#androdioecy-2"><span class="toc-section-number">7.4</span> Androdioecy 2</a><ul>
-<li><a href="#variant-i-2"><span class="toc-section-number">7.4.1</span> Variant I</a></li>
-<li><a href="#variant-ii-2"><span class="toc-section-number">7.4.2</span> Variant II</a></li>
-</ul></li>
-<li><a href="#gynodioecy"><span class="toc-section-number">7.5</span> Gynodioecy</a></li>
+<li><a href="#gynodioecy"><span class="toc-section-number">7.4</span> Gynodioecy</a></li>
 </ul></li>
 <li><a href="#specifying-additional-information"><span class="toc-section-number">8</span> Specifying additional information</a><ul>
 <li><a href="#modifying-model-description-modules"><span class="toc-section-number">8.1</span> Modifying model-description modules</a></li>
@@ -433,122 +429,7 @@ sample.2    23  20  1   1   4   5</code></pre>
 </table>
 <p>Here the user must modify <code>AndroID.hs</code> to add additional information about <span class="math">\(p_m\)</span> and also about <span class="math">\(\tilde{s}\)</span> or <span class="math">\(\tau\)</span>.</p>
 <p>This variant is run by specifying <code>-m AndroID.hs</code> on the command line.</p>
-<h2 id="androdioecy-2"><span class="header-section-number">7.4</span> Androdioecy 2</h2>
-<p>This version of the androdioecy model differs from the previous one, because hermaphrodites can produce pollen.</p>
-<p>In this model, the population consists of some fraction <span class="math">\(p_m\)</span> of males, with the rest of the individuals being hermaphrodites. Hermaphrodites and males both produce produce pollen. Males produce more pollen than hermaphrodites by a factor of <span class="math">\({\sigma}\)</span>. There are two variants of this model.</p>
-<h3 id="variant-i-2"><span class="header-section-number">7.4.1</span> Variant I</h3>
-<p>The first variant has <span class="math">\(\Psi=\{s^*,p_m,\sigma\}\)</span>. This variant treats <span class="math">\(s^*\)</span> as a basic parameter, and does not model inbreeding depression.</p>
-<p>The following variables are estimated, with the field names given:</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Variable</th>
-<th align="left">Name</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><span class="math">\(s^*\)</span></td>
-<td align="left">Selfing.s*</td>
-<td align="left">Fraction of uniparental adults (selfing rate).</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math">\(p_m\)</span></td>
-<td align="left">Selfing.p_m</td>
-<td align="left">The fraction of males</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math">\(\sigma\)</span></td>
-<td align="left">Selfing.sigma</td>
-<td align="left">Pollen production rate of males relative to hermaphrodites.</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math">\({T_k}\)</span></td>
-<td align="left">Selfing.DiploidAFS.t!!<span class="math">\(k\)</span></td>
-<td align="left">Number of generations of selfing for individual <span class="math">\(k\)</span>.</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math">\(R\)</span></td>
-<td align="left">Selfing.R</td>
-<td align="left">Decrease in parent-sharing effective population size</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math">\({\Theta^*_l}\)</span></td>
-<td align="left">Selfing.Theta*!!<span class="math">\(l\)</span></td>
-<td align="left"><em>Effective</em> scaled mutation rate for locus <span class="math">\(l\)</span>.</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math">\({\Theta_l}\)</span></td>
-<td align="left">Selfing.Theta!!<span class="math">\(l\)</span></td>
-<td align="left">Scaled mutation rate <span class="math">\(4Nu\)</span> for locus <span class="math">\(l\)</span>.</td>
-</tr>
-</tbody>
-</table>
-<p>Here the user must modify <code>Andro2.hs</code> to add additional information about <span class="math">\(p_m\)</span>.</p>
-<p>This variant is run by specifying <code>-m Andro2.hs</code> on the command line.</p>
-<h3 id="variant-ii-2"><span class="header-section-number">7.4.2</span> Variant II</h3>
-<p>The second variant has <span class="math">\(\Psi=\{\tilde{s},\tau,p_m,\sigma\}\)</span>. This variant treats <span class="math">\(s^*\)</span> as a composite parameter.</p>
-<p>The following variables are estimated, with the field names given:</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Variable</th>
-<th align="left">Name</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><span class="math">\(\tilde{s}\)</span></td>
-<td align="left">Selfing.s~</td>
-<td align="left">Fraction of uniparental zygotes.</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math">\(\tau\)</span></td>
-<td align="left">Selfing.tau</td>
-<td align="left">Relative viability of selfed zygotes.</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math">\(p_m\)</span></td>
-<td align="left">Selfing.p_m</td>
-<td align="left">The fraction of males</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math">\(\sigma\)</span></td>
-<td align="left">Selfing.sigma</td>
-<td align="left">Pollen production rate of males relative to hermaphrodites.</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math">\(s^*\)</span></td>
-<td align="left">Selfing.s*</td>
-<td align="left">Fraction of uniparental adults (selfing rate).</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math">\({T_k}\)</span></td>
-<td align="left">Selfing.DiploidAFS.t!!<span class="math">\(k\)</span></td>
-<td align="left">Number of generations of selfing for individual <span class="math">\(k\)</span>.</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math">\(R\)</span></td>
-<td align="left">Selfing.R</td>
-<td align="left">Decrease in parent-sharing effective population size</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math">\({\Theta^*_l}\)</span></td>
-<td align="left">Selfing.Theta*!!<span class="math">\(l\)</span></td>
-<td align="left"><em>Effective</em> scaled mutation rate for locus <span class="math">\(l\)</span>.</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math">\({\Theta_l}\)</span></td>
-<td align="left">Selfing.Theta!!<span class="math">\(l\)</span></td>
-<td align="left">Scaled mutation rate <span class="math">\(4Nu\)</span> for locus <span class="math">\(l\)</span>.</td>
-</tr>
-</tbody>
-</table>
-<p>Here the user must modify <code>Andro2ID.hs</code> to add additional information about <span class="math">\(p_m\)</span> and also about <span class="math">\(\tilde{s}\)</span> or <span class="math">\(\tau\)</span>.</p>
-<p>This variant is run by specifying <code>-m Andro2ID.hs</code> on the command line.</p>
-<h2 id="gynodioecy"><span class="header-section-number">7.5</span> Gynodioecy</h2>
+<h2 id="gynodioecy"><span class="header-section-number">7.4</span> Gynodioecy</h2>
 <p>In the gynodioecious model, the population consist of some fraction <span class="math">\(p_f\)</span> of females, with the rest of the individuals being hermaphrodites. Hermaphrodites produce pollen, and so can contribute male gametes to females, other hermaphrodites, and themselves.</p>
 <p>In this model <span class="math">\(\Psi=\{\tilde{s},\tau,p_f,\sigma\}\)</span>. Here <span class="math">\(s^*\)</span> is a composite parameter.</p>
 <p>The following variables are estimated, with the field names given:</p>
