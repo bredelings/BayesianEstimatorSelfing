@@ -1,38 +1,37 @@
 module PopGen.Selfing.Herm where
-{
-import PopGen;
-import PopGen.Selfing;
-import Distributions;
-import System.Environment;
 
-observed_alleles = read_phase_file (getArgs!!0);
+import PopGen
+import PopGen.Selfing
+import Distributions
+import System.Environment
 
-n_loci = length observed_alleles;
+observed_alleles = read_phase_file (getArgs!!0)
 
-n_individuals = length (observed_alleles!!0)/2;
+n_loci = length observed_alleles
 
-main = Prefix "Selfing" $ do 
-{
-  let {alpha = 0.10};
+n_individuals = length (observed_alleles!!0)/2
 
-  theta_effective <- dp n_loci alpha (gamma 0.25 2.0); 
+main = do 
 
-  s <- uniform 0.0 1.0;
+  let alpha = 0.10
 
-  let {r = 1.0};
+  theta_effective <- dp n_loci alpha (gamma 0.25 2.0)
+
+  s <- uniform 0.0 1.0
+
+  let r = 1.0
   
   -- theta* = factor * theta
-  let {factor = (1.0 - s*0.5)/r};
+  let factor = (1.0 - s*0.5)/r
 
-  let {theta = map (/factor) theta_effective};
+  let theta = map (/factor) theta_effective
 
-  afs_dist <- diploid_afs n_individuals n_loci s theta_effective;
+  (t,afs_dist) <- diploid_afs n_individuals n_loci s theta_effective
 
-  Observe observed_alleles afs_dist;
+  observe observed_alleles afs_dist
 
-  Log "s*" s;
-  Log "theta*" theta_effective;
-  Log "theta" theta;
-  Log "R" r;
-};
-}
+  return $ log_all [ t %% "t",
+                     s %% "s*",
+                     theta_effective %% "theta*",
+                     theta %% "theta",
+                     r %% "R" ]

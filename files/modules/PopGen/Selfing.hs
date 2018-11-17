@@ -1,30 +1,24 @@
 module PopGen.Selfing where
-{
-import Distributions;
-import Range;
 
-builtin builtin_ewens_diploid_probability 3 "ewens_diploid_probability" "PopGen";
-builtin builtin_sum_out_coals 3 "sum_out_coals" "MCMC";
+import Distributions
+import Range
 
-sum_out_coals x y c = IOAction3 builtin_sum_out_coals x y c;
+builtin builtin_ewens_diploid_probability 3 "ewens_diploid_probability" "PopGen"
+builtin builtin_sum_out_coals 3 "sum_out_coals" "MCMC"
 
-ewens_diploid_probability theta i x = builtin_ewens_diploid_probability theta (list_to_vector i) (list_to_vector x);
+sum_out_coals x y c = IOAction3 builtin_sum_out_coals x y c
 
-afs2 thetas ps = ProbDensity (ewens_diploid_probability thetas ps) (error "afs2 has no quantile") () ();
+ewens_diploid_probability theta i x = builtin_ewens_diploid_probability theta (list_to_vector i) (list_to_vector x)
 
-robust_diploid_afs n_individuals n_loci s f theta_effective = Prefix "DiploidAFS" $ do 
-{ 
-  t <- iid n_individuals (rgeometric s);
-  Log "t" t;
+afs2 thetas ps = ProbDensity (ewens_diploid_probability thetas ps) (error "afs2 has no quantile") () ()
 
-  i <- plate n_individuals (\k->iid n_loci (rbernoulli (0.5**t!!k*(1.0-f))) );
---  Log "i" i;
+robust_diploid_afs n_individuals n_loci s f theta_effective = do 
+  t <- iid n_individuals (rgeometric s)
 
-  AddMove (\c -> mapM_ (\k-> sum_out_coals (t!!k) (i!!k) c) [0..n_individuals-1]);
+  i <- plate n_individuals (\k->iid n_loci (rbernoulli (0.5**t!!k*(1.0-f))) )
 
-  return $ plate n_loci (\l -> afs2 (theta_effective!!l) (map (!!l) i));
-};
+  AddMove (\c -> mapM_ (\k-> sum_out_coals (t!!k) (i!!k) c) [0..n_individuals-1])
 
-diploid_afs n_individuals n_loci s theta_effective = robust_diploid_afs n_individuals n_loci s 0.0 theta_effective;
+  return $ (t, plate n_loci (\l -> afs2 (theta_effective!!l) (map (!!l) i)))
 
-}
+diploid_afs n_individuals n_loci s theta_effective = robust_diploid_afs n_individuals n_loci s 0.0 theta_effective
