@@ -21,9 +21,9 @@ main = do
   -- Alternatively, one can use a dirichlet process mixture:
   --  theta_effective <- dpm n_loci (gamma 0.5 1.0) (gamma 1.05 0.1) 
 
-  f <- uniform 0.0 1.0
+  f <- sample $ uniform 0.0 1.0
                      
-  s <- uniform 0.0 1.0
+  s <- sample $ uniform 0.0 1.0
 
   (t, afs_dist) <- robust_diploid_afs n_individuals n_loci s f theta_effective
 
