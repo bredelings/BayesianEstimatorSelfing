@@ -1,34 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-  <meta charset="utf-8">
-  <meta name="generator" content="pandoc">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Bayesian Estimator of Selfing (BES)</title>
-  <style type="text/css">code{white-space: pre;}</style>
-  <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
   <style type="text/css">
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; }
-code > span.dt { color: #902000; }
-code > span.dv { color: #40a070; }
-code > span.bn { color: #40a070; }
-code > span.fl { color: #40a070; }
-code > span.ch { color: #4070a0; }
-code > span.st { color: #4070a0; }
-code > span.co { color: #60a0b0; font-style: italic; }
-code > span.ot { color: #007020; }
-code > span.al { color: #ff0000; font-weight: bold; }
-code > span.fu { color: #06287e; }
-code > span.er { color: #ff0000; font-weight: bold; }
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  <link rel="stylesheet" href="pandoc.css">
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
   <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
 <body>
@@ -98,15 +144,15 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </ul>
 <h2 id="installing-bes"><span class="header-section-number">2.3</span> Installing BES</h2>
 <p>First, check that the <code>bali-phy-pkg</code> command works:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> bali-phy-pkg help</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ex">%</span> bali-phy-pkg help</a></code></pre></div>
 <p>Download and install the BES package:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> bali-phy-pkg install BES</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="ex">%</span> bali-phy-pkg install BES</a></code></pre></div>
 <p>Check that the package is installed:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> bali-phy-pkg packages</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="ex">%</span> bali-phy-pkg packages</a></code></pre></div>
 <p>To see what modules were installed, run:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> bali-phy-pkg files BES</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ex">%</span> bali-phy-pkg files BES</a></code></pre></div>
 <p>You can uninstall the package by running:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> bali-phy-pkg uninstall BES</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="ex">%</span> bali-phy-pkg uninstall BES</a></code></pre></div>
 <p>Next, download some additional modules for particular mating systems. These files are not installed into the package directory because they must be manually modified before they are used.</p>
 <ul>
 <li><a href="https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/HermID.hs">HermID.hs</a></li>
@@ -118,14 +164,14 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h1 id="running-the-program"><span class="header-section-number">3</span> Running the program</h1>
 <h2 id="quick-start"><span class="header-section-number">3.1</span> Quick Start</h2>
 <p>First, check that the model loads correctly:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> bali-phy -M PopGen.Selfing.Generic --test --- Examples/outfile.001.70.001.phase</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="ex">%</span> bali-phy -M PopGen.Selfing.Generic --test --- Examples/outfile.001.70.001.phase</a></code></pre></div>
 <p>If that works, then run the MCMC using the generic model:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> bali-phy -M PopGen.Selfing.Generic --iter=1000 --- Examples/outfile.001.70.001.phase <span class="kw">&amp;</span></code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="ex">%</span> bali-phy -M PopGen.Selfing.Generic --iter=1000 --- Examples/outfile.001.70.001.phase <span class="kw">&amp;</span></a></code></pre></div>
 <p>This should create a directory called <code>Generic-1/</code> (or <code>Generic-2/</code>, etc.) that contains the output files.</p>
 <p>Second, load the output file <code>Generic-1/C1.p</code> using the GUI program Tracer. On Unix, you can run this from the command line as follows:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> tracer Generic-1/C1.p <span class="kw">&amp;</span></code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="ex">%</span> tracer Generic-1/C1.p <span class="kw">&amp;</span></a></code></pre></div>
 <p>It is also possible to use a non-graphical program statreport to view the estimates of the selfing rate</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> statreport --select=<span class="st">&quot;Selfing.s*&quot;</span> Generic-1/C1.p</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="ex">%</span> statreport --select=<span class="st">&quot;Selfing.s*&quot;</span> Generic-1/C1.p</a></code></pre></div>
 <p>This can be useful when analyzing data in a terminal.</p>
 <h1 id="input"><span class="header-section-number">4</span> Input</h1>
 <p>Input files must be in PHASE format. Both alleles for each locus should be specified, with NA given to indicate missing data.</p>
@@ -133,7 +179,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <ol type="1">
 <li>The number of individuals, on a line by itself.</li>
 <li>The number of loci, on a line by itself.</li>
-<li>A sequence of 'M's (for microsatellite) on a line by itself. The number of M's should equal the number of loci.</li>
+<li>A sequence of ’M’s (for microsatellite) on a line by itself. The number of M’s should equal the number of loci.</li>
 </ol>
 <p>The line describing each individual should contain an individual name, followed by a list of integer allele names. The name and the numbers should be tab-delimited, and there should be twice the number of alleles as loci, since there are 2 alleles per locus. Integer allele names must be positive. The purpose of this is to avoid confusion, since 0 and negative numbers are often used to indicate missing data.</p>
 <p>Here is a very small PHASE file as an illustration:</p>
@@ -151,22 +197,22 @@ sample.2    23  20  1   1   4   5</code></pre>
 <table>
 <thead>
 <tr class="header">
-<th style="text-align: left;">File name</th>
-<th style="text-align: left;">Description</th>
+<th>File name</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">C1.out</td>
-<td style="text-align: left;">General information: command line, start time, etc.</td>
+<td>C1.out</td>
+<td>General information: command line, start time, etc.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">C1.err</td>
-<td style="text-align: left;">May contain error messages.</td>
+<td>C1.err</td>
+<td>May contain error messages.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">C1.p</td>
-<td style="text-align: left;">MCMC samples for different variables.</td>
+<td>C1.p</td>
+<td>MCMC samples for different variables.</td>
 </tr>
 </tbody>
 </table>
@@ -175,62 +221,67 @@ sample.2    23  20  1   1   4   5</code></pre>
 <h1 id="analyzing-output-files"><span class="header-section-number">6</span> Analyzing output files</h1>
 <h2 id="using-statreport"><span class="header-section-number">6.1</span> Using <code>statreport</code></h2>
 <p>In order to determine estimates of parameters, you can use the program <code>statreport</code>:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> statreport C1.p</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="ex">%</span> statreport C1.p</a></code></pre></div>
 <p>You can plot the posterior distribution for specific parameters by using the select option:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> statreport --select <span class="st">&quot;Selfing.s*&quot;</span> C1.p</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="ex">%</span> statreport --select <span class="st">&quot;Selfing.s*&quot;</span> C1.p</a></code></pre></div>
 <p>Here quotes are necessary to make sure that the <code>*</code> is not interpreted by the command line shell, but is passed in to the <code>statreport</code> program unchanged.</p>
 <p>You can also use the arguments <code>--mean</code>, <code>--mode</code>, and <code>--median</code> (the default) to exime different properties of the posterior distribution.</p>
 <h2 id="using-tracer"><span class="header-section-number">6.2</span> Using <code>tracer</code></h2>
 <p>Tracer is a graphical program for exploring posterior distributions.</p>
 <p>Load the <code>C1.p</code> file using <code>tracer</code>. On Unix, if <code>tracer</code> is in your <code>PATH</code>, you can do this by typing</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">%</span> tracer C1.p <span class="kw">&amp;</span></code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="ex">%</span> tracer C1.p <span class="kw">&amp;</span></a></code></pre></div>
 <h1 id="mating-system-models"><span class="header-section-number">7</span> Mating system models</h1>
-<p>The stochastic process that generates the genetic data is described in terms of mating system parameters <span class="math">\(\Psi\)</span> and the effective scaled mutation rates <span class="math">\(\Theta^*_l\)</span> for each locus <span class="math">\(l\)</span>. The set of variables <span class="math">\(\Psi\)</span> is specific for each mating system.</p>
+<p>The stochastic process that generates the genetic data is described in terms of mating system parameters <span class="math inline">\(\Psi\)</span> and the effective scaled mutation rates <span class="math inline">\(\Theta^*_l\)</span> for each locus <span class="math inline">\(l\)</span>. The set of variables <span class="math inline">\(\Psi\)</span> is specific for each mating system.</p>
 <p>Some quantites are of interest for each mating system</p>
 <ul>
-<li><span class="math">\(s^*\)</span> is the fraction of uniparental adults (selfing rate).</li>
-<li><span class="math">\(R\)</span> is the decrease in effective population size caused by the mating system.</li>
-<li><span class="math">\({T_k}\)</span> is the number of generations of selfing in the immediate ancestry of individual <span class="math">\(k\)</span>.</li>
-<li><span class="math">\({\Theta_l}\)</span> is the scaled mutation rate <span class="math">\(4Nu\)</span> for locus <span class="math">\(l\)</span>.</li>
-<li><span class="math">\({\Theta^*_l}\)</span> is the <em>effective</em> scaled mutation rate for locus <span class="math">\(l\)</span>.</li>
+<li><span class="math inline">\(s^*\)</span> is the fraction of uniparental adults (selfing rate).</li>
+<li><span class="math inline">\(R\)</span> is the decrease in effective population size caused by the mating system.</li>
+<li><span class="math inline">\({T_k}\)</span> is the number of generations of selfing in the immediate ancestry of individual <span class="math inline">\(k\)</span>.</li>
+<li><span class="math inline">\({\Theta_l}\)</span> is the scaled mutation rate <span class="math inline">\(4Nu\)</span> for locus <span class="math inline">\(l\)</span>.</li>
+<li><span class="math inline">\({\Theta^*_l}\)</span> is the <em>effective</em> scaled mutation rate for locus <span class="math inline">\(l\)</span>.</li>
 </ul>
-<p>Here, <span class="math">\(R\)</span> is given by</p>
+<p>Here, <span class="math inline">\(R\)</span> is given by</p>
 <ul>
-<li><span class="math">\(R = \lim_{N\to\infty} \frac{N^*}{N}\)</span></li>
+<li><span class="math inline">\(R = \lim_{N\to\infty} \frac{N^*}{N}\)</span></li>
 </ul>
-<p>where <span class="math">\(N\)</span> is the population size, and <span class="math">\(N^*\)</span> is the effective population size defined by the rate of parent-sharing. The effective scaled mutation rate is</p>
+<p>where <span class="math inline">\(N\)</span> is the population size, and <span class="math inline">\(N^*\)</span> is the effective population size defined by the rate of parent-sharing. The effective scaled mutation rate is</p>
 <ul>
-<li><span class="math">\(\Theta^*_l = \Theta_l \cdot (1-s^*/2) / R\)</span>.</li>
+<li><span class="math inline">\(\Theta^*_l = \Theta_l \cdot (1-s^*/2) / R\)</span>.</li>
 </ul>
-<p>In general, <span class="math">\(s^*\)</span> and <span class="math">\(R\)</span> are composite parameters: they are determined from the basic mating system parameters <span class="math">\(\Psi\)</span>.</p>
-<p>It is important to note that the genetic data contain information directly only about <span class="math">\(s^*\)</span> and <span class="math">\({\Theta^*_l}\)</span>. Therefore, the basic mating system parameters <span class="math">\(\Psi\)</span> may be unidentifiable on the basis of genetic data alone. This can be solved by introducing additional data in the form on field observations on, for example, the fraction of males or the fraction of females in the population. When such information is unavailable, the generic model should be used.</p>
+<p>In general, <span class="math inline">\(s^*\)</span> and <span class="math inline">\(R\)</span> are composite parameters: they are determined from the basic mating system parameters <span class="math inline">\(\Psi\)</span>.</p>
+<p>It is important to note that the genetic data contain information directly only about <span class="math inline">\(s^*\)</span> and <span class="math inline">\({\Theta^*_l}\)</span>. Therefore, the basic mating system parameters <span class="math inline">\(\Psi\)</span> may be unidentifiable on the basis of genetic data alone. This can be solved by introducing additional data in the form on field observations on, for example, the fraction of males or the fraction of females in the population. When such information is unavailable, the generic model should be used.</p>
 <h2 id="generic-model"><span class="header-section-number">7.1</span> Generic model</h2>
-<p>The generic model is agnostic about the particular mating system, and simply reports <span class="math">\(s^*\)</span>, <span class="math">\({T_k}\)</span> and <span class="math">\({\Theta^*_l}\)</span> as estimated from the genetic data. Since the mating system is not known, <span class="math">\(R\)</span> cannot be calculated. This means that it is not possible to calculate <span class="math">\({\Theta_l}\)</span> from <span class="math">\({\Theta^*_l}\)</span>.</p>
-<p>The generic model characterizes the mating system simply in terms of the selfing rate <span class="math">\(s^*\)</span>. Thus, <span class="math">\(\Psi=\{s^*\}\)</span>, and so <span class="math">\(s^*\)</span> is a basic parameter, instead of being calculated from other parameters.</p>
+<p>The generic model is agnostic about the particular mating system, and simply reports <span class="math inline">\(s^*\)</span>, <span class="math inline">\({T_k}\)</span> and <span class="math inline">\({\Theta^*_l}\)</span> as estimated from the genetic data. Since the mating system is not known, <span class="math inline">\(R\)</span> cannot be calculated. This means that it is not possible to calculate <span class="math inline">\({\Theta_l}\)</span> from <span class="math inline">\({\Theta^*_l}\)</span>.</p>
+<p>The generic model characterizes the mating system simply in terms of the selfing rate <span class="math inline">\(s^*\)</span>. Thus, <span class="math inline">\(\Psi=\{s^*\}\)</span>, and so <span class="math inline">\(s^*\)</span> is a basic parameter, instead of being calculated from other parameters.</p>
 <p>The following variables are estimated, with the field names given:</p>
 <table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 21%" />
+<col style="width: 47%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Variable</th>
-<th style="text-align: left;">Name</th>
-<th style="text-align: left;">Description</th>
+<th>Variable</th>
+<th>Name</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\(s^*\)</span></td>
-<td style="text-align: left;">Selfing.s*</td>
-<td style="text-align: left;">Fraction of uniparental adults (selfing rate).</td>
+<td><span class="math inline">\(s^*\)</span></td>
+<td>Selfing.s*</td>
+<td>Fraction of uniparental adults (selfing rate).</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\({T_k}\)</span></td>
-<td style="text-align: left;">Selfing.DiploidAFS.t!!<span class="math">\(k\)</span></td>
-<td style="text-align: left;">Number of generations of selfing for individual <span class="math">\(k\)</span>.</td>
+<td><span class="math inline">\({T_k}\)</span></td>
+<td>Selfing.DiploidAFS.t!!<span class="math inline">\(k\)</span></td>
+<td>Number of generations of selfing for individual <span class="math inline">\(k\)</span>.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\({\Theta^*_l}\)</span></td>
-<td style="text-align: left;">Selfing.Theta*!!<span class="math">\(l\)</span></td>
-<td style="text-align: left;"><em>Effective</em> scaled mutation rate for locus <span class="math">\(l\)</span>.</td>
+<td><span class="math inline">\({\Theta^*_l}\)</span></td>
+<td>Selfing.Theta*!!<span class="math inline">\(l\)</span></td>
+<td><em>Effective</em> scaled mutation rate for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
 </table>
@@ -238,275 +289,300 @@ sample.2    23  20  1   1   4   5</code></pre>
 <h2 id="pure-hermaphrodite"><span class="header-section-number">7.2</span> Pure Hermaphrodite</h2>
 <p>In the pure hermaphrodite model, each individual contributes both male and female gametes to the gene pool. There are two variants of this model.</p>
 <h3 id="variant-i"><span class="header-section-number">7.2.1</span> Variant I</h3>
-<p>The first variant has <span class="math">\(\Psi=\{s^*\}\)</span>. This variant treats <span class="math">\(s^*\)</span> as a basic parameter, and does not model inbreeding depression. This variant is similar to the generic model, except that <span class="math">\(R\)</span> can be calculated because the mating system is known to be a pure hermaphrodite mating system. This allows <span class="math">\({\Theta_l}\)</span> to be calculated also. However, note that <span class="math">\(R\)</span> is always <span class="math">\(1\)</span> for the pure hermaphrodite model.</p>
+<p>The first variant has <span class="math inline">\(\Psi=\{s^*\}\)</span>. This variant treats <span class="math inline">\(s^*\)</span> as a basic parameter, and does not model inbreeding depression. This variant is similar to the generic model, except that <span class="math inline">\(R\)</span> can be calculated because the mating system is known to be a pure hermaphrodite mating system. This allows <span class="math inline">\({\Theta_l}\)</span> to be calculated also. However, note that <span class="math inline">\(R\)</span> is always <span class="math inline">\(1\)</span> for the pure hermaphrodite model.</p>
 <p>The following variables are estimated, with the field names given:</p>
 <table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 21%" />
+<col style="width: 47%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Variable</th>
-<th style="text-align: left;">Name</th>
-<th style="text-align: left;">Description</th>
+<th>Variable</th>
+<th>Name</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\(s^*\)</span></td>
-<td style="text-align: left;">Selfing.s*</td>
-<td style="text-align: left;">Fraction of uniparental adults (selfing rate).</td>
+<td><span class="math inline">\(s^*\)</span></td>
+<td>Selfing.s*</td>
+<td>Fraction of uniparental adults (selfing rate).</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\({T_k}\)</span></td>
-<td style="text-align: left;">Selfing.DiploidAFS.t!!<span class="math">\(k\)</span></td>
-<td style="text-align: left;">Number of generations of selfing for individual <span class="math">\(k\)</span>.</td>
+<td><span class="math inline">\({T_k}\)</span></td>
+<td>Selfing.DiploidAFS.t!!<span class="math inline">\(k\)</span></td>
+<td>Number of generations of selfing for individual <span class="math inline">\(k\)</span>.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\(R\)</span></td>
-<td style="text-align: left;">Selfing.R</td>
-<td style="text-align: left;">Decrease in parent-sharing effective population size</td>
+<td><span class="math inline">\(R\)</span></td>
+<td>Selfing.R</td>
+<td>Decrease in parent-sharing effective population size</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\({\Theta^*_l}\)</span></td>
-<td style="text-align: left;">Selfing.Theta*!!<span class="math">\(l\)</span></td>
-<td style="text-align: left;"><em>Effective</em> scaled mutation rate for locus <span class="math">\(l\)</span>.</td>
+<td><span class="math inline">\({\Theta^*_l}\)</span></td>
+<td>Selfing.Theta*!!<span class="math inline">\(l\)</span></td>
+<td><em>Effective</em> scaled mutation rate for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\({\Theta_l}\)</span></td>
-<td style="text-align: left;">Selfing.Theta!!<span class="math">\(l\)</span></td>
-<td style="text-align: left;">Scaled mutation rate <span class="math">\(4Nu\)</span> for locus <span class="math">\(l\)</span>.</td>
+<td><span class="math inline">\({\Theta_l}\)</span></td>
+<td>Selfing.Theta!!<span class="math inline">\(l\)</span></td>
+<td>Scaled mutation rate <span class="math inline">\(4Nu\)</span> for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
 </table>
 <p>This variant is run by specifying <code>-M PopGen.Selfing.Herm</code> on the command line.</p>
 <h3 id="variant-ii"><span class="header-section-number">7.2.2</span> Variant II</h3>
-<p>The second variant has <span class="math">\(\Psi=\{\tilde{s},\tau\}\)</span>. This variant treats <span class="math">\(s^*\)</span> as a composite parameter.</p>
+<p>The second variant has <span class="math inline">\(\Psi=\{\tilde{s},\tau\}\)</span>. This variant treats <span class="math inline">\(s^*\)</span> as a composite parameter.</p>
 <p>The following variables are estimated, with the field names given:</p>
 <table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 21%" />
+<col style="width: 47%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Variable</th>
-<th style="text-align: left;">Name</th>
-<th style="text-align: left;">Description</th>
+<th>Variable</th>
+<th>Name</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\(\tilde{s}\)</span></td>
-<td style="text-align: left;">Selfing.s~</td>
-<td style="text-align: left;">Fraction of uniparental seeds.</td>
+<td><span class="math inline">\(\tilde{s}\)</span></td>
+<td>Selfing.s~</td>
+<td>Fraction of uniparental seeds.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\(\tau\)</span></td>
-<td style="text-align: left;">Selfing.tau</td>
-<td style="text-align: left;">Relative viability of selfed seeds.</td>
+<td><span class="math inline">\(\tau\)</span></td>
+<td>Selfing.tau</td>
+<td>Relative viability of selfed seeds.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\(s^*\)</span></td>
-<td style="text-align: left;">Selfing.s*</td>
-<td style="text-align: left;">Fraction of uniparental adults (selfing rate).</td>
+<td><span class="math inline">\(s^*\)</span></td>
+<td>Selfing.s*</td>
+<td>Fraction of uniparental adults (selfing rate).</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\({T_k}\)</span></td>
-<td style="text-align: left;">Selfing.DiploidAFS.t!!<span class="math">\(k\)</span></td>
-<td style="text-align: left;">Number of generations of selfing for individual <span class="math">\(k\)</span>.</td>
+<td><span class="math inline">\({T_k}\)</span></td>
+<td>Selfing.DiploidAFS.t!!<span class="math inline">\(k\)</span></td>
+<td>Number of generations of selfing for individual <span class="math inline">\(k\)</span>.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\(R\)</span></td>
-<td style="text-align: left;">Selfing.R</td>
-<td style="text-align: left;">Decrease in parent-sharing effective population size</td>
+<td><span class="math inline">\(R\)</span></td>
+<td>Selfing.R</td>
+<td>Decrease in parent-sharing effective population size</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\({\Theta^*_l}\)</span></td>
-<td style="text-align: left;">Selfing.Theta*!!<span class="math">\(l\)</span></td>
-<td style="text-align: left;"><em>Effective</em> scaled mutation rate for locus <span class="math">\(l\)</span>.</td>
+<td><span class="math inline">\({\Theta^*_l}\)</span></td>
+<td>Selfing.Theta*!!<span class="math inline">\(l\)</span></td>
+<td><em>Effective</em> scaled mutation rate for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\({\Theta_l}\)</span></td>
-<td style="text-align: left;">Selfing.Theta!!<span class="math">\(l\)</span></td>
-<td style="text-align: left;">Scaled mutation rate <span class="math">\(4Nu\)</span> for locus <span class="math">\(l\)</span>.</td>
+<td><span class="math inline">\({\Theta_l}\)</span></td>
+<td>Selfing.Theta!!<span class="math inline">\(l\)</span></td>
+<td>Scaled mutation rate <span class="math inline">\(4Nu\)</span> for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
 </table>
-<p>Here the user must modify <code>HermID.hs</code> to add additional information about <span class="math">\(\tilde{s}\)</span> or <span class="math">\(\tau\)</span>.</p>
+<p>Here the user must modify <code>HermID.hs</code> to add additional information about <span class="math inline">\(\tilde{s}\)</span> or <span class="math inline">\(\tau\)</span>.</p>
 <p>This variant is run by specifying <code>-m HermID.hs</code> on the command line.</p>
 <h2 id="androdioecy"><span class="header-section-number">7.3</span> Androdioecy</h2>
-<p>In the androdioecious model, the population consists of some fraction <span class="math">\(p_m\)</span> of males, with the rest of the individuals being hermaphrodites. Hermaphrodites produce males gametes, but only fertilize their own eggs. There are two variants of this model.</p>
+<p>In the androdioecious model, the population consists of some fraction <span class="math inline">\(p_m\)</span> of males, with the rest of the individuals being hermaphrodites. Hermaphrodites produce males gametes, but only fertilize their own eggs. There are two variants of this model.</p>
 <h3 id="variant-i-1"><span class="header-section-number">7.3.1</span> Variant I</h3>
-<p>The first variant has <span class="math">\(\Psi=\{s^*,p_m\}\)</span>. This variant treats <span class="math">\(s^*\)</span> as a basic parameter, and does not model inbreeding depression.</p>
+<p>The first variant has <span class="math inline">\(\Psi=\{s^*,p_m\}\)</span>. This variant treats <span class="math inline">\(s^*\)</span> as a basic parameter, and does not model inbreeding depression.</p>
 <p>The following variables are estimated, with the field names given:</p>
 <table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 21%" />
+<col style="width: 47%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Variable</th>
-<th style="text-align: left;">Name</th>
-<th style="text-align: left;">Description</th>
+<th>Variable</th>
+<th>Name</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\(s^*\)</span></td>
-<td style="text-align: left;">Selfing.s*</td>
-<td style="text-align: left;">Fraction of uniparental adults (selfing rate).</td>
+<td><span class="math inline">\(s^*\)</span></td>
+<td>Selfing.s*</td>
+<td>Fraction of uniparental adults (selfing rate).</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\(p_m\)</span></td>
-<td style="text-align: left;">Selfing.p_m</td>
-<td style="text-align: left;">The fraction of males</td>
+<td><span class="math inline">\(p_m\)</span></td>
+<td>Selfing.p_m</td>
+<td>The fraction of males</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\({T_k}\)</span></td>
-<td style="text-align: left;">Selfing.DiploidAFS.t!!<span class="math">\(k\)</span></td>
-<td style="text-align: left;">Number of generations of selfing for individual <span class="math">\(k\)</span>.</td>
+<td><span class="math inline">\({T_k}\)</span></td>
+<td>Selfing.DiploidAFS.t!!<span class="math inline">\(k\)</span></td>
+<td>Number of generations of selfing for individual <span class="math inline">\(k\)</span>.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\(R\)</span></td>
-<td style="text-align: left;">Selfing.R</td>
-<td style="text-align: left;">Decrease in parent-sharing effective population size</td>
+<td><span class="math inline">\(R\)</span></td>
+<td>Selfing.R</td>
+<td>Decrease in parent-sharing effective population size</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\({\Theta^*_l}\)</span></td>
-<td style="text-align: left;">Selfing.Theta*!!<span class="math">\(l\)</span></td>
-<td style="text-align: left;"><em>Effective</em> scaled mutation rate for locus <span class="math">\(l\)</span>.</td>
+<td><span class="math inline">\({\Theta^*_l}\)</span></td>
+<td>Selfing.Theta*!!<span class="math inline">\(l\)</span></td>
+<td><em>Effective</em> scaled mutation rate for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\({\Theta_l}\)</span></td>
-<td style="text-align: left;">Selfing.Theta!!<span class="math">\(l\)</span></td>
-<td style="text-align: left;">Scaled mutation rate <span class="math">\(4Nu\)</span> for locus <span class="math">\(l\)</span>.</td>
+<td><span class="math inline">\({\Theta_l}\)</span></td>
+<td>Selfing.Theta!!<span class="math inline">\(l\)</span></td>
+<td>Scaled mutation rate <span class="math inline">\(4Nu\)</span> for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
 </table>
-<p>Here the user must modify <code>Andro.hs</code> to add additional information about <span class="math">\(p_m\)</span>.</p>
+<p>Here the user must modify <code>Andro.hs</code> to add additional information about <span class="math inline">\(p_m\)</span>.</p>
 <p>This variant is run by specifying <code>-m Andro.hs</code> on the command line.</p>
 <h3 id="variant-ii-1"><span class="header-section-number">7.3.2</span> Variant II</h3>
-<p>The second variant has <span class="math">\(\Psi=\{\tilde{s},\tau,p_m\}\)</span>. This variant treats <span class="math">\(s^*\)</span> as a composite parameter.</p>
+<p>The second variant has <span class="math inline">\(\Psi=\{\tilde{s},\tau,p_m\}\)</span>. This variant treats <span class="math inline">\(s^*\)</span> as a composite parameter.</p>
 <p>The following variables are estimated, with the field names given:</p>
 <table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 21%" />
+<col style="width: 47%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Variable</th>
-<th style="text-align: left;">Name</th>
-<th style="text-align: left;">Description</th>
+<th>Variable</th>
+<th>Name</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\(\tilde{s}\)</span></td>
-<td style="text-align: left;">Selfing.s~</td>
-<td style="text-align: left;">Fraction of uniparental zygotes.</td>
+<td><span class="math inline">\(\tilde{s}\)</span></td>
+<td>Selfing.s~</td>
+<td>Fraction of uniparental zygotes.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\(\tau\)</span></td>
-<td style="text-align: left;">Selfing.tau</td>
-<td style="text-align: left;">Relative viability of selfed zygotes.</td>
+<td><span class="math inline">\(\tau\)</span></td>
+<td>Selfing.tau</td>
+<td>Relative viability of selfed zygotes.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\(p_m\)</span></td>
-<td style="text-align: left;">Selfing.p_m</td>
-<td style="text-align: left;">The fraction of males</td>
+<td><span class="math inline">\(p_m\)</span></td>
+<td>Selfing.p_m</td>
+<td>The fraction of males</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\(s^*\)</span></td>
-<td style="text-align: left;">Selfing.s*</td>
-<td style="text-align: left;">Fraction of uniparental adults (selfing rate).</td>
+<td><span class="math inline">\(s^*\)</span></td>
+<td>Selfing.s*</td>
+<td>Fraction of uniparental adults (selfing rate).</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\({T_k}\)</span></td>
-<td style="text-align: left;">Selfing.DiploidAFS.t!!<span class="math">\(k\)</span></td>
-<td style="text-align: left;">Number of generations of selfing for individual <span class="math">\(k\)</span>.</td>
+<td><span class="math inline">\({T_k}\)</span></td>
+<td>Selfing.DiploidAFS.t!!<span class="math inline">\(k\)</span></td>
+<td>Number of generations of selfing for individual <span class="math inline">\(k\)</span>.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\(R\)</span></td>
-<td style="text-align: left;">Selfing.R</td>
-<td style="text-align: left;">Decrease in parent-sharing effective population size</td>
+<td><span class="math inline">\(R\)</span></td>
+<td>Selfing.R</td>
+<td>Decrease in parent-sharing effective population size</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\({\Theta^*_l}\)</span></td>
-<td style="text-align: left;">Selfing.Theta*!!<span class="math">\(l\)</span></td>
-<td style="text-align: left;"><em>Effective</em> scaled mutation rate for locus <span class="math">\(l\)</span>.</td>
+<td><span class="math inline">\({\Theta^*_l}\)</span></td>
+<td>Selfing.Theta*!!<span class="math inline">\(l\)</span></td>
+<td><em>Effective</em> scaled mutation rate for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\({\Theta_l}\)</span></td>
-<td style="text-align: left;">Selfing.Theta!!<span class="math">\(l\)</span></td>
-<td style="text-align: left;">Scaled mutation rate <span class="math">\(4Nu\)</span> for locus <span class="math">\(l\)</span>.</td>
+<td><span class="math inline">\({\Theta_l}\)</span></td>
+<td>Selfing.Theta!!<span class="math inline">\(l\)</span></td>
+<td>Scaled mutation rate <span class="math inline">\(4Nu\)</span> for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
 </table>
-<p>Here the user must modify <code>AndroID.hs</code> to add additional information about <span class="math">\(p_m\)</span> and also about <span class="math">\(\tilde{s}\)</span> or <span class="math">\(\tau\)</span>.</p>
+<p>Here the user must modify <code>AndroID.hs</code> to add additional information about <span class="math inline">\(p_m\)</span> and also about <span class="math inline">\(\tilde{s}\)</span> or <span class="math inline">\(\tau\)</span>.</p>
 <p>This variant is run by specifying <code>-m AndroID.hs</code> on the command line.</p>
 <h2 id="gynodioecy"><span class="header-section-number">7.4</span> Gynodioecy</h2>
-<p>In the gynodioecious model, the population consist of some fraction <span class="math">\(p_f\)</span> of females, with the rest of the individuals being hermaphrodites. Hermaphrodites produce pollen, and so can contribute male gametes to females, other hermaphrodites, and themselves.</p>
-<p>In this model <span class="math">\(\Psi=\{\tilde{s},\tau,p_f,\sigma\}\)</span>. Here <span class="math">\(s^*\)</span> is a composite parameter.</p>
+<p>In the gynodioecious model, the population consist of some fraction <span class="math inline">\(p_f\)</span> of females, with the rest of the individuals being hermaphrodites. Hermaphrodites produce pollen, and so can contribute male gametes to females, other hermaphrodites, and themselves.</p>
+<p>In this model <span class="math inline">\(\Psi=\{\tilde{s},\tau,p_f,\sigma\}\)</span>. Here <span class="math inline">\(s^*\)</span> is a composite parameter.</p>
 <p>The following variables are estimated, with the field names given:</p>
 <table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 21%" />
+<col style="width: 47%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Variable</th>
-<th style="text-align: left;">Name</th>
-<th style="text-align: left;">Description</th>
+<th>Variable</th>
+<th>Name</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\(\tilde{s}\)</span></td>
-<td style="text-align: left;">Selfing.s~</td>
-<td style="text-align: left;">Fraction of hermaphrodite seeds set by self-pollen.</td>
+<td><span class="math inline">\(\tilde{s}\)</span></td>
+<td>Selfing.s~</td>
+<td>Fraction of hermaphrodite seeds set by self-pollen.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\(\tau\)</span></td>
-<td style="text-align: left;">Selfing.tau</td>
-<td style="text-align: left;">Relative viability of selfed seeds.</td>
+<td><span class="math inline">\(\tau\)</span></td>
+<td>Selfing.tau</td>
+<td>Relative viability of selfed seeds.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\(p_f\)</span></td>
-<td style="text-align: left;">Selfing.p_f</td>
-<td style="text-align: left;">The fraction of females</td>
+<td><span class="math inline">\(p_f\)</span></td>
+<td>Selfing.p_f</td>
+<td>The fraction of females</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\(\sigma\)</span></td>
-<td style="text-align: left;">Selfing.sigma</td>
-<td style="text-align: left;">Seed production rate of females relative to hermaphrodites.</td>
+<td><span class="math inline">\(\sigma\)</span></td>
+<td>Selfing.sigma</td>
+<td>Seed production rate of females relative to hermaphrodites.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\(s^*\)</span></td>
-<td style="text-align: left;">Selfing.s*</td>
-<td style="text-align: left;">Fraction of uniparental adults (selfing rate).</td>
+<td><span class="math inline">\(s^*\)</span></td>
+<td>Selfing.s*</td>
+<td>Fraction of uniparental adults (selfing rate).</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\({T_k}\)</span></td>
-<td style="text-align: left;">Selfing.DiploidAFS.t!!<span class="math">\(k\)</span></td>
-<td style="text-align: left;">Number of generations of selfing for individual <span class="math">\(k\)</span>.</td>
+<td><span class="math inline">\({T_k}\)</span></td>
+<td>Selfing.DiploidAFS.t!!<span class="math inline">\(k\)</span></td>
+<td>Number of generations of selfing for individual <span class="math inline">\(k\)</span>.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\(R\)</span></td>
-<td style="text-align: left;">Selfing.R</td>
-<td style="text-align: left;">Decrease in parent-sharing effective population size</td>
+<td><span class="math inline">\(R\)</span></td>
+<td>Selfing.R</td>
+<td>Decrease in parent-sharing effective population size</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\(H\)</span></td>
-<td style="text-align: left;">Selfing.H</td>
-<td style="text-align: left;">Fraction of non-selfed individuals with a hermaphrodite seed-parent.</td>
+<td><span class="math inline">\(H\)</span></td>
+<td>Selfing.H</td>
+<td>Fraction of non-selfed individuals with a hermaphrodite seed-parent.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math">\({\Theta^*_l}\)</span></td>
-<td style="text-align: left;">Selfing.Theta*!!<span class="math">\(l\)</span></td>
-<td style="text-align: left;"><em>Effective</em> scaled mutation rate for locus <span class="math">\(l\)</span>.</td>
+<td><span class="math inline">\({\Theta^*_l}\)</span></td>
+<td>Selfing.Theta*!!<span class="math inline">\(l\)</span></td>
+<td><em>Effective</em> scaled mutation rate for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math">\({\Theta_l}\)</span></td>
-<td style="text-align: left;">Selfing.Theta!!<span class="math">\(l\)</span></td>
-<td style="text-align: left;">Scaled mutation rate <span class="math">\(4Nu\)</span> for locus <span class="math">\(l\)</span>.</td>
+<td><span class="math inline">\({\Theta_l}\)</span></td>
+<td>Selfing.Theta!!<span class="math inline">\(l\)</span></td>
+<td>Scaled mutation rate <span class="math inline">\(4Nu\)</span> for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
 </table>
-<p>Here the user must modify <code>Gyno.hs</code> to add additional information about 3 out of the 4 components of <span class="math">\(\Psi\)</span>.</p>
+<p>Here the user must modify <code>Gyno.hs</code> to add additional information about 3 out of the 4 components of <span class="math inline">\(\Psi\)</span>.</p>
 <p>This variant is run by specifying <code>-m Gyno.hs</code> on the command line.</p>
 <h1 id="specifying-additional-information"><span class="header-section-number">8</span> Specifying additional information</h1>
-<p>When the mating system parameters <span class="math">\(\Psi\)</span> contain more than one degree of freedom, the mating system parameters are not identifiable from genetic data alone. Therefore, the user must obtain a model-description module (<code>HermID.hs</code>, <code>Andro.hs</code>, <code>AndroID.hs</code>, or <code>Gyno.hs</code>) and modify this module to add additional information to make the mating system parameters identifiable. In general, if <span class="math">\(\Psi\)</span> contains <span class="math">\(n\)</span> variables, then additional information about <span class="math">\(n-1\)</span> of them must be incorporated.</p>
+<p>When the mating system parameters <span class="math inline">\(\Psi\)</span> contain more than one degree of freedom, the mating system parameters are not identifiable from genetic data alone. Therefore, the user must obtain a model-description module (<code>HermID.hs</code>, <code>Andro.hs</code>, <code>AndroID.hs</code>, or <code>Gyno.hs</code>) and modify this module to add additional information to make the mating system parameters identifiable. In general, if <span class="math inline">\(\Psi\)</span> contains <span class="math inline">\(n\)</span> variables, then additional information about <span class="math inline">\(n-1\)</span> of them must be incorporated.</p>
 <h2 id="modifying-model-description-modules"><span class="header-section-number">8.1</span> Modifying model-description modules</h2>
 <p>BES model-description modules (such as <code>Andro.hs</code>) use a Haskell-like syntax. In this syntax,</p>
 <ol type="1">
 <li>Function application <code>f(x,y)</code> is written <code>f x y</code>.</li>
 <li>Comments are introduced by <code>--</code>.</li>
-<li>In a <code>do</code> block, an <code>Observe</code> command introduces data. Commenting out the <code>Observe</code> statements removes the data from the model file.</li>
+<li>In a <code>do</code> block, an <code>observe</code> command introduces data. Commenting out the <code>observe</code> statements removes the data from the model file.</li>
 </ol>
 <p>In the model-description template files (e.g. <code>HermID.hs</code>), the comments illustrate possible ways to introduce variables.</p>
 <h2 id="methods-for-adding-additional-information"><span class="header-section-number">8.2</span> Methods for adding additional information</h2>
@@ -517,25 +593,25 @@ sample.2    23  20  1   1   4   5</code></pre>
 <li>Place a subjective prior on the variable.</li>
 </ol>
 <h3 id="introduce-a-variable-with-a-prior-and-place-observations-on-it."><span class="header-section-number">8.2.1</span> Introduce a variable with a prior and place observations on it.</h3>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">  tau <span class="ot">&lt;-</span> uniform <span class="fl">0.0</span> <span class="fl">1.0</span>;
-  <span class="dt">Observe</span> <span class="dv">10</span> (binomial <span class="dv">20</span> tau);</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb14-1" data-line-number="1">  tau <span class="ot">&lt;-</span> sample <span class="fu">$</span> uniform <span class="fl">0.0</span> <span class="fl">1.0</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">  observe <span class="dv">10</span> (binomial <span class="dv">20</span> tau)</a></code></pre></div>
 <h3 id="fix-a-variable-to-a-known-constant-value."><span class="header-section-number">8.2.2</span> Fix a variable to a known constant value.</h3>
 <p>If you know the value of a variable, you can fix it to a constant:</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">  <span class="kw">let</span> {tau <span class="fu">=</span> <span class="fl">1.0</span>};</code></pre>
-<p>If you have observations about a variable (e.g. <span class="math">\(p_m\)</span>) then do not fix that variable to a constant. If you fix a variable to a constant, then that variable cannot be estimated since its value is already known.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb15-1" data-line-number="1">  <span class="kw">let</span> tau <span class="fu">=</span> <span class="fl">1.0</span></a></code></pre></div>
+<p>If you have observations about a variable (e.g. <span class="math inline">\(p_m\)</span>) then do not fix that variable to a constant. If you fix a variable to a constant, then that variable cannot be estimated since its value is already known.</p>
 <h3 id="place-a-subjective-prior-on-a-variable"><span class="header-section-number">8.2.3</span> Place a subjective prior on a variable</h3>
-<p>This approach doesn't actually make the parameter <em>identifiable</em>, since this approach affects only the prior, and not the likelihood.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">  tau <span class="ot">&lt;-</span> beta <span class="fl">2.0</span> <span class="fl">8.0</span>;</code></pre>
+<p>This approach doesn’t actually make the parameter <em>identifiable</em>, since this approach affects only the prior, and not the likelihood.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb16-1" data-line-number="1">  tau <span class="ot">&lt;-</span> sample <span class="fu">$</span> beta <span class="fl">2.0</span> <span class="fl">8.0</span></a></code></pre></div>
 <p>As a result, it is not possible to compare the posterior (with data) and the prior (without data) to assess the impact of the data. This approach is therefore not recommended.</p>
 <h1 id="bayesian-priors-and-posteriors"><span class="header-section-number">9</span> Bayesian priors and posteriors</h1>
-<p>In Bayesian parlance, <em>prior</em> means &quot;before the data&quot;, and <em>posterior</em> means &quot;after the data&quot;. The Bayesian approach places prior distributions on parameters. As a result, parameters become random variables, and can have distributions. This differs from the maximum likelihood setting, where parameters are not random. However, the researcher must interpret prior and posterior distributions carefully in order to avoid drawing erroneous conclusions.</p>
+<p>In Bayesian parlance, <em>prior</em> means “before the data”, and <em>posterior</em> means “after the data”. The Bayesian approach places prior distributions on parameters. As a result, parameters become random variables, and can have distributions. This differs from the maximum likelihood setting, where parameters are not random. However, the researcher must interpret prior and posterior distributions carefully in order to avoid drawing erroneous conclusions.</p>
 <h2 id="uninformative-priors"><span class="header-section-number">9.1</span> Uninformative priors</h2>
-<p>We take the &quot;objective Bayesian&quot; approach, and seek priors that have minimal influence on the analysis. In general, such priors have a broad range. This range should not be characterized simply in terms of the mean or median, but in terms of the Bayesian Credible Interval (BCI), and in terms of the shapes of the tails of the distribution.</p>
-<p>Note that, although the goal is to obtain priors with minimal influence, such priors are not actually &quot;uninformative&quot;. Specifically, a uniform prior is not &quot;uninformative&quot;. The choice of an appropriate prior should be undertaken with care in order to avoid ruling out any plausible outcome <em>a priori</em>.</p>
+<p>We take the “objective Bayesian” approach, and seek priors that have minimal influence on the analysis. In general, such priors have a broad range. This range should not be characterized simply in terms of the mean or median, but in terms of the Bayesian Credible Interval (BCI), and in terms of the shapes of the tails of the distribution.</p>
+<p>Note that, although the goal is to obtain priors with minimal influence, such priors are not actually “uninformative”. Specifically, a uniform prior is not “uninformative”. The choice of an appropriate prior should be undertaken with care in order to avoid ruling out any plausible outcome <em>a priori</em>.</p>
 <h2 id="comparing-the-posterior-and-the-prior"><span class="header-section-number">9.2</span> Comparing the posterior and the prior</h2>
 <p>The posterior distribution combines information the prior distribution and the likelihood. In order to determine if the shape of the posterior is being largely driven by the prior, or largely driven by the likelihood, one should compare the posterior and the prior distributions.</p>
 <h2 id="priors-on-composite-parameters"><span class="header-section-number">9.3</span> Priors on composite parameters</h2>
-<p>For models, such as the gynodioecious model, where <span class="math">\(s^*\)</span> is a composite parameter, no prior distribution is placed on <span class="math">\(s^*\)</span> directly. However, <span class="math">\(s^*\)</span> still has a prior distribution that is the combined result of the priors on all the basic parameters that it is computed from.</p>
-<p>In order to determine what the shape of the prior on <span class="math">\(s^*\)</span> is, one can run the model without data. This can be done by commenting out the &quot;Observe&quot; statements.</p>
+<p>For models, such as the gynodioecious model, where <span class="math inline">\(s^*\)</span> is a composite parameter, no prior distribution is placed on <span class="math inline">\(s^*\)</span> directly. However, <span class="math inline">\(s^*\)</span> still has a prior distribution that is the combined result of the priors on all the basic parameters that it is computed from.</p>
+<p>In order to determine what the shape of the prior on <span class="math inline">\(s^*\)</span> is, one can run the model without data. This can be done by commenting out the <code>observe</code> statements.</p>
 </body>
 </html>

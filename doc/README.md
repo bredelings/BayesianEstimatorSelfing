@@ -401,8 +401,8 @@ In this syntax,
 
 1. Function application `f(x,y)` is written `f x y`.
 2. Comments are introduced by `--`.
-3. In a `do` block, an `Observe` command introduces data.  Commenting out the
-`Observe` statements removes the data from the model file.
+3. In a `do` block, an `observe` command introduces data.  Commenting out the
+`observe` statements removes the data from the model file.
 
 In the model-description template files (e.g. `HermID.hs`), the comments illustrate possible ways to introduce
 variables.
@@ -417,14 +417,14 @@ Additional information about a variable can be added in 3 ways.
 
 ### Introduce a variable with a prior and place observations on it.
 ``` haskell
-  tau <- uniform 0.0 1.0;
-  Observe 10 (binomial 20 tau);
+  tau <- sample $ uniform 0.0 1.0
+  observe 10 (binomial 20 tau)
 ```
 
 ### Fix a variable to a known constant value.
 If you know the value of a variable, you can fix it to a constant:
 ``` haskell
-  let {tau = 1.0};
+  let tau = 1.0
 ```
 If you have observations about a variable (e.g. $p_m$) then do not fix that
 variable to a constant.  If you fix a variable to a constant, then that variable
@@ -435,7 +435,7 @@ cannot be estimated since its value is already known.
 This approach doesn't actually make the parameter *identifiable*,
 since this approach affects only the prior, and not the likelihood.
 ``` haskell
-  tau <- beta 2.0 8.0;
+  tau <- sample $ beta 2.0 8.0
 ```
 As a result, it is not possible to compare the posterior (with data)
 and the prior (without data) to assess the impact of the data.  This
@@ -482,4 +482,4 @@ computed from.
 
 In order to determine what the shape of the prior on $s^*$ is, one
 can run the model without data.  This can be done by commenting out
-the "Observe" statements.
+the `observe` statements.
