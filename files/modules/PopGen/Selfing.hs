@@ -13,9 +13,9 @@ ewens_diploid_probability theta i x = builtin_ewens_diploid_probability theta (l
 afs2 thetas ps = ProbDensity (ewens_diploid_probability thetas ps) (error "afs2 has no quantile") () ()
 
 robust_diploid_afs n_individuals n_loci s f theta_effective = do 
-  t <- iid n_individuals (rgeometric s)
+  t <- sample $ iid n_individuals (rgeometric s)
 
-  i <- plate n_individuals (\k->iid n_loci (rbernoulli (0.5**t!!k*(1.0-f))) )
+  i <- sample $ plate n_individuals (\k->iid n_loci (rbernoulli (0.5**t!!k*(1.0-f))) )
 
   AddMove (\c -> mapM_ (\k-> sum_out_coals (t!!k) (i!!k) c) [0..n_individuals-1])
 
