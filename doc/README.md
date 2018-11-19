@@ -91,14 +91,14 @@ If that works, then run the MCMC using the generic model:
 ```
 This should create a directory called `Generic-1/` (or `Generic-2/`, etc.) that contains the output files.
 
-Second, load the output file `Generic-1/C1.p` using the GUI program Tracer.  On Unix, you can run this from
+Second, load the output file `Generic-1/C1.log` using the GUI program Tracer.  On Unix, you can run this from
 the command line as follows:
 ``` bash
-% tracer Generic-1/C1.p &
+% tracer Generic-1/C1.log &
 ```
 It is also possible to use a non-graphical program statreport to view the estimates of the selfing rate
 ``` bash
-% statreport --select="Selfing.s*" Generic-1/C1.p
+% statreport --select="s*" Generic-1/C1.log
 ```
 This can be useful when analyzing data in a terminal.
 
@@ -145,10 +145,10 @@ BAli-Phy writes the following output files inside the directory that it creates:
 | --------- | ----------- |
 | C1.out    | General information: command line, start time, etc. |
 | C1.err    | May contain error messages. |
-| C1.p      | MCMC samples for different variables. |
+| C1.log      | MCMC samples for different variables. |
 
-The `C1.p` file contains MCMC samples for the variables that are being
-estimated.  For example, the variable `Selfing.s*` indicates the
+The `C1.log` file contains MCMC samples for the variables that are being
+estimated.  For example, the variable `s*` indicates the
 fraction of uniparental individuals at the time of breeding.
 
 Since each mating system has a unique set of parameters, the variables
@@ -162,13 +162,13 @@ In order to determine estimates of parameters, you can use the program
 `statreport`:
 
 ``` bash
-% statreport C1.p
+% statreport C1.log
 ```
 
 You can plot the posterior distribution for specific parameters by
 using the select option:
 ``` bash
-% statreport --select "Selfing.s*" C1.p
+% statreport --select "s*" C1.log
 ```
 Here quotes are necessary to make sure that the `*` is not interpreted
 by the command line shell, but is passed in to the `statreport`
@@ -182,11 +182,11 @@ default) to exime different properties of the posterior distribution.
 
 Tracer is a graphical program for exploring posterior distributions.
 
-Load the `C1.p` file using `tracer`.  On Unix, if `tracer` is in your
+Load the `C1.log` file using `tracer`.  On Unix, if `tracer` is in your
 `PATH`, you can do this by typing
 
 ``` bash
-% tracer C1.p &
+% tracer C1.log &
 ```
 
 # Mating system models
@@ -240,9 +240,9 @@ The following variables are estimated, with the field names given:
 
 | Variable | Name | Description |
 | -------  | -----| ----------- |
-| $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
-| ${T_k}$ | Selfing.DiploidAFS.t!!$k$ | Number of generations of selfing for individual $k$. |
-| ${\Theta^*_l}$ | Selfing.Theta\*!!$l$       | *Effective* scaled mutation rate for locus $l$. |
+| $s^*$ | s* | Fraction of uniparental adults (selfing rate). |
+| ${T_k}$ | t[$k$] | Number of generations of selfing for individual $k$. |
+| ${\Theta^*_l}$ | theta\*[$l$]       | *Effective* scaled mutation rate for locus $l$. |
 
 This variant is run by specifying `-M PopGen.Selfing.Generic` on the
 command line.
@@ -267,11 +267,11 @@ The following variables are estimated, with the field names given:
 
 | Variable | Name | Description |
 | -------  | -----| ----------- |
-| $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
-| ${T_k}$ | Selfing.DiploidAFS.t!!$k$ | Number of generations of selfing for individual $k$. |
-| $R$ | Selfing.R | Decrease in parent-sharing effective population size |
-| ${\Theta^*_l}$ | Selfing.Theta\*!!$l$       | *Effective* scaled mutation rate for locus $l$. |
-| ${\Theta_l}$ | Selfing.Theta\!!$l$       | Scaled mutation rate $4Nu$ for locus $l$. |
+| $s^*$ | s* | Fraction of uniparental adults (selfing rate). |
+| ${T_k}$ | t[$k$] | Number of generations of selfing for individual $k$. |
+| $R$ | R | Decrease in parent-sharing effective population size |
+| ${\Theta^*_l}$ | theta\*[$l$]       | *Effective* scaled mutation rate for locus $l$. |
+| ${\Theta_l}$ | theta\[$l$]       | Scaled mutation rate $4Nu$ for locus $l$. |
 
 This variant is run by specifying `-M PopGen.Selfing.Herm` on the
 command line.
@@ -284,13 +284,13 @@ The following variables are estimated, with the field names given:
 
 | Variable | Name | Description |
 | -------  | -----| ----------- |
-| $\tilde{s}$ | Selfing.s~ | Fraction of uniparental seeds. |
-| $\tau$ | Selfing.tau | Relative viability of selfed seeds. |
-| $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
-| ${T_k}$ | Selfing.DiploidAFS.t!!$k$ | Number of generations of selfing for individual $k$. |
-| $R$ | Selfing.R | Decrease in parent-sharing effective population size |
-| ${\Theta^*_l}$ | Selfing.Theta\*!!$l$       | *Effective* scaled mutation rate for locus $l$. |
-| ${\Theta_l}$ | Selfing.Theta\!!$l$       | Scaled mutation rate $4Nu$ for locus $l$. |
+| $\tilde{s}$ | s~ | Fraction of uniparental seeds. |
+| $\tau$ | tau | Relative viability of selfed seeds. |
+| $s^*$ | s* | Fraction of uniparental adults (selfing rate). |
+| ${T_k}$ | t[$k$] | Number of generations of selfing for individual $k$. |
+| $R$ | R | Decrease in parent-sharing effective population size |
+| ${\Theta^*_l}$ | theta\*[$l$]       | *Effective* scaled mutation rate for locus $l$. |
+| ${\Theta_l}$ | theta\[$l$]       | Scaled mutation rate $4Nu$ for locus $l$. |
 
 Here the user must modify `HermID.hs` to add additional information
 about $\tilde{s}$ or $\tau$.
@@ -315,12 +315,12 @@ The following variables are estimated, with the field names given:
 
 | Variable | Name | Description |
 | -------  | -----| ----------- |
-| $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
-| $p_m$ | Selfing.p_m | The fraction of males |
-| ${T_k}$ | Selfing.DiploidAFS.t!!$k$ | Number of generations of selfing for individual $k$. |
-| $R$ | Selfing.R | Decrease in parent-sharing effective population size |
-| ${\Theta^*_l}$ | Selfing.Theta\*!!$l$       | *Effective* scaled mutation rate for locus $l$. |
-| ${\Theta_l}$ | Selfing.Theta\!!$l$       | Scaled mutation rate $4Nu$ for locus $l$. |
+| $s^*$ | s* | Fraction of uniparental adults (selfing rate). |
+| $p_m$ | p_m | The fraction of males |
+| ${T_k}$ | t[$k$] | Number of generations of selfing for individual $k$. |
+| $R$ | R | Decrease in parent-sharing effective population size |
+| ${\Theta^*_l}$ | theta\*[$l$]       | *Effective* scaled mutation rate for locus $l$. |
+| ${\Theta_l}$ | theta\[$l$]       | Scaled mutation rate $4Nu$ for locus $l$. |
 
 Here the user must modify `Andro.hs` to add additional information
 about $p_m$.
@@ -336,14 +336,14 @@ The following variables are estimated, with the field names given:
 
 | Variable | Name | Description |
 | -------  | -----| ----------- |
-| $\tilde{s}$ | Selfing.s~ | Fraction of uniparental zygotes. |
-| $\tau$ | Selfing.tau | Relative viability of selfed zygotes. |
-| $p_m$ | Selfing.p_m | The fraction of males |
-| $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
-| ${T_k}$ | Selfing.DiploidAFS.t!!$k$ | Number of generations of selfing for individual $k$. |
-| $R$ | Selfing.R | Decrease in parent-sharing effective population size |
-| ${\Theta^*_l}$ | Selfing.Theta\*!!$l$       | *Effective* scaled mutation rate for locus $l$. |
-| ${\Theta_l}$ | Selfing.Theta\!!$l$       | Scaled mutation rate $4Nu$ for locus $l$. |
+| $\tilde{s}$ | s~ | Fraction of uniparental zygotes. |
+| $\tau$ | tau | Relative viability of selfed zygotes. |
+| $p_m$ | p_m | The fraction of males |
+| $s^*$ | s* | Fraction of uniparental adults (selfing rate). |
+| ${T_k}$ | t[$k$] | Number of generations of selfing for individual $k$. |
+| $R$ | R | Decrease in parent-sharing effective population size |
+| ${\Theta^*_l}$ | theta\*[$l$]       | *Effective* scaled mutation rate for locus $l$. |
+| ${\Theta_l}$ | theta\[$l$]       | Scaled mutation rate $4Nu$ for locus $l$. |
 
 Here the user must modify `AndroID.hs` to add additional information
 about $p_m$ and also about $\tilde{s}$ or $\tau$.
@@ -365,16 +365,16 @@ The following variables are estimated, with the field names given:
 
 | Variable | Name | Description |
 | -------  | -----| ----------- |
-| $\tilde{s}$ | Selfing.s~ | Fraction of hermaphrodite seeds set by self-pollen. |
-| $\tau$ | Selfing.tau | Relative viability of selfed seeds. |
-| $p_f$ | Selfing.p_f | The fraction of females |
-| $\sigma$ | Selfing.sigma | Seed production rate of females relative to hermaphrodites. |
-| $s^*$ | Selfing.s* | Fraction of uniparental adults (selfing rate). |
-| ${T_k}$ | Selfing.DiploidAFS.t!!$k$ | Number of generations of selfing for individual $k$. |
-| $R$ | Selfing.R | Decrease in parent-sharing effective population size |
-| $H$ | Selfing.H | Fraction of non-selfed individuals with a hermaphrodite seed-parent. |
-| ${\Theta^*_l}$ | Selfing.Theta\*!!$l$       | *Effective* scaled mutation rate for locus $l$. |
-| ${\Theta_l}$ | Selfing.Theta\!!$l$       | Scaled mutation rate $4Nu$ for locus $l$. |
+| $\tilde{s}$ | s~ | Fraction of hermaphrodite seeds set by self-pollen. |
+| $\tau$ | tau | Relative viability of selfed seeds. |
+| $p_f$ | p_f | The fraction of females |
+| $\sigma$ | sigma | Seed production rate of females relative to hermaphrodites. |
+| $s^*$ | s* | Fraction of uniparental adults (selfing rate). |
+| ${T_k}$ | t[$k$] | Number of generations of selfing for individual $k$. |
+| $R$ | R | Decrease in parent-sharing effective population size |
+| $H$ | H | Fraction of non-selfed individuals with a hermaphrodite seed-parent. |
+| ${\Theta^*_l}$ | theta\*[$l$]       | *Effective* scaled mutation rate for locus $l$. |
+| ${\Theta_l}$ | theta\[$l$]       | Scaled mutation rate $4Nu$ for locus $l$. |
 
 Here the user must modify `Gyno.hs` to add additional information
 about 3 out of the 4 components of $\Psi$.

@@ -168,10 +168,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>If that works, then run the MCMC using the generic model:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="ex">%</span> bali-phy -M PopGen.Selfing.Generic --iter=1000 --- Examples/outfile.001.70.001.phase <span class="kw">&amp;</span></a></code></pre></div>
 <p>This should create a directory called <code>Generic-1/</code> (or <code>Generic-2/</code>, etc.) that contains the output files.</p>
-<p>Second, load the output file <code>Generic-1/C1.p</code> using the GUI program Tracer. On Unix, you can run this from the command line as follows:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="ex">%</span> tracer Generic-1/C1.p <span class="kw">&amp;</span></a></code></pre></div>
+<p>Second, load the output file <code>Generic-1/C1.log</code> using the GUI program Tracer. On Unix, you can run this from the command line as follows:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="ex">%</span> tracer Generic-1/C1.log <span class="kw">&amp;</span></a></code></pre></div>
 <p>It is also possible to use a non-graphical program statreport to view the estimates of the selfing rate</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="ex">%</span> statreport --select=<span class="st">&quot;Selfing.s*&quot;</span> Generic-1/C1.p</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="ex">%</span> statreport --select=<span class="st">&quot;s*&quot;</span> Generic-1/C1.log</a></code></pre></div>
 <p>This can be useful when analyzing data in a terminal.</p>
 <h1 id="input"><span class="header-section-number">4</span> Input</h1>
 <p>Input files must be in PHASE format. Both alleles for each locus should be specified, with NA given to indicate missing data.</p>
@@ -211,25 +211,25 @@ sample.2    23  20  1   1   4   5</code></pre>
 <td>May contain error messages.</td>
 </tr>
 <tr class="odd">
-<td>C1.p</td>
+<td>C1.log</td>
 <td>MCMC samples for different variables.</td>
 </tr>
 </tbody>
 </table>
-<p>The <code>C1.p</code> file contains MCMC samples for the variables that are being estimated. For example, the variable <code>Selfing.s*</code> indicates the fraction of uniparental individuals at the time of breeding.</p>
+<p>The <code>C1.log</code> file contains MCMC samples for the variables that are being estimated. For example, the variable <code>s*</code> indicates the fraction of uniparental individuals at the time of breeding.</p>
 <p>Since each mating system has a unique set of parameters, the variables for each model will be described in the section for that model.</p>
 <h1 id="analyzing-output-files"><span class="header-section-number">6</span> Analyzing output files</h1>
 <h2 id="using-statreport"><span class="header-section-number">6.1</span> Using <code>statreport</code></h2>
 <p>In order to determine estimates of parameters, you can use the program <code>statreport</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="ex">%</span> statreport C1.p</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="ex">%</span> statreport C1.log</a></code></pre></div>
 <p>You can plot the posterior distribution for specific parameters by using the select option:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="ex">%</span> statreport --select <span class="st">&quot;Selfing.s*&quot;</span> C1.p</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="ex">%</span> statreport --select <span class="st">&quot;s*&quot;</span> C1.log</a></code></pre></div>
 <p>Here quotes are necessary to make sure that the <code>*</code> is not interpreted by the command line shell, but is passed in to the <code>statreport</code> program unchanged.</p>
 <p>You can also use the arguments <code>--mean</code>, <code>--mode</code>, and <code>--median</code> (the default) to exime different properties of the posterior distribution.</p>
 <h2 id="using-tracer"><span class="header-section-number">6.2</span> Using <code>tracer</code></h2>
 <p>Tracer is a graphical program for exploring posterior distributions.</p>
-<p>Load the <code>C1.p</code> file using <code>tracer</code>. On Unix, if <code>tracer</code> is in your <code>PATH</code>, you can do this by typing</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="ex">%</span> tracer C1.p <span class="kw">&amp;</span></a></code></pre></div>
+<p>Load the <code>C1.log</code> file using <code>tracer</code>. On Unix, if <code>tracer</code> is in your <code>PATH</code>, you can do this by typing</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="ex">%</span> tracer C1.log <span class="kw">&amp;</span></a></code></pre></div>
 <h1 id="mating-system-models"><span class="header-section-number">7</span> Mating system models</h1>
 <p>The stochastic process that generates the genetic data is described in terms of mating system parameters <span class="math inline">\(\Psi\)</span> and the effective scaled mutation rates <span class="math inline">\(\Theta^*_l\)</span> for each locus <span class="math inline">\(l\)</span>. The set of variables <span class="math inline">\(\Psi\)</span> is specific for each mating system.</p>
 <p>Some quantites are of interest for each mating system</p>
@@ -255,11 +255,6 @@ sample.2    23  20  1   1   4   5</code></pre>
 <p>The generic model characterizes the mating system simply in terms of the selfing rate <span class="math inline">\(s^*\)</span>. Thus, <span class="math inline">\(\Psi=\{s^*\}\)</span>, and so <span class="math inline">\(s^*\)</span> is a basic parameter, instead of being calculated from other parameters.</p>
 <p>The following variables are estimated, with the field names given:</p>
 <table>
-<colgroup>
-<col style="width: 30%" />
-<col style="width: 21%" />
-<col style="width: 47%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
@@ -270,17 +265,17 @@ sample.2    23  20  1   1   4   5</code></pre>
 <tbody>
 <tr class="odd">
 <td><span class="math inline">\(s^*\)</span></td>
-<td>Selfing.s*</td>
+<td>s*</td>
 <td>Fraction of uniparental adults (selfing rate).</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\({T_k}\)</span></td>
-<td>Selfing.DiploidAFS.t!!<span class="math inline">\(k\)</span></td>
+<td>t[<span class="math inline">\(k\)</span>]</td>
 <td>Number of generations of selfing for individual <span class="math inline">\(k\)</span>.</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\({\Theta^*_l}\)</span></td>
-<td>Selfing.Theta*!!<span class="math inline">\(l\)</span></td>
+<td>theta*[<span class="math inline">\(l\)</span>]</td>
 <td><em>Effective</em> scaled mutation rate for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
@@ -292,11 +287,6 @@ sample.2    23  20  1   1   4   5</code></pre>
 <p>The first variant has <span class="math inline">\(\Psi=\{s^*\}\)</span>. This variant treats <span class="math inline">\(s^*\)</span> as a basic parameter, and does not model inbreeding depression. This variant is similar to the generic model, except that <span class="math inline">\(R\)</span> can be calculated because the mating system is known to be a pure hermaphrodite mating system. This allows <span class="math inline">\({\Theta_l}\)</span> to be calculated also. However, note that <span class="math inline">\(R\)</span> is always <span class="math inline">\(1\)</span> for the pure hermaphrodite model.</p>
 <p>The following variables are estimated, with the field names given:</p>
 <table>
-<colgroup>
-<col style="width: 30%" />
-<col style="width: 21%" />
-<col style="width: 47%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
@@ -307,27 +297,27 @@ sample.2    23  20  1   1   4   5</code></pre>
 <tbody>
 <tr class="odd">
 <td><span class="math inline">\(s^*\)</span></td>
-<td>Selfing.s*</td>
+<td>s*</td>
 <td>Fraction of uniparental adults (selfing rate).</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\({T_k}\)</span></td>
-<td>Selfing.DiploidAFS.t!!<span class="math inline">\(k\)</span></td>
+<td>t[<span class="math inline">\(k\)</span>]</td>
 <td>Number of generations of selfing for individual <span class="math inline">\(k\)</span>.</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(R\)</span></td>
-<td>Selfing.R</td>
+<td>R</td>
 <td>Decrease in parent-sharing effective population size</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\({\Theta^*_l}\)</span></td>
-<td>Selfing.Theta*!!<span class="math inline">\(l\)</span></td>
+<td>theta*[<span class="math inline">\(l\)</span>]</td>
 <td><em>Effective</em> scaled mutation rate for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\({\Theta_l}\)</span></td>
-<td>Selfing.Theta!!<span class="math inline">\(l\)</span></td>
+<td>theta[<span class="math inline">\(l\)</span>]</td>
 <td>Scaled mutation rate <span class="math inline">\(4Nu\)</span> for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
@@ -337,11 +327,6 @@ sample.2    23  20  1   1   4   5</code></pre>
 <p>The second variant has <span class="math inline">\(\Psi=\{\tilde{s},\tau\}\)</span>. This variant treats <span class="math inline">\(s^*\)</span> as a composite parameter.</p>
 <p>The following variables are estimated, with the field names given:</p>
 <table>
-<colgroup>
-<col style="width: 30%" />
-<col style="width: 21%" />
-<col style="width: 47%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
@@ -352,37 +337,37 @@ sample.2    23  20  1   1   4   5</code></pre>
 <tbody>
 <tr class="odd">
 <td><span class="math inline">\(\tilde{s}\)</span></td>
-<td>Selfing.s~</td>
+<td>s~</td>
 <td>Fraction of uniparental seeds.</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(\tau\)</span></td>
-<td>Selfing.tau</td>
+<td>tau</td>
 <td>Relative viability of selfed seeds.</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(s^*\)</span></td>
-<td>Selfing.s*</td>
+<td>s*</td>
 <td>Fraction of uniparental adults (selfing rate).</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\({T_k}\)</span></td>
-<td>Selfing.DiploidAFS.t!!<span class="math inline">\(k\)</span></td>
+<td>t[<span class="math inline">\(k\)</span>]</td>
 <td>Number of generations of selfing for individual <span class="math inline">\(k\)</span>.</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(R\)</span></td>
-<td>Selfing.R</td>
+<td>R</td>
 <td>Decrease in parent-sharing effective population size</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\({\Theta^*_l}\)</span></td>
-<td>Selfing.Theta*!!<span class="math inline">\(l\)</span></td>
+<td>theta*[<span class="math inline">\(l\)</span>]</td>
 <td><em>Effective</em> scaled mutation rate for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\({\Theta_l}\)</span></td>
-<td>Selfing.Theta!!<span class="math inline">\(l\)</span></td>
+<td>theta[<span class="math inline">\(l\)</span>]</td>
 <td>Scaled mutation rate <span class="math inline">\(4Nu\)</span> for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
@@ -395,11 +380,6 @@ sample.2    23  20  1   1   4   5</code></pre>
 <p>The first variant has <span class="math inline">\(\Psi=\{s^*,p_m\}\)</span>. This variant treats <span class="math inline">\(s^*\)</span> as a basic parameter, and does not model inbreeding depression.</p>
 <p>The following variables are estimated, with the field names given:</p>
 <table>
-<colgroup>
-<col style="width: 30%" />
-<col style="width: 21%" />
-<col style="width: 47%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
@@ -410,32 +390,32 @@ sample.2    23  20  1   1   4   5</code></pre>
 <tbody>
 <tr class="odd">
 <td><span class="math inline">\(s^*\)</span></td>
-<td>Selfing.s*</td>
+<td>s*</td>
 <td>Fraction of uniparental adults (selfing rate).</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(p_m\)</span></td>
-<td>Selfing.p_m</td>
+<td>p_m</td>
 <td>The fraction of males</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\({T_k}\)</span></td>
-<td>Selfing.DiploidAFS.t!!<span class="math inline">\(k\)</span></td>
+<td>t[<span class="math inline">\(k\)</span>]</td>
 <td>Number of generations of selfing for individual <span class="math inline">\(k\)</span>.</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(R\)</span></td>
-<td>Selfing.R</td>
+<td>R</td>
 <td>Decrease in parent-sharing effective population size</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\({\Theta^*_l}\)</span></td>
-<td>Selfing.Theta*!!<span class="math inline">\(l\)</span></td>
+<td>theta*[<span class="math inline">\(l\)</span>]</td>
 <td><em>Effective</em> scaled mutation rate for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\({\Theta_l}\)</span></td>
-<td>Selfing.Theta!!<span class="math inline">\(l\)</span></td>
+<td>theta[<span class="math inline">\(l\)</span>]</td>
 <td>Scaled mutation rate <span class="math inline">\(4Nu\)</span> for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
@@ -446,11 +426,6 @@ sample.2    23  20  1   1   4   5</code></pre>
 <p>The second variant has <span class="math inline">\(\Psi=\{\tilde{s},\tau,p_m\}\)</span>. This variant treats <span class="math inline">\(s^*\)</span> as a composite parameter.</p>
 <p>The following variables are estimated, with the field names given:</p>
 <table>
-<colgroup>
-<col style="width: 30%" />
-<col style="width: 21%" />
-<col style="width: 47%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
@@ -461,42 +436,42 @@ sample.2    23  20  1   1   4   5</code></pre>
 <tbody>
 <tr class="odd">
 <td><span class="math inline">\(\tilde{s}\)</span></td>
-<td>Selfing.s~</td>
+<td>s~</td>
 <td>Fraction of uniparental zygotes.</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(\tau\)</span></td>
-<td>Selfing.tau</td>
+<td>tau</td>
 <td>Relative viability of selfed zygotes.</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(p_m\)</span></td>
-<td>Selfing.p_m</td>
+<td>p_m</td>
 <td>The fraction of males</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(s^*\)</span></td>
-<td>Selfing.s*</td>
+<td>s*</td>
 <td>Fraction of uniparental adults (selfing rate).</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\({T_k}\)</span></td>
-<td>Selfing.DiploidAFS.t!!<span class="math inline">\(k\)</span></td>
+<td>t[<span class="math inline">\(k\)</span>]</td>
 <td>Number of generations of selfing for individual <span class="math inline">\(k\)</span>.</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(R\)</span></td>
-<td>Selfing.R</td>
+<td>R</td>
 <td>Decrease in parent-sharing effective population size</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\({\Theta^*_l}\)</span></td>
-<td>Selfing.Theta*!!<span class="math inline">\(l\)</span></td>
+<td>theta*[<span class="math inline">\(l\)</span>]</td>
 <td><em>Effective</em> scaled mutation rate for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\({\Theta_l}\)</span></td>
-<td>Selfing.Theta!!<span class="math inline">\(l\)</span></td>
+<td>theta[<span class="math inline">\(l\)</span>]</td>
 <td>Scaled mutation rate <span class="math inline">\(4Nu\)</span> for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
@@ -508,11 +483,6 @@ sample.2    23  20  1   1   4   5</code></pre>
 <p>In this model <span class="math inline">\(\Psi=\{\tilde{s},\tau,p_f,\sigma\}\)</span>. Here <span class="math inline">\(s^*\)</span> is a composite parameter.</p>
 <p>The following variables are estimated, with the field names given:</p>
 <table>
-<colgroup>
-<col style="width: 30%" />
-<col style="width: 21%" />
-<col style="width: 47%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
@@ -523,52 +493,52 @@ sample.2    23  20  1   1   4   5</code></pre>
 <tbody>
 <tr class="odd">
 <td><span class="math inline">\(\tilde{s}\)</span></td>
-<td>Selfing.s~</td>
+<td>s~</td>
 <td>Fraction of hermaphrodite seeds set by self-pollen.</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(\tau\)</span></td>
-<td>Selfing.tau</td>
+<td>tau</td>
 <td>Relative viability of selfed seeds.</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(p_f\)</span></td>
-<td>Selfing.p_f</td>
+<td>p_f</td>
 <td>The fraction of females</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(\sigma\)</span></td>
-<td>Selfing.sigma</td>
+<td>sigma</td>
 <td>Seed production rate of females relative to hermaphrodites.</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(s^*\)</span></td>
-<td>Selfing.s*</td>
+<td>s*</td>
 <td>Fraction of uniparental adults (selfing rate).</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\({T_k}\)</span></td>
-<td>Selfing.DiploidAFS.t!!<span class="math inline">\(k\)</span></td>
+<td>t[<span class="math inline">\(k\)</span>]</td>
 <td>Number of generations of selfing for individual <span class="math inline">\(k\)</span>.</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(R\)</span></td>
-<td>Selfing.R</td>
+<td>R</td>
 <td>Decrease in parent-sharing effective population size</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(H\)</span></td>
-<td>Selfing.H</td>
+<td>H</td>
 <td>Fraction of non-selfed individuals with a hermaphrodite seed-parent.</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\({\Theta^*_l}\)</span></td>
-<td>Selfing.Theta*!!<span class="math inline">\(l\)</span></td>
+<td>theta*[<span class="math inline">\(l\)</span>]</td>
 <td><em>Effective</em> scaled mutation rate for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\({\Theta_l}\)</span></td>
-<td>Selfing.Theta!!<span class="math inline">\(l\)</span></td>
+<td>theta[<span class="math inline">\(l\)</span>]</td>
 <td>Scaled mutation rate <span class="math inline">\(4Nu\)</span> for locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
