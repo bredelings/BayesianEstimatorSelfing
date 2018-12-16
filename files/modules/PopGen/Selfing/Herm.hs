@@ -17,7 +17,7 @@ main = do
 
   theta_effective <- dp n_loci alpha (gamma 0.25 2.0)
 
-  s <- uniform 0.0 1.0
+  s <- sample $ uniform 0.0 1.0
 
   let r = 1.0
   
