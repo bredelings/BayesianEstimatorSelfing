@@ -1,6 +1,7 @@
 module PopGen.Selfing.RobustGeneric where
 
 import PopGen
+import PopGen.Selfing
 import Distributions
 import System.Environment
 
@@ -8,7 +9,7 @@ observed_alleles = read_phase_file (getArgs!!0)
 
 n_loci = length observed_alleles
 
-n_individuals = length (observed_alleles!!0)/2
+n_individuals = length (observed_alleles!!0) `div` 2
 
 main = do 
 
