@@ -33,10 +33,10 @@ main = do
 
   (t, afs_dist) <- diploid_afs n_individuals n_loci s theta_effective
 
-  observe observed_alleles afs_dist
+  observe afs_dist observed_alleles
 
 --  Insert specific numbers of females and total individuals in below:
---  observe <females> $ binomial <total> p_f
+--  observe (binomial <num_total> p_f) <num_females>
 
   return $ log_all [ t   %% "t",
                      a   %% "a",

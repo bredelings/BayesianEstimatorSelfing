@@ -13,7 +13,7 @@ n_individuals = length (observed_alleles!!0) `div` 2
 
 main = do 
 
-  let alpha = 0.10
+  let alpha = 1.0
 
   theta_effective <- dp n_loci alpha (gamma 0.25 2.0)
 
@@ -28,7 +28,7 @@ main = do
 
   (t,afs_dist) <- diploid_afs n_individuals n_loci s theta_effective
 
-  observe observed_alleles afs_dist
+  observe afs_dist observed_alleles
 
   return $ log_all [ t %% "t",
                      s %% "s*",
