@@ -9,7 +9,7 @@ estimating parameters under the gynodioecious model and the androdioecious model
 
 # Install
 
-BES is implement within the BAli-Phy MCMC framework, so you must first install [BAli-Phy](https://github.com/bredelings/BAli-Phy).
+BES is implemented within the BAli-Phy MCMC framework, so you must first install [BAli-Phy](https://github.com/bredelings/BAli-Phy).
 
 You can then install BES as follows:
 ```
