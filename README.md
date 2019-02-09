@@ -7,6 +7,21 @@ BES also contains a generic model for estimating selfing rates and mutation rate
 Additional non-genetic information, such as field observations of the number of females or males, is required for
 estimating parameters under the gynodioecious model and the androdioecious model.
 
+# Install
+
+BES is implement within the BAli-Phy MCMC framework, so you must first install [BAli-Phy](https://github.com/bredelings/BAli-Phy).
+
+You can then install BES as follows:
+```
+bali-phy --version
+bali-phy-pkg install BES
+bali-phy-pkg packages
+```
+
+For further instructions in installation and usage, see the [README.pdf](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/doc/README.pdf)
+
+# Overview
+
 BES is run as a Unix command line program.  It is not a GUI program; instead you must run it in a terminal.
 Therefore, you might want to keep a [Unix Tutorial](http://www.ee.surrey.ac.uk/Teaching/Unix) or
 [Unix cheat sheet](http://www.rain.org/~mkummel/unix.html) handy while you work.
@@ -23,5 +38,3 @@ such as (for example) field observations on the fraction of hermaphrodites.  The
 the user must [edit these modules](#specifying-additional-information) to add this information before attempting to run these models.  This manual
 describes how to add information, but is not a substitute for understanding something about the structure of the
 model.
-
-For further instructions in installation and usage, see the [README.pdf](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/doc/README.pdf)
