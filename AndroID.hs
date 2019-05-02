@@ -3,7 +3,7 @@ module AndroID where
 import PopGen
 import PopGen.Selfing
 import PopGen.Selfing.Androdioecy
-import Distributions
+import Probability
 import System.Environment
 
 -- This file is a template.  It using Haskell syntax to describe a model.

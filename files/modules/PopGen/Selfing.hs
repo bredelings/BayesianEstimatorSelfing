@@ -1,6 +1,6 @@
 module PopGen.Selfing where
 
-import Distributions
+import Probability
 import Range
 
 builtin builtin_ewens_diploid_probability 3 "ewens_diploid_probability" "PopGen"

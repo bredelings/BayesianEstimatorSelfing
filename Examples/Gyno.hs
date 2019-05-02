@@ -3,7 +3,7 @@ module Gyno where
 import PopGen
 import PopGen.Selfing
 import PopGen.Selfing.Gynodioecy
-import Distributions
+import Probability
 import System.Environment
 
 observed_alleles = read_phase_file (getArgs!!0)

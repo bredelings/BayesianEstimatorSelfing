@@ -3,7 +3,7 @@ module HermID where
 import PopGen
 import PopGen.Selfing
 import PopGen.Selfing.PureHermaphrodites
-import Distributions
+import Probability
 import System.Environment
 
 observed_alleles = read_phase_file (getArgs!!0)
