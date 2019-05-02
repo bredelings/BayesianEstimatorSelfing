@@ -26,13 +26,13 @@ herm_model = do
   return (tau, ss)
 
 
-main = do 
+main = block $ do
 
   let alpha = 0.10
 
-  theta_effective <- dp n_loci alpha (gamma 0.25 2.0) 
+  theta_effective <- random $ dp n_loci alpha (gamma 0.25 2.0)
 
-  (tau, ss) <- herm_model
+  (tau, ss) <- random $ herm_model
 
   let s = herm_mating_system ss tau
       r = 1.0
@@ -41,7 +41,7 @@ main = do
 
   let theta = map (/factor) theta_effective
 
-  (t, afs_dist) <- diploid_afs n_individuals n_loci s theta_effective
+  (t, afs_dist) <- random $ diploid_afs n_individuals n_loci s theta_effective
 
   observe observed_alleles afs_dist
 

@@ -17,13 +17,13 @@ n_loci = length observed_alleles
 
 n_individuals = length (observed_alleles!!0) `div` 2
 
-main = do 
+main = block $ do
 
   let alpha = 0.10
 
-  theta_effective <- dp n_loci alpha (gamma 0.5 0.5) 
+  theta_effective <- random $ dp n_loci alpha (gamma 0.5 0.5)
 
-  (a, tau, p_f, sigma) <- gyno_model
+  (a, tau, p_f, sigma) <- random $ gyno_model
 
   let (s, h, r) = gyno_mating_system tau a p_f sigma
 
@@ -31,7 +31,7 @@ main = do
   
   let theta = map (/factor) theta_effective
 
-  (t, afs_dist) <- diploid_afs n_individuals n_loci s theta_effective
+  (t, afs_dist) <- random $ diploid_afs n_individuals n_loci s theta_effective
 
   observe observed_alleles afs_dist
 
