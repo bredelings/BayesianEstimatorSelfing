@@ -36,7 +36,7 @@ main = do
   observe observed_alleles afs_dist
 
 --  Insert specific numbers of females and total individuals in below:
---  observe <females> $ binomial <total> p_f
+--  observe (binomial <total> p_f) <females>
 
   return $ log_all [ t   %% "t",
                      a   %% "a",

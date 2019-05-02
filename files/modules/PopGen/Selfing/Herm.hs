@@ -28,7 +28,7 @@ main = do
 
   (t,afs_dist) <- diploid_afs n_individuals n_loci s theta_effective
 
-  observe observed_alleles afs_dist
+  observe afs_dist observed_alleles
 
   return $ log_all [ t %% "t",
                      s %% "s*",

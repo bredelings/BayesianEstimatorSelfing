@@ -28,9 +28,9 @@ main = do
 
   (t, afs_dist) <- diploid_afs n_individuals n_loci s theta_effective
 
-  observe observed_alleles afs_dist
+  observe afs_dist observed_alleles
 
-  observe 27 $ binomial 221 p_f
+  observe (binomial 221 p_f) 27
 
   return $ log_all [ s' %% "s~",
                      tau %% "tau",

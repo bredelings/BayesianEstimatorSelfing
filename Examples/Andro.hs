@@ -27,9 +27,9 @@ main = do
 
   (t, afs_dist) <- diploid_afs n_individuals n_loci s theta_effective
 
-  observe observed_alleles afs_dist
+  observe afs_dist observed_alleles
 
-  observe 20 $ binomial 2000 p_m
+  observe (binomial 2000 p_m) 20
 
   return $ log_all [ p_m %% "p_m",
                      s %% "s*",
