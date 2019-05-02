@@ -417,8 +417,8 @@ Additional information about a variable can be added in 3 ways.
 
 ### Introduce a variable with a prior and place observations on it.
 ``` haskell
-  tau <- sample $ uniform 0.0 1.0
-  observe 10 (binomial 20 tau)
+  tau <- random $ sample $ uniform 0.0 1.0
+  observe (binomial 20 tau) 10
 ```
 
 ### Fix a variable to a known constant value.

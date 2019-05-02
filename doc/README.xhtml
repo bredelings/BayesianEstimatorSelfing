@@ -29,7 +29,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -144,15 +144,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <h2 id="installing-bes"><span class="header-section-number">2.3</span> Installing BES</h2>
 <p>First, check that the <code>bali-phy-pkg</code> command works:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ex">%</span> bali-phy-pkg help</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">%</span> bali-phy-pkg help</a></code></pre></div>
 <p>Download and install the BES package:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="ex">%</span> bali-phy-pkg install BES</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">%</span> bali-phy-pkg install BES</a></code></pre></div>
 <p>Check that the package is installed:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="ex">%</span> bali-phy-pkg packages</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="ex">%</span> bali-phy-pkg packages</a></code></pre></div>
 <p>To see what modules were installed, run:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ex">%</span> bali-phy-pkg files BES</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="ex">%</span> bali-phy-pkg files BES</a></code></pre></div>
 <p>You can uninstall the package by running:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="ex">%</span> bali-phy-pkg uninstall BES</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="ex">%</span> bali-phy-pkg uninstall BES</a></code></pre></div>
 <p>Next, download some additional modules for particular mating systems. These files are not installed into the package directory because they must be manually modified before they are used.</p>
 <ul>
 <li><a href="https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/HermID.hs">HermID.hs</a></li>
@@ -164,14 +164,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1 id="running-the-program"><span class="header-section-number">3</span> Running the program</h1>
 <h2 id="quick-start"><span class="header-section-number">3.1</span> Quick Start</h2>
 <p>First, check that the model loads correctly:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="ex">%</span> bali-phy -M PopGen.Selfing.Generic --test --- Examples/outfile.001.70.001.phase</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="ex">%</span> bali-phy -M PopGen.Selfing.Generic --test --- Examples/outfile.001.70.001.phase</a></code></pre></div>
 <p>If that works, then run the MCMC using the generic model:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="ex">%</span> bali-phy -M PopGen.Selfing.Generic --iter=1000 --- Examples/outfile.001.70.001.phase <span class="kw">&amp;</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="ex">%</span> bali-phy -M PopGen.Selfing.Generic --iter=1000 --- Examples/outfile.001.70.001.phase <span class="kw">&amp;</span></a></code></pre></div>
 <p>This should create a directory called <code>Generic-1/</code> (or <code>Generic-2/</code>, etc.) that contains the output files.</p>
 <p>Second, load the output file <code>Generic-1/C1.log</code> using the GUI program Tracer. On Unix, you can run this from the command line as follows:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="ex">%</span> tracer Generic-1/C1.log <span class="kw">&amp;</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1"><span class="ex">%</span> tracer Generic-1/C1.log <span class="kw">&amp;</span></a></code></pre></div>
 <p>It is also possible to use a non-graphical program statreport to view the estimates of the selfing rate</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="ex">%</span> statreport --select=<span class="st">&quot;s*&quot;</span> Generic-1/C1.log</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1"><span class="ex">%</span> statreport --select=<span class="st">&quot;s*&quot;</span> Generic-1/C1.log</a></code></pre></div>
 <p>This can be useful when analyzing data in a terminal.</p>
 <h1 id="input"><span class="header-section-number">4</span> Input</h1>
 <p>Input files must be in PHASE format. Both alleles for each locus should be specified, with NA given to indicate missing data.</p>
@@ -221,15 +221,15 @@ sample.2    23  20  1   1   4   5</code></pre>
 <h1 id="analyzing-output-files"><span class="header-section-number">6</span> Analyzing output files</h1>
 <h2 id="using-statreport"><span class="header-section-number">6.1</span> Using <code>statreport</code></h2>
 <p>In order to determine estimates of parameters, you can use the program <code>statreport</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="ex">%</span> statreport C1.log</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" title="1"><span class="ex">%</span> statreport C1.log</a></code></pre></div>
 <p>You can plot the posterior distribution for specific parameters by using the select option:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="ex">%</span> statreport --select <span class="st">&quot;s*&quot;</span> C1.log</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" title="1"><span class="ex">%</span> statreport --select <span class="st">&quot;s*&quot;</span> C1.log</a></code></pre></div>
 <p>Here quotes are necessary to make sure that the <code>*</code> is not interpreted by the command line shell, but is passed in to the <code>statreport</code> program unchanged.</p>
 <p>You can also use the arguments <code>--mean</code>, <code>--mode</code>, and <code>--median</code> (the default) to exime different properties of the posterior distribution.</p>
 <h2 id="using-tracer"><span class="header-section-number">6.2</span> Using <code>tracer</code></h2>
 <p>Tracer is a graphical program for exploring posterior distributions.</p>
 <p>Load the <code>C1.log</code> file using <code>tracer</code>. On Unix, if <code>tracer</code> is in your <code>PATH</code>, you can do this by typing</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="ex">%</span> tracer C1.log <span class="kw">&amp;</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" title="1"><span class="ex">%</span> tracer C1.log <span class="kw">&amp;</span></a></code></pre></div>
 <h1 id="mating-system-models"><span class="header-section-number">7</span> Mating system models</h1>
 <p>The stochastic process that generates the genetic data is described in terms of mating system parameters <span class="math inline">\(\Psi\)</span> and the effective scaled mutation rates <span class="math inline">\(\Theta^*_l\)</span> for each locus <span class="math inline">\(l\)</span>. The set of variables <span class="math inline">\(\Psi\)</span> is specific for each mating system.</p>
 <p>Some quantites are of interest for each mating system</p>
@@ -563,15 +563,15 @@ sample.2    23  20  1   1   4   5</code></pre>
 <li>Place a subjective prior on the variable.</li>
 </ol>
 <h3 id="introduce-a-variable-with-a-prior-and-place-observations-on-it."><span class="header-section-number">8.2.1</span> Introduce a variable with a prior and place observations on it.</h3>
-<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb14-1" data-line-number="1">  tau <span class="ot">&lt;-</span> sample <span class="fu">$</span> uniform <span class="fl">0.0</span> <span class="fl">1.0</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">  observe <span class="dv">10</span> (binomial <span class="dv">20</span> tau)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb14-1" title="1">  tau <span class="ot">&lt;-</span> random <span class="fu">$</span> sample <span class="fu">$</span> uniform <span class="fl">0.0</span> <span class="fl">1.0</span></a>
+<a class="sourceLine" id="cb14-2" title="2">  observe (binomial <span class="dv">20</span> tau) <span class="dv">10</span></a></code></pre></div>
 <h3 id="fix-a-variable-to-a-known-constant-value."><span class="header-section-number">8.2.2</span> Fix a variable to a known constant value.</h3>
 <p>If you know the value of a variable, you can fix it to a constant:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb15-1" data-line-number="1">  <span class="kw">let</span> tau <span class="fu">=</span> <span class="fl">1.0</span></a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb15-1" title="1">  <span class="kw">let</span> tau <span class="fu">=</span> <span class="fl">1.0</span></a></code></pre></div>
 <p>If you have observations about a variable (e.g. <span class="math inline">\(p_m\)</span>) then do not fix that variable to a constant. If you fix a variable to a constant, then that variable cannot be estimated since its value is already known.</p>
 <h3 id="place-a-subjective-prior-on-a-variable"><span class="header-section-number">8.2.3</span> Place a subjective prior on a variable</h3>
 <p>This approach doesn’t actually make the parameter <em>identifiable</em>, since this approach affects only the prior, and not the likelihood.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb16-1" data-line-number="1">  tau <span class="ot">&lt;-</span> sample <span class="fu">$</span> beta <span class="fl">2.0</span> <span class="fl">8.0</span></a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb16-1" title="1">  tau <span class="ot">&lt;-</span> sample <span class="fu">$</span> beta <span class="fl">2.0</span> <span class="fl">8.0</span></a></code></pre></div>
 <p>As a result, it is not possible to compare the posterior (with data) and the prior (without data) to assess the impact of the data. This approach is therefore not recommended.</p>
 <h1 id="bayesian-priors-and-posteriors"><span class="header-section-number">9</span> Bayesian priors and posteriors</h1>
 <p>In Bayesian parlance, <em>prior</em> means “before the data”, and <em>posterior</em> means “after the data”. The Bayesian approach places prior distributions on parameters. As a result, parameters become random variables, and can have distributions. This differs from the maximum likelihood setting, where parameters are not random. However, the researcher must interpret prior and posterior distributions carefully in order to avoid drawing erroneous conclusions.</p>
