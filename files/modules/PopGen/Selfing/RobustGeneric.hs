@@ -2,7 +2,7 @@ module PopGen.Selfing.RobustGeneric where
 
 import PopGen
 import PopGen.Selfing
-import Distributions
+import Probability
 import System.Environment
 
 observed_alleles = read_phase_file (getArgs!!0)
