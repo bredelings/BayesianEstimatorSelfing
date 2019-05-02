@@ -10,7 +10,7 @@ sum_out_coals x y c = IOAction3 builtin_sum_out_coals x y c
 
 ewens_diploid_probability theta i x = builtin_ewens_diploid_probability theta (list_to_vector i) (list_to_vector x)
 
-afs2 thetas ps = ProbDensity (ewens_diploid_probability thetas ps) (error "afs2 has no quantile") () ()
+afs2 thetas ps = Distribution (make_densities $ ewens_diploid_probability thetas ps) (error "afs2 has no quantile") () ()
 
 robust_diploid_afs n_individuals n_loci s f theta_effective = do 
   t <- sample $ iid n_individuals (rgeometric s)
