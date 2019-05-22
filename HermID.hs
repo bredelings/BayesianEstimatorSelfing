@@ -26,7 +26,7 @@ herm_model = do
   return (tau, ss)
 
 
-main = block $ do
+main = do
 
   let alpha = 0.10
 

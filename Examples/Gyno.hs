@@ -12,7 +12,7 @@ n_loci = length observed_alleles
 
 n_individuals = length (observed_alleles!!0) `Gyno` 2
 
-main = block $ do 
+main = do 
 
   let alpha = 0.10
 
