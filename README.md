@@ -18,8 +18,7 @@ information, such as field observations of the number of females or
 males, is required for estimating parameters under the gynodioecious
 model and the androdioecious model.
 
-See the paper:  [(2015) Redelings et al, "A Bayesian Approach  Inferring Rates of Selfing and Locus-Specific Mutation", Genetics November 1, 2015 vol. 201 no. 3 1171-1188]( https://doi.org/10.1534/genetics.115.179093 )
-  * [Figures](https://www.genetics.org/content/201/3/1171.figures-only)
+See the [paper](https://doi.org/10.1534/genetics.115.179093) and [figures](https://www.genetics.org/content/201/3/1171.figures-only).
 
 # Install
 
