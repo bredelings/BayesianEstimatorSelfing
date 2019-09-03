@@ -4,19 +4,15 @@ rates and other mating system parameters from genotype data.  BES
 estimates parameters in a Bayesian framework using Markov chain Monte
 Carlo (MCMC).
 
-BES contains a generic model for estimating selfing rates and mutation
-rates independent of a mating system.
-
-BES also contains models of
+BES contains a _generic_ model for estimating selfing rates and mutation
+rates independent of a mating system. BES also contains models of
 * pure hermaphroditism
 * androdioecy (hermaphrodites + males)
 * gynodioecy (hermaphrodites + females)
 
-Under each model, BES estimates selfing rates, mutation rates, and
-mating-system specific parameters. Additional *non-genetic*
-information, such as field observations of the number of females or
-males, is required for estimating parameters under the gynodioecious
-model and the androdioecious model.
+Additional *non-genetic* information, such as field observations of
+the number of females or males, is required for to estimate mating
+system parameters.
 
 See the [paper](https://doi.org/10.1534/genetics.115.179093) and [figures](https://www.genetics.org/content/201/3/1171.figures-only).
 
