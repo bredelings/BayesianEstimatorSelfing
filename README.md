@@ -11,6 +11,7 @@ BES also contains models of
 * pure hermaphroditism
 * androdioecy (hermaphrodites + males)
 * gynodioecy (hermaphrodites + females)
+
 Under each model, BES estimates selfing rates, mutation rates, and
 mating-system specific parameters. Additional *non-genetic*
 information, such as field observations of the number of females or
