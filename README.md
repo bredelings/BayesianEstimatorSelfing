@@ -51,11 +51,15 @@ bali-phy -m Generic2.hs -l tsv --test --- Examples/test.phase2
 
 If you leave off the `-l tsv` then logging will be done in JSON format.
 
-# Using the robust version
+### Using the robust version
 
 The default version of BES assumes that selfing is the _only_ source of decreased heterozygosity.
 However, with multiple loci, it is easy to separate loss of heterozygosity that comes from selfing
 versus loss of heterozygosity that comes from other sources.
+
+
+The "robust" version estimates an additional parameter `f` that indicates the loss of heterozygosity
+that comes from non-selfing sources.
 
 ```
 cd BayesianEstimatorSelfing
