@@ -20,6 +20,16 @@ bali-phy-pkg packages
 
 For further instructions in installation and usage, see the [README.pdf](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/doc/README.pdf)
 
+## Installing the development version of BES
+
+This assumes you've installed the latest (unreleased) version of bali-phy from github.
+```
+git clone git@github.com:bredelings/BayesianEstimatorSelfing.git
+cd BayesianEstimatorSelfing
+./make_package
+bali-phy-pkg install-archive BES_0.1.2.tar.gz
+```
+
 # Overview
 
 BES is run as a Unix command line program.  It is not a GUI program; instead you must run it in a terminal.
