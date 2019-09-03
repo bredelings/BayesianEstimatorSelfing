@@ -30,6 +30,29 @@ cd BayesianEstimatorSelfing
 bali-phy-pkg install-archive BES_0.1.2.tar.gz
 ```
 
+To try a test run, do
+
+```
+cd BayesianEstimatorSelfing
+bali-phy -m Generic.hs -l tsv --iter=50 --- Examples/outfile.001.70.001.phase1
+bali-phy -m Generic2.hs -l tsv --test --- Examples/test.fastphase
+bali-phy -m Generic2.hs -l tsv --test --- Examples/test.phase2
+```
+
+If you leave off the `-l tsv` then logging will be done in JSON format.
+
+# Using the robust version
+
+The default version of BES assumes that selfing is the _only_ source of decreased heterozygosity.
+However, with multiple loci, it is easy to separate loss of heterozygosity that comes from selfing
+versus loss of heterozygosity that comes from other sources.
+
+```
+cd BayesianEstimatorSelfing
+bali-phy -m RobustGeneric.hs --iter=10 -l tsv --- Examples/outfile.001.70.001.phase1
+```
+
+
 # Overview
 
 BES is run as a Unix command line program.  It is not a GUI program; instead you must run it in a terminal.
