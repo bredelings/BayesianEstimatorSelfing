@@ -2,11 +2,12 @@ module PopGen.Selfing where
 
 import Probability
 import Range
+import Foreign.Pair
 
 builtin builtin_ewens_diploid_probability 3 "ewens_diploid_probability" "PopGen"
-builtin builtin_sum_out_coals 3 "sum_out_coals" "MCMC"
+builtin builtin_sum_out_coals 4 "sum_out_coals" "MCMC"
 
-sum_out_coals x y c = IOAction3 builtin_sum_out_coals x y c
+sum_out_coals x y c = IOAction (pair_from_c . builtin_sum_out_coals x y c)
 
 ewens_diploid_probability theta i x = builtin_ewens_diploid_probability theta (list_to_vector i) (list_to_vector x)
 
