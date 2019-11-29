@@ -417,7 +417,7 @@ Additional information about a variable can be added in 3 ways.
 
 ### Introduce a variable with a prior and place observations on it.
 ``` haskell
-  tau <- random $ sample $ uniform 0.0 1.0
+  tau <- random $ uniform 0.0 1.0
   observe (binomial 20 tau) 10
 ```
 
@@ -435,7 +435,7 @@ cannot be estimated since its value is already known.
 This approach doesn't actually make the parameter *identifiable*,
 since this approach affects only the prior, and not the likelihood.
 ``` haskell
-  tau <- sample $ beta 2.0 8.0
+  tau <- beta 2.0 8.0
 ```
 As a result, it is not possible to compare the posterior (with data)
 and the prior (without data) to assess the impact of the data.  This

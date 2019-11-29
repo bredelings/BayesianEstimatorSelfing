@@ -38,16 +38,16 @@ main = do
 --  Insert specific numbers of females and total individuals in below:
 --  observe (binomial <total> p_f) <females>
 
-  return $ log_all [ t   %% "t",
-                     a   %% "a",
-                     tau %% "tau",
-                     p_f %% "p_f",
-                     sigma %% "sigma",
-                     s   %% "s*",
-                     theta_effective %% "theta*",
-                     theta %% "theta",
-                     h %% "H",
-                     r %% "R"]
+  return $ log_all [ "t" %=% t,
+                     "a" %=% a,
+                     "tau" %=% tau,
+                     "p_f" %=% p_f,
+                     "sigma" %=% sigma,
+                     "s*" %=% s,
+                     "theta*" %=% theta_effective,
+                     "theta" %=% theta,
+                     "H" %=% h,
+                     "R" %=% r]
 
 gyno_model = do
 

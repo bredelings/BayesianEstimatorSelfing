@@ -38,22 +38,22 @@ main = do
 --  Insert specific numbers of males and total individuals in below:
 --  observe (binomial <total> p_m) <males>
 
-  return $ log_all [ p_m %% "p_m",
-                     t   %% "t",
-                     s'  %% "s~",
-                     tau %% "tau",
-                     s   %% "s*",
-                     theta_effective %% "theta*",
-                     theta %% "theta",
-                     r %% "R" ]
+  return $ log_all [ "p_m" %=% p_m,
+                     "t" %=% t,
+                     "s~" %=% s',
+                     "tau" %=% tau,
+                     "s*" %=% s,
+                     "theta*" %=% theta_effective,
+                     "theta" %=% theta,
+                     "R" %=% r ]
 
 andro_model _ = do
 
---  s' <- sample $ uniform 0.0 1.0
+--  s' <- uniform 0.0 1.0
 
---  tau <- sample $ uniform 0.0 1.0
+--  tau <- uniform 0.0 1.0
        
---  p_m <- sample $ uniform 0.0 1.0
+--  p_m <- uniform 0.0 1.0
   
   return (p_m, tau, s')
 

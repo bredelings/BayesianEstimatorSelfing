@@ -14,9 +14,9 @@ n_individuals = length (observed_alleles!!0) `div` 2
 
 herm_model = do
 
-  tau <- sample $ uniform 0.0 1.0
+  tau <- uniform 0.0 1.0
 
-  ss <- sample $ uniform 0.0 1.0
+  ss <- uniform 0.0 1.0
 
   return (tau, ss)
 
@@ -40,10 +40,10 @@ main = do
 
   observe afs_dist observed_alleles
 
-  return $ log_all [ss %% "s~",
-                    t %% "t",
-                    tau %% "tau",
-                    s %% "s*",
-                    theta_effective %% "theta*",
-                    theta %% "theta",
-                    r %% "R" ]
+  return $ log_all ["s~" %=% ss,
+                    "t" %=% t,
+                    "tau" %=% tau,
+                    "s*" %=% s,
+                    "theta*" %=% theta_effective,
+                    "theta" %=% theta,
+                    "R" %=% r ]

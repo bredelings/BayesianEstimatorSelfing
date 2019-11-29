@@ -17,7 +17,7 @@ main = do
 
   theta_effective <- random $ dp n_loci alpha (gamma 0.25 2.0)
 
-  s <- random $ sample $ uniform 0.0 1.0
+  s <- random $ uniform 0.0 1.0
 
   let r = 1.0
   
@@ -30,8 +30,8 @@ main = do
 
   observe afs_dist observed_alleles
 
-  return $ log_all [ t %% "t",
-                     s %% "s*",
-                     theta_effective %% "theta*",
-                     theta %% "theta",
-                     r %% "R" ]
+  return $ log_all [ "t" %=% t,
+                     "s*" %=% s,
+                     "theta*" %=% theta_effective,
+                     "theta" %=% theta,
+                     "R" %=% r ]

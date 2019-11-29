@@ -21,16 +21,16 @@ main = do
   -- Alternatively, one can use a dirichlet process mixture:
   --  theta_effective <- random $ dpm n_loci (gamma 0.5 1.0) (gamma 1.05 0.1)
 
-  f <- random $ sample $ uniform 0.0 1.0
+  f <- random $ uniform 0.0 1.0
                      
-  s <- random $ sample $ uniform 0.0 1.0
+  s <- random $ uniform 0.0 1.0
 
   (t, afs_dist) <- random $ robust_diploid_afs n_individuals n_loci s f theta_effective
 
   observe afs_dist observed_alleles
 
-  return $ log_all [t %% "t",
-                    s %% "s*",
-                    f %% "f",
-                    theta_effective %% "theta*"]
+  return $ log_all ["t" %=% t,
+                    "s*" %=% s,
+                    "f" %=% f,
+                    "theta*" %=% theta_effective]
 

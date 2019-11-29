@@ -32,23 +32,23 @@ main = do
 
   observe (binomial 221 p_f) 27
 
-  return $ log_all [ s' %% "s~",
-                     tau %% "tau",
-                     p_f %% "p_f",
-                     sigma %% "sigma",
-                     s %% "s*",
-                     theta_effective %% "theta*",
-                     theta %% "theta",
-                     h %% "H",
-                     r %% "R" ]
+  return $ log_all [ "s~" %=% s',
+                     "tau" %=% tau,
+                     "p_f" %=% p_f,
+                     "sigma" %=% sigma,
+                     "s*" %=% s,
+                     "theta*" %=% theta_effective,
+                     "theta" %=% theta,
+                     "H" %=% h,
+                     "R" %=% r ]
 
 gyno_model _ = do
 
-  s' <- sample $ uniform 0.0 1.0
+  s' <- uniform 0.0 1.0
 
-  tau <- sample $ beta 2.0 8.0
+  tau <- beta 2.0 8.0
 
-  p_f <- sample $ uniform 0.0 1.0
+  p_f <- uniform 0.0 1.0
 
   let sigma = 1.0
 

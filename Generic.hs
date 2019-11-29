@@ -14,13 +14,13 @@ n_individuals = length (observed_alleles!!0) `div` 2
 main = do
 
   -- Prior on the concentration parameter alpha for the Dirichlet Process
-  alpha <- random $ sample $ gamma 2.0 0.5;
+  alpha <- random $ gamma 2.0 0.5;
 
   -- The vector of mutation rates theta[l] for each locus l
   theta_effective <- random $ dp n_loci alpha (gamma 0.25 2.0)
 
   -- The selfing rate s
-  s <- random $ sample $ uniform 0.0 1.0
+  s <- random $ uniform 0.0 1.0
 
   -- The vector of selfing times t, and the distribution afs_dist of observed data, given t
   -- (unobserved) i.
@@ -30,7 +30,7 @@ main = do
   observe afs_dist observed_alleles
 
   -- Side-effect-free logging by constructing a JSON object that represents parameters.
-  return $ log_all [alpha %% "alpha",
-                    t %% "t",
-                    s %% "s*",
-                    theta_effective %% "theta*" ]
+  return $ log_all ["alpha" %=% alpha,
+                    "t" %=% t,
+                    "s*" %=% s,
+                    "theta*" %=% theta_effective ]
