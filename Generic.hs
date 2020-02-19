@@ -1,4 +1,4 @@
-module Generic where
+module RobustGeneric where
 
 import           PopGen
 import           PopGen.Selfing
@@ -19,15 +19,19 @@ main = do
     -- The vector of mutation rates theta[l] for each locus l
     theta_effective <- random $ dp n_loci alpha (gamma 0.25 2.0)
 
+    -- Decrease in heterozygosity that is NOT from selfing.
+    f               <- random $ beta 1.0 2.0
+
     -- The selfing rate s
-    s               <- random $ uniform 0.0 1.0
+    s               <- random $ beta 1.0 2.0
 
-    -- The vector of selfing times t, and the distribution afs_dist of observed data, given t
-    -- (unobserved) i.
-    (t, afs_dist)   <- random $ diploid_afs n_individuals n_loci s theta_effective
+    -- The vector of selfing times t, and the distribution afs_dist of observed data,
+    -- given t, f and (unobserved) i.
+    (t, afs_dist)   <- random $ robust_diploid_afs n_individuals n_loci s f theta_effective
 
-    -- Compute the likelihood of the observed data, given t and (unobserved) i.
+    -- Compute the likelihood of the observed data, given t, f and (unobserved) i.
     observe afs_dist observed_alleles
 
     -- Side-effect-free logging by constructing a JSON object that represents parameters.
-    return ["alpha" %=% alpha, "t" %=% t, "s*" %=% s, "theta*" %=% theta_effective]
+    return ["alpha" %=% alpha, "t" %=% t, "s*" %=% s, "f" %=% f, "theta*" %=% theta_effective]
+

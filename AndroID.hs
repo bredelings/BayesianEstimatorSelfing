@@ -31,7 +31,9 @@ main = do
 
     let theta  = map (/ factor) theta_effective
 
-    (t, afs_dist) <- random $ diploid_afs n_individuals n_loci s theta_effective
+    f               <- random $ beta 1.0 2.0
+
+    (t, afs_dist) <- random $ robust_diploid_afs n_individuals n_loci s f theta_effective
 
     observe afs_dist observed_alleles
 

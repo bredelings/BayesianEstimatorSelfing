@@ -1,4 +1,4 @@
-module Generic2 where
+module RobustGeneric where
 
 import           PopGen
 import           PopGen.Selfing
@@ -13,19 +13,25 @@ n_individuals = length (observed_alleles !! 0) `div` 2
 
 main = do
 
--- Uncomment to estimate alpha:
+  -- Prior on the concentration parameter alpha for the Dirichlet Process
     alpha           <- random $ gamma 2.0 0.5
-  --  let alpha = 0.10
 
+    -- The vector of mutation rates theta[l] for each locus l
     theta_effective <- random $ dp n_loci alpha (gamma 0.25 2.0)
 
-    -- Alternatively, one can use a dirichlet process mixture:
-    --  theta_effective <- random $ dpm n_loci (gamma 0.5 1.0) (gamma 1.05 0.1)
+    -- Decrease in heterozygosity that is NOT from selfing.
+    f               <- random $ beta 1.0 2.0
 
-    s               <- random $ uniform 0.0 1.0
+    -- The selfing rate s
+    s               <- random $ beta 1.0 2.0
 
-    (t, afs_dist)   <- random $ diploid_afs n_individuals n_loci s theta_effective
+    -- The vector of selfing times t, and the distribution afs_dist of observed data,
+    -- given t, f and (unobserved) i.
+    (t, afs_dist)   <- random $ robust_diploid_afs n_individuals n_loci s f theta_effective
 
+    -- Compute the likelihood of the observed data, given t, f and (unobserved) i.
     observe afs_dist observed_alleles
 
-    return ["alpha" %=% alpha, "t" %=% t, "s*" %=% s, "theta*" %=% theta_effective]
+    -- Side-effect-free logging by constructing a JSON object that represents parameters.
+    return ["alpha" %=% alpha, "t" %=% t, "s*" %=% s, "f" %=% f, "theta*" %=% theta_effective]
+

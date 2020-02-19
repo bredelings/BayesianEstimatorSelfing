@@ -36,7 +36,7 @@ This assumes you've installed the latest (unreleased) version of bali-phy from g
 git clone https://github.com/bredelings/BayesianEstimatorSelfing.git
 cd BayesianEstimatorSelfing
 ./make_package
-bali-phy-pkg install-archive BES_0.1.2.tar.gz
+bali-phy-pkg install-archive BES_0.1.3.tar.gz
 ```
 
 To try a test run, do
@@ -50,21 +50,30 @@ bali-phy -m Generic2.hs -l tsv --test --- Examples/test.phase2
 
 If you leave off the `-l tsv` then logging will be done in JSON format.
 
-### Using the robust version
+### The robust version
 
-The default version of BES assumes that selfing is the _only_ source of decreased heterozygosity.
-However, with multiple loci, it is easy to separate loss of heterozygosity that comes from selfing
-versus loss of heterozygosity that comes from other sources.
+BES version 0.1.3 has been changed to estimate the
+loss-of-heterozygosity (f) that is not due to selfing as well as the
+selfing rate (s or s*).  This is more robust than assuming that
+selfing is the _only_ source of decreased heterozygosity, as in the
+paper.  With enough loci, it is easy to separate the loss of
+heterozygosity that comes from selfing versus loss of heterozygosity
+that comes from other sources.  This is because selfing leads to loss
+of heterozygosity across all loci in a selfed individual.
 
+The model of non-selfing inbreeding assumes that two alleles in the
+first outbred ancestor of a selfed individual have probability f of
+being identical, and probability (1-f) of being drawn independently
+from the gene pool.
 
-The "robust" version estimates an additional parameter `f` that indicates the loss of heterozygosity
-that comes from non-selfing sources.
+No mechanism is specified for this inbreeding coefficient.  It is
+assumed to result from some genealogical process that happens
+effectively instantaneously on the time-scale of a coalescent event.
+The lack of mechanism is unfortunate.  However, without allowing
+for a extra source of loss-of-heterozygosity, the estimates of the
+selfing rate can be too high.
 
-```
-cd BayesianEstimatorSelfing
-bali-phy -m RobustGeneric.hs --iter=10 -l tsv --- Examples/outfile.001.70.001.phase1
-```
-
+You can disable this by setting f to 0.
 
 # Overview
 
