@@ -54,12 +54,16 @@ If you leave off the `-l tsv` then logging will be done in JSON format.
 
 BES version 0.1.3 has been changed to estimate the
 loss-of-heterozygosity (f) that is not due to selfing as well as the
-selfing rate (s or s*).  This is more robust than assuming that
+selfing rate (s or s*).  You can disable this by setting f to 0.
+
+Estimating loss-of-heterozygosity from f is more robust than assuming that
 selfing is the _only_ source of decreased heterozygosity, as in the
 paper.  With enough loci, it is easy to separate the loss of
 heterozygosity that comes from selfing versus loss of heterozygosity
 that comes from other sources.  This is because selfing leads to loss
-of heterozygosity across all loci in a selfed individual.
+of heterozygosity across all loci in highly selfed individuals, but does
+not cause loss of heterozygosity in outbred individuals.  Other sources
+of inbreeding cause a loss of heterozygosity in all individuals alike.
 
 The model of non-selfing inbreeding assumes that two alleles in the
 first outbred ancestor of a selfed individual have probability f of
@@ -73,7 +77,6 @@ The lack of mechanism is unfortunate.  However, without allowing
 for a extra source of loss-of-heterozygosity, the estimates of the
 selfing rate can be too high.
 
-You can disable this by setting f to 0.
 
 # Overview
 
