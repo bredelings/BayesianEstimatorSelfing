@@ -1,4 +1,4 @@
-module RobustGeneric where
+module Generic where
 
 import           PopGen
 import           PopGen.Selfing
