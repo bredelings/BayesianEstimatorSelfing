@@ -31,7 +31,7 @@ main = do
 
     let theta  = map (/ factor) theta_effective
 
-    f               <- random $ beta 1.0 2.0
+    f               <- random $ beta 0.25 1.0
 
     (t, afs_dist) <- random $ robust_diploid_afs n_individuals n_loci s f theta_effective
 
@@ -44,7 +44,7 @@ main = do
 
 andro_model _ = do
 
-  s <- beta 1.0 2.0
+  s <- beta 0.25 1.0
 
   male_fraction <- beta 2.0 2.0
 

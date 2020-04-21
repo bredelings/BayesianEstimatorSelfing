@@ -20,10 +20,10 @@ main = do
     theta_effective <- random $ dp n_loci alpha (gamma 0.25 2.0)
 
     -- Decrease in heterozygosity that is NOT from selfing.
-    f               <- random $ beta 1.0 2.0
+    f               <- random $ beta 0.25 1.0
 
     -- The selfing rate s
-    s               <- random $ beta 1.0 2.0
+    s               <- random $ beta 0.25 1.0
 
     -- The vector of selfing times t, and the distribution afs_dist of observed data,
     -- given t, f and (unobserved) i.
