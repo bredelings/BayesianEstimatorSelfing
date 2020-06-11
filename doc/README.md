@@ -83,11 +83,11 @@ modification.
 
 First, check that the model loads correctly:
 ``` bash
-% bali-phy -M PopGen.Selfing.Generic --test --- Examples/outfile.001.70.001.phase
+% bali-phy -m Generic.hs --test --- Examples/outfile.001.70.001.phase
 ```
 If that works, then run the MCMC using the generic model:
 ``` bash
-% bali-phy -M PopGen.Selfing.Generic --iter=1000 --- Examples/outfile.001.70.001.phase &
+% bali-phy -m Generic.hs --iter=1000 --- Examples/outfile.001.70.001.phase &
 ```
 This should create a directory called `Generic-1/` (or `Generic-2/`, etc.) that contains the output files.
 
@@ -244,7 +244,7 @@ The following variables are estimated, with the field names given:
 | ${T_k}$ | t[$k$] | Number of generations of selfing for individual $k$. |
 | ${\Theta^*_l}$ | theta\*[$l$]       | *Effective* scaled mutation rate for locus $l$. |
 
-This variant is run by specifying `-M PopGen.Selfing.Generic` on the
+This variant is run by specifying `-m Generic.hs` on the
 command line.
 
 ## Pure Hermaphrodite
@@ -273,7 +273,7 @@ The following variables are estimated, with the field names given:
 | ${\Theta^*_l}$ | theta\*[$l$]       | *Effective* scaled mutation rate for locus $l$. |
 | ${\Theta_l}$ | theta\[$l$]       | Scaled mutation rate $4Nu$ for locus $l$. |
 
-This variant is run by specifying `-M PopGen.Selfing.Herm` on the
+This variant is run by specifying `-m HermID.hs` on the
 command line.
 
 ### Variant II

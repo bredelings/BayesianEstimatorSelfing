@@ -164,9 +164,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1 id="running-the-program"><span class="header-section-number">3</span> Running the program</h1>
 <h2 id="quick-start"><span class="header-section-number">3.1</span> Quick Start</h2>
 <p>First, check that the model loads correctly:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="ex">%</span> bali-phy -M PopGen.Selfing.Generic --test --- Examples/outfile.001.70.001.phase</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="ex">%</span> bali-phy -m Generic.hs --test --- Examples/outfile.001.70.001.phase</a></code></pre></div>
 <p>If that works, then run the MCMC using the generic model:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="ex">%</span> bali-phy -M PopGen.Selfing.Generic --iter=1000 --- Examples/outfile.001.70.001.phase <span class="kw">&amp;</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="ex">%</span> bali-phy -m Generic.hs --iter=1000 --- Examples/outfile.001.70.001.phase <span class="kw">&amp;</span></a></code></pre></div>
 <p>This should create a directory called <code>Generic-1/</code> (or <code>Generic-2/</code>, etc.) that contains the output files.</p>
 <p>Second, load the output file <code>Generic-1/C1.log</code> using the GUI program Tracer. On Unix, you can run this from the command line as follows:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1"><span class="ex">%</span> tracer Generic-1/C1.log <span class="kw">&amp;</span></a></code></pre></div>
@@ -280,7 +280,7 @@ sample.2    23  20  1   1   4   5</code></pre>
 </tr>
 </tbody>
 </table>
-<p>This variant is run by specifying <code>-M PopGen.Selfing.Generic</code> on the command line.</p>
+<p>This variant is run by specifying <code>-m Generic.hs</code> on the command line.</p>
 <h2 id="pure-hermaphrodite"><span class="header-section-number">7.2</span> Pure Hermaphrodite</h2>
 <p>In the pure hermaphrodite model, each individual contributes both male and female gametes to the gene pool. There are two variants of this model.</p>
 <h3 id="variant-i"><span class="header-section-number">7.2.1</span> Variant I</h3>
@@ -322,7 +322,7 @@ sample.2    23  20  1   1   4   5</code></pre>
 </tr>
 </tbody>
 </table>
-<p>This variant is run by specifying <code>-M PopGen.Selfing.Herm</code> on the command line.</p>
+<p>This variant is run by specifying <code>-m HermID.hs</code> on the command line.</p>
 <h3 id="variant-ii"><span class="header-section-number">7.2.2</span> Variant II</h3>
 <p>The second variant has <span class="math inline">\(\Psi=\{\tilde{s},\tau\}\)</span>. This variant treats <span class="math inline">\(s^*\)</span> as a composite parameter.</p>
 <p>The following variables are estimated, with the field names given:</p>
