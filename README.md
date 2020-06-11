@@ -17,7 +17,7 @@ system parameters.
 See the [paper](https://doi.org/10.1534/genetics.115.179093) and [figures](https://www.genetics.org/content/201/3/1171.figures-only).
 
 
-## The robust
+## A more robust estimator
 
 BES version 0.1.3 has been changed to be more robust by estimating the
 loss-of-heterozygosity (f) that is not due to selfing as well as the
