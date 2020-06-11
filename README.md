@@ -47,7 +47,9 @@ individuals alike.
 
 # Install
 
-BES is implemented within the BAli-Phy MCMC framework, so you must first install [BAli-Phy](https://github.com/bredelings/BAli-Phy).
+BES is implemented within the BAli-Phy MCMC framework, so you must
+first install [BAli-Phy](https://github.com/bredelings/BAli-Phy).
+Version 3.5.0 or higher is required.
 
 1. You first need to install the BES package for bali-phy:
 ```
