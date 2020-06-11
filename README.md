@@ -48,21 +48,23 @@ individuals alike.
 # Install
 
 1. Install the MCMC program [BAli-Phy](https://github.com/bredelings/BAli-Phy) version 3.5.0 or higher.
+
    See the [full documentation](http://bali-phy.org/README.xhtml) or
    the [quick install documentation](http://bali-phy.org/download.php).
 
 2. Install the BES package for bali-phy:
-```
-bali-phy --version
-bali-phy-pkg install BES
-bali-phy-pkg packages
-```
+
+   ```
+   bali-phy --version
+   bali-phy-pkg install BES
+   bali-phy-pkg packages
+   ```
 
 3. Install the BES example scripts:
 
-```
-git clone https://github.com/bredelings/BayesianEstimatorSelfing.git
-```
+   ```
+   git clone https://github.com/bredelings/BayesianEstimatorSelfing.git
+   ```
 
 For further instructions in installation and usage, see the [README.pdf](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/doc/README.pdf)
 
