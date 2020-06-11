@@ -26,8 +26,8 @@ However, without allowing for an extra source of loss-of-heterozygosity,
 the estimates of the selfing rate can be too high, since they assume
 that selfing is the _only_ source of decreased heterozygosity.
 
-The model of non-selfing inbreeding assumes that two alleles in the
-first outbred ancestor of a selfed individual have probability f of
+The model of non-selfing inbreeding assumes that two alleles from the
+first two outbred ancestors of a selfed individual have probability f of
 being identical, and probability (1-f) of being drawn independently
 from the gene pool.  No mechanism is specified for this inbreeding
 coefficient.  It is simply assumed to result from some genealogical
