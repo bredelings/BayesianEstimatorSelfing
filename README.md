@@ -47,18 +47,19 @@ individuals alike.
 
 # Install
 
-BES is implemented within the BAli-Phy MCMC framework, so you must
-first install [BAli-Phy](https://github.com/bredelings/BAli-Phy).
+BES is implemented within the BAli-Phy MCMC framework.
+
+1. You must first install [BAli-Phy](https://github.com/bredelings/BAli-Phy).
 Version 3.5.0 or higher is required.
 
-1. You first need to install the BES package for bali-phy:
+2. You first need to install the BES package for bali-phy:
 ```
 bali-phy --version
 bali-phy-pkg install BES
 bali-phy-pkg packages
 ```
 
-2. You then need to install the BES example scripts:
+3. You then need to install the BES example scripts:
 
 ```
 git clone https://github.com/bredelings/BayesianEstimatorSelfing.git
