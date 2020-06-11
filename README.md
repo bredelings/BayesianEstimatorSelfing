@@ -89,19 +89,17 @@ model.
 
 # Usage
 
-3. To try a test run, do
+1. To try a test run, do
 
 ```
 cd BayesianEstimatorSelfing
-bali-phy -m Generic.hs -l tsv --test     --- Examples/outfile.001.70.001.phase1
-bali-phy -m Generic.hs -l tsv --iter=50  --- Examples/outfile.001.70.001.phase1
+bali-phy -m Generic.hs -l tsv --test --- Examples/outfile.001.70.001.phase1
+bali-phy -m Generic.hs -l tsv        --- Examples/outfile.001.70.001.phase1
 ```
 
-This runs 50 iterations of MCMC, which is too short for a full run,
-just to see if the software is working.  The script `Generic.hs` is a
-template can be modified if you wish to adjust the priors.
+The script `Generic.hs` is a template can be modified if you wish to adjust the priors.
 
-If you want to use a FastPhase of Phase2-formatted input file, you can
+2. If you want to use a FastPhase of Phase2-formatted input file, you can
 use the `Generic2.hs` template:
 
 ```
@@ -109,11 +107,12 @@ bali-phy -m Generic2.hs -l tsv --test --- Examples/test.fastphase
 bali-phy -m Generic2.hs -l tsv --test --- Examples/test.phase2
 ```
 
-If you leave off the `-l tsv` then logging will be done in JSON format.
-
+3. If you leave off the `-l tsv` then logging will be done in JSON format.
 
 
 # Installing the development version of BES
+
+*Note:* You should probably just run `bali-phy-pkg install BES` instead of doing this!
 
 To install the unreleased development version of BES from github:
 ```
