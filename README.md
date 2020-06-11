@@ -32,7 +32,9 @@ being identical, and probability (1-f) of being drawn independently
 from the gene pool.  No mechanism is specified for this inbreeding
 coefficient.  It is simply assumed to result from some genealogical
 process that happens effectively instantaneously on the time-scale of
-a coalescent event.
+a coalescent event.  _Thus the `f` parameter is the probability that an
+allele from an individual `I1` and an individual `I2` are IBD conditional
+on `I1` and `I2` having a viable offspring._
 
 With enough loci, it is easy to separate the loss of heterozygosity
 that comes from selfing versus loss of heterozygosity that comes from
