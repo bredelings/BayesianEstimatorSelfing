@@ -123,3 +123,7 @@ bali-phy-pkg install-archive BES_<version>.tar.gz
 ```
 This will probably require the latest (unreleased) version of bali-phy from github as well.
 
+# Contact
+
+You can send questions to the mailing list [https://groups.google.com/forum/#!forum/bayesian-estimator-selfing].
+If you don't join the group first, your question will be held until I have a chance to check that it is not spam.
