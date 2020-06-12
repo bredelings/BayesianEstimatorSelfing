@@ -483,3 +483,8 @@ computed from.
 In order to determine what the shape of the prior on $s^*$ is, one
 can run the model without data.  This can be done by commenting out
 the `observe` statements.
+
+# Contact
+
+You can send questions to the mailing list [https://groups.google.com/forum/#!forum/bayesian-estimator-selfing].
+If you don't join the group first, your question will be held until I have a chance to check that it is not spam.
