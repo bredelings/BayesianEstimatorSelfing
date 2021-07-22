@@ -21,9 +21,9 @@ main = do
 
     let alpha = 0.10
 
-    theta_effective <- random $ dp n_loci alpha (gamma 0.25 2.0)
+    theta_effective    <- random $ dp n_loci alpha (gamma 0.25 2.0)
 
-    (male_fraction, s)        <- andro_model ()
+    (male_fraction, s) <- random $ andro_model ()
 
     let r      = andro_mating_system' s male_fraction
 
@@ -31,21 +31,33 @@ main = do
 
     let theta  = map (/ factor) theta_effective
 
-    f               <- random $ beta 0.25 1.0
+    f_other <- random $ beta 0.25 1.0
 
-    (t, afs_dist) <- random $ robust_diploid_afs n_individuals n_loci s f theta_effective
+    let f_is    = s / (2.0 - s)
+        f_total = 1.0 - (1.0 - f_is) * (1.0 - f_other)
+
+    (t, afs_dist) <- random $ robust_diploid_afs n_individuals n_loci s f_other theta_effective
 
     observe afs_dist observed_alleles
 
   --  Insert specific numbers of males and total individuals in below:
   --  observe (binomial <total_individual> male_fraction) <male_individuals>
 
-    return ["male_fraction" %=% male_fraction, "t" %=% t, "s*" %=% s, "F[is]" %=% s/(2.0-s), "F[other]" %=% f, "theta*" %=% theta_effective, "R" %=% r]
+    return
+        [ "male_fraction" %=% male_fraction
+        , "t" %=% t
+        , "s*" %=% s
+        , "F[is]" %=% f_is
+        , "F[other]" %=% f_other
+        , "F[total]" %=% f_total
+        , "theta*" %=% theta_effective
+        , "R" %=% r
+        ]
 
 andro_model _ = do
 
-  s <- beta 0.25 1.0
+    s             <- beta 0.25 1.0
 
-  male_fraction <- beta 2.0 2.0
+    male_fraction <- beta 2.0 2.0
 
-  return (male_fraction, s)
+    return (male_fraction, s)

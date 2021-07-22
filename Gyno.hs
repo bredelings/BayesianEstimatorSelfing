@@ -31,9 +31,12 @@ main = do
 
     let theta     = map (/ factor) theta_effective
 
-    f               <- random $ beta 0.25 1.0
+    f_other <- random $ beta 0.25 1.0
 
-    (t, afs_dist) <- random $ robust_diploid_afs n_individuals n_loci s f theta_effective
+    let f_is    = s / (2.0 - s)
+        f_total = 1.0 - (1.0 - f_is) * (1.0 - f_other)
+
+    (t, afs_dist) <- random $ robust_diploid_afs n_individuals n_loci s f_other theta_effective
 
     observe observed_alleles afs_dist
 
@@ -47,8 +50,9 @@ main = do
         , "p_f" %=% p_f
         , "sigma" %=% sigma
         , "s*" %=% s
-        , "F[is]" %=% s/(2.0-s)
-        , "F[other]" %=% f
+        , "F[is]" %=% f_is
+        , "F[other]" %=% f_other
+        , "F[total]" %=% f_total
         , "theta*" %=% theta_effective
         , "theta" %=% theta
         , "H" %=% h
