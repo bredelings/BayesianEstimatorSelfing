@@ -20,21 +20,10 @@ See the [paper](https://doi.org/10.1534/genetics.115.179093) and [figures](https
 ## A more robust estimator
 
 BES version 0.1.3 has been changed to be more robust by estimating the
-loss-of-heterozygosity (f) that is not due to selfing as well as the
-selfing rate (s or s*).  You can disable this by setting f to 0.
-However, without allowing for an extra source of loss-of-heterozygosity,
+loss-of-heterozygosity (F[other]) that is not due to selfing as well as the
+selfing rate (s or s*).  Without allowing other sources of inbreeding,
 the estimates of the selfing rate can be too high, since they assume
 that selfing is the _only_ source of decreased heterozygosity.
-
-The model of non-selfing inbreeding assumes that two alleles from the
-first two outbred ancestors of a selfed individual have probability f of
-being identical, and probability (1-f) of being drawn independently
-from the gene pool.  No mechanism is specified for this inbreeding
-coefficient.  It is simply assumed to result from some genealogical
-process that happens effectively instantaneously on the time-scale of
-a coalescent event.  _Thus the f parameter is the probability that an
-allele from an individual I1 and an individual I2 are IBD conditional
-on I1 and I2 having a viable offspring._
 
 With enough loci, it is easy to separate the loss of heterozygosity
 that comes from selfing versus loss of heterozygosity that comes from
@@ -44,6 +33,11 @@ large effect on individuals with many generations of selfing. Other
 sources of inbreeding cause a loss of heterozygosity in all
 individuals alike.  
 
+The model of non-selfing inbreeding assumes that the two alleles in an outbred
+individual have probability (1-F[other]) of being drawn independently from the
+gene pool, and probability F[other] of being identical-by-descent (IBD).  No
+mechanism is specified for the allele sharing in the IBD case, except that the
+two IBD alleles are assumed to have coalesced instantaneously.
 
 # Install
 
