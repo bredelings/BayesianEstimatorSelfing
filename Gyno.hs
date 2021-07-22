@@ -47,6 +47,7 @@ main = do
         , "p_f" %=% p_f
         , "sigma" %=% sigma
         , "s*" %=% s
+        , "f" %=% f
         , "theta*" %=% theta_effective
         , "theta" %=% theta
         , "H" %=% h
