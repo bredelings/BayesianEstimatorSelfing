@@ -20,8 +20,8 @@ See the [paper](https://doi.org/10.1534/genetics.115.179093) and [figures](https
 ## A more robust estimator
 
 BES version 0.1.3 has been changed to be more robust by estimating the
-loss-of-heterozygosity (F[other]) that is not due to selfing as well as the
-selfing rate (s or s*).  Without allowing other sources of inbreeding,
+loss-of-heterozygosity (`F[other`]) that is not due to selfing as well as the
+selfing rate (`s` or `s*`).  Without allowing other sources of inbreeding,
 the estimates of the selfing rate can be too high, since they assume
 that selfing is the _only_ source of decreased heterozygosity.
 
@@ -34,13 +34,13 @@ sources of inbreeding cause a loss of heterozygosity in all
 individuals alike.  
 
 The model of non-selfing inbreeding assumes that the two alleles in an outbred
-individual have probability (1-F[other]) of being drawn independently from the
+individual have probability (`1 - F[other]`) of being drawn independently from the
 gene pool, and probability F[other] of being identical-by-descent (IBD).  No
 mechanism is specified for the allele sharing in the IBD case, except that the
 two IBD alleles are assumed to have coalesced quickly compared to a normal
 coalesent event.
 
-In addition to s* (the selfing rate), the example scripts now
+In addition to `s*` (the selfing rate), the example scripts now
 report the inbreeding coefficients:
 
 * F[other]
