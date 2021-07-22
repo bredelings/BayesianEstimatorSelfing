@@ -36,5 +36,5 @@ main = do
     observe afs_dist observed_alleles
 
     -- Side-effect-free logging by constructing a JSON object that represents parameters.
-    return ["alpha" %=% alpha, "t" %=% t, "s*" %=% s, "f" %=% f, "theta*" %=% theta_effective]
+    return ["alpha" %=% alpha, "t" %=% t, "s*" %=% s, "F[is]" %=% s/(2.0-s), "F[other]" %=% f, "theta*" %=% theta_effective]
 

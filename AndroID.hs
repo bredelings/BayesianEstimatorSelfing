@@ -40,7 +40,7 @@ main = do
   --  Insert specific numbers of males and total individuals in below:
   --  observe (binomial <total> p_m) <males>
 
-    return ["p_m" %=% p_m, "t" %=% t, "s~" %=% s', "tau" %=% tau, "s*" %=% s, "f" %=% f, "theta*" %=% theta_effective, "theta" %=% theta, "R" %=% r]
+    return ["p_m" %=% p_m, "t" %=% t, "s~" %=% s', "tau" %=% tau, "s*" %=% s, "F[is]" %=% s/(2.0-s), "F[other]" %=% f, "theta*" %=% theta_effective, "theta" %=% theta, "R" %=% r]
 
 andro_model _ = do
 

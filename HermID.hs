@@ -47,4 +47,4 @@ main = do
 
     observe observed_alleles afs_dist
 
-    return ["t" %=% t, "s~" %=% ss, "tau" %=% tau, "s*" %=% s, "f" %=% f, "theta*" %=% theta_effective, "theta" %=% theta, "R" %=% r]
+    return ["t" %=% t, "s~" %=% ss, "tau" %=% tau, "s*" %=% s, "F[is]" %=% s/(2.0-s), "F[other]" %=% f, "theta*" %=% theta_effective, "theta" %=% theta, "R" %=% r]
