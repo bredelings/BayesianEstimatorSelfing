@@ -11,7 +11,7 @@ rates independent of a mating system. BES also contains models of
 * gynodioecy (hermaphrodites + females)
 
 Additional *non-genetic* information, such as field observations of
-the number of females or males, is required for to estimate mating
+the number of females or males, is required to estimate mating
 system parameters.
 
 See the [paper](https://doi.org/10.1534/genetics.115.179093) and [figures](https://www.genetics.org/content/201/3/1171.figures-only).
