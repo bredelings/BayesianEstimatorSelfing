@@ -40,9 +40,16 @@ mechanism is specified for the allele sharing in the IBD case, except that the
 two IBD alleles are assumed to have coalesced quickly compared to a normal
 coalesent event.
 
+In addition to s* (the selfing rate), the example scripts now
+report the inbreeding coefficients:
+
+* F[other]
+* F[is] = s*/(2-s*)
+* F[total] = 1 - (1 - F[is]) * (1 - F[other])
+
 # Install
 
-1. Install the MCMC program [BAli-Phy](https://github.com/bredelings/BAli-Phy) version 3.5.0 or higher.
+1. Install the MCMC program [BAli-Phy](https://github.com/bredelings/BAli-Phy) version 3.6.0 or higher.
 
    See the [full documentation](http://bali-phy.org/README.xhtml) or
    the [quick install documentation](http://bali-phy.org/download.php).
