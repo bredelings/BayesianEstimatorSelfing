@@ -35,7 +35,7 @@ individuals alike.
 
 The model of non-selfing inbreeding assumes that the two alleles in an outbred
 individual have probability (`1 - F[other]`) of being drawn independently from the
-gene pool, and probability $$F[other]$$ of being identical-by-descent (IBD).  No
+gene pool, and probability `F[other]` of being identical-by-descent (IBD).  No
 mechanism is specified for the allele sharing in the IBD case, except that the
 two IBD alleles are assumed to have coalesced quickly compared to a normal
 coalesent event.
