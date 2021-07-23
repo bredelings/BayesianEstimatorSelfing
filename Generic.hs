@@ -5,13 +5,13 @@ import           PopGen.Selfing
 import           Probability
 import           System.Environment
 
-observed_alleles = read_phase_file (getArgs !! 0)
+random = lazy
 
-n_loci = length observed_alleles
+model observed_alleles = do
 
-n_individuals = length (observed_alleles !! 0) `div` 2
+    let n_loci = length observed_alleles
 
-main = do
+        n_individuals = length (observed_alleles !! 0) `div` 2
 
     -- Prior on the concentration parameter alpha for the Dirichlet Process
     alpha           <- random $ gamma 2.0 0.5
@@ -48,4 +48,11 @@ main = do
         , "F[total]" %=% f_total
         , "theta*" %=% theta_effective
         ]
+
+main = do
+  [filename] <- getArgs
+
+  let observed_alleles = read_phase_file filename
+
+  mcmc $ model observed_alleles
 
