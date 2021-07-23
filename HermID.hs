@@ -43,8 +43,8 @@ main = do
 
     f_other <- random $ beta 0.25 1.0
 
-    let f_is    = s / (2.0 - s)
-        f_total = 1.0 - (1.0 - f_is) * (1.0 - f_other)
+    let f_selfing = s / (2.0 - s)
+        f_total   = 1.0 - (1.0 - f_selfing) * (1.0 - f_other)
 
     (t, afs_dist) <- random $ robust_diploid_afs n_individuals n_loci s f_other theta_effective
 
@@ -55,7 +55,7 @@ main = do
         , "s~" %=% ss
         , "tau" %=% tau
         , "s*" %=% s
-        , "F[is]" %=% f_is
+        , "F[selfing]" %=% f_selfing
         , "F[other]" %=% f
         , "F[total]" %=% f_total
         , "theta*" %=% theta_effective

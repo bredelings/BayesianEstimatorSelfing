@@ -43,8 +43,8 @@ In addition to `s*` (the selfing rate), the example scripts now
 report the inbreeding coefficients:
 
 * F[other]
-* F[is] = s*/(2-s*)
-* F[total] = 1 - (1 - F[is]) * (1 - F[other])
+* F[selfing] = s*/(2-s*)
+* F[total] = 1 - (1 - F[selfing]) * (1 - F[other])
 
 # Install
 

@@ -28,8 +28,8 @@ main = do
     -- The selfing rate s
     s               <- random $ beta 0.25 1.0
 
-    let f_is    = s / (2.0 - s)
-        f_total = 1.0 - (1.0 - f_is) * (1.0 - f_other)
+    let f_selfing = s / (2.0 - s)
+        f_total   = 1.0 - (1.0 - f_selfing) * (1.0 - f_other)
 
     -- The vector of selfing times t, and the distribution afs_dist of observed data,
     -- given t, f and (unobserved) i.
@@ -43,7 +43,7 @@ main = do
         [ "alpha" %=% alpha
         , "t" %=% t
         , "s*" %=% s
-        , "F[is]" %=% f_is
+        , "F[selfing]" %=% f_selfing
         , "F[other]" %=% f_other
         , "F[total]" %=% f_total
         , "theta*" %=% theta_effective
