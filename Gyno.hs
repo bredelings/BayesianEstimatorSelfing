@@ -21,9 +21,9 @@ main = do
 
     let alpha = 0.10
 
-    theta_effective      <- random $ dp n_loci alpha (gamma 0.5 0.5)
+    theta_effective      <- dp n_loci alpha (gamma 0.5 0.5)
 
-    (a, tau, p_f, sigma) <- random $ gyno_model
+    (a, tau, p_f, sigma) <- gyno_model
 
     let (s, h, r) = gyno_mating_system tau a p_f sigma
 
@@ -31,12 +31,12 @@ main = do
 
     let theta     = map (/ factor) theta_effective
 
-    f_other <- random $ beta 0.25 1.0
+    f_other <- beta 0.25 1.0
 
     let f_selfing = s / (2.0 - s)
         f_total   = 1.0 - (1.0 - f_selfing) * (1.0 - f_other)
 
-    (t, afs_dist) <- random $ robust_diploid_afs n_individuals n_loci s f_other theta_effective
+    (t, afs_dist) <- robust_diploid_afs n_individuals n_loci s f_other theta_effective
 
     observe observed_alleles afs_dist
 

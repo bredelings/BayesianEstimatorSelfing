@@ -15,9 +15,9 @@ main = do
 
     let alpha = 0.10
 
-    theta_effective <- random $ dp n_loci alpha (gamma 0.25 2.0)
+    theta_effective <- dp n_loci alpha (gamma 0.25 2.0)
 
-    s               <- random $ uniform 0.0 1.0
+    s               <- uniform 0.0 1.0
 
     let r      = 1.0
 
@@ -26,7 +26,7 @@ main = do
 
     let theta  = map (/ factor) theta_effective
 
-    (t, afs_dist) <- random $ diploid_afs n_individuals n_loci s theta_effective
+    (t, afs_dist) <- diploid_afs n_individuals n_loci s theta_effective
 
     observe afs_dist observed_alleles
 
