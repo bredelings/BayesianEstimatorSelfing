@@ -38,10 +38,11 @@ main = do
 
     (t, afs_dist) <- robust_diploid_afs n_individuals n_loci s f_other theta_effective
 
-    observe afs_dist observed_alleles
+    -- Observed the data: compute the likelihood of the data, given t, f and (unobserved) i.
+    observed_alleles ~> afs_dist
 
-  --  Insert specific numbers of males and total individuals in below:
-  --  observe (binomial <total_individual> male_fraction) <male_individuals>
+    --  Insert specific numbers of males and total individuals in below:
+  --  <male individuals> ~> binomial <total_individual> male_fraction
 
     return
         [ "male_fraction" %=% male_fraction

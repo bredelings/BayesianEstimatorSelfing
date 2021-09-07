@@ -48,7 +48,7 @@ main = do
 
     (t, afs_dist) <- robust_diploid_afs n_individuals n_loci s f_other theta_effective
 
-    observe observed_alleles afs_dist
+    observed_alleles ~> afs_dist
 
     return
         [ "t" %=% t
