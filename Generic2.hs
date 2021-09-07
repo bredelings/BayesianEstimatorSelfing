@@ -5,13 +5,11 @@ import           PopGen.Selfing
 import           Probability
 import           System.Environment
 
-observed_alleles = read_phase2_file (getArgs !! 0)
+model observed_alleles = do
 
-n_loci = length observed_alleles
+    let n_loci = length observed_alleles
 
-n_individuals = length (observed_alleles !! 0) `div` 2
-
-main = do
+        n_individuals = length (observed_alleles !! 0) `div` 2
 
     -- Prior on the concentration parameter alpha for the Dirichlet Process
     alpha           <- gamma 2.0 0.5
@@ -35,8 +33,8 @@ main = do
     -- given t, f and (unobserved) i.
     (t, afs_dist) <- robust_diploid_afs n_individuals n_loci s f_other theta_effective
 
-    -- Compute the likelihood of the observed data, given t, f and (unobserved) i.
-    observe afs_dist observed_alleles
+    -- Observed the data: compute the likelihood of the data, given t, f and (unobserved) i.
+    observed_alleles ~> afs_dist
 
     -- Side-effect-free logging by constructing a JSON object that represents parameters.
     return
@@ -48,4 +46,11 @@ main = do
         , "F[total]" %=% f_total
         , "theta*" %=% theta_effective
         ]
+
+main = do
+  [filename] <- getArgs
+
+  let observed_alleles = read_phase2_file filename
+
+  mcmc $ model observed_alleles
 
