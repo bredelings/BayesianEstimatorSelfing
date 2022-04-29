@@ -48,7 +48,7 @@ report the inbreeding coefficients:
 
 # Install
 
-1. Install the MCMC program [BAli-Phy](https://github.com/bredelings/BAli-Phy) version 3.6.0 or higher.
+1. Install the MCMC program [BAli-Phy](https://github.com/bredelings/BAli-Phy) version 3.6.1 or higher.
 
    See the [full documentation](http://bali-phy.org/README.xhtml) or
    the [quick install documentation](http://bali-phy.org/download.php).
