@@ -11,13 +11,11 @@ import           System.Environment
 -- To use commented priors, remove the -- and add data on the correspond variable.
 -- Alternatively, remove the prior and set the variable to a constant using 'let'.
 
-observed_alleles = read_phase_file (getArgs !! 0)
+model observed_alleles = do
 
-n_loci = length observed_alleles
+    let n_loci = length observed_alleles
 
-n_individuals = length (observed_alleles !! 0) `div` 2
-
-main = do
+        n_individuals = length (observed_alleles !! 0) `div` 2
 
     let alpha = 0.10
 
@@ -27,14 +25,14 @@ main = do
 
     let (s, h, r) = gyno_mating_system tau a p_f sigma
 
-    let factor    = (1.0 - s * 0.5) * r
+    let factor    = (1 - s/2) * r
 
     let theta     = map (/ factor) theta_effective
 
-    f_other <- beta 0.25 1.0
+    f_other <- beta 0.25 1
 
-    let f_selfing = s / (2.0 - s)
-        f_total   = 1.0 - (1.0 - f_selfing) * (1.0 - f_other)
+    let f_selfing = s / (2 - s)
+        f_total   = 1 - (1 - f_selfing) * (1 - f_other)
 
     (t, afs_dist) <- robust_diploid_afs n_individuals n_loci s f_other theta_effective
 
@@ -62,15 +60,19 @@ main = do
 
 gyno_model = do
 
---  a <- uniform 0.0 1.0
+--  a <- uniform 0 1
 
---  tau <- beta 2.0 8.0
+--  tau <- beta 2 8
 
---  p_f <- uniform 0.0 1.0
+--  p_f <- uniform 0 1
 
---  let sigma = 1.0
+--  let sigma = 1
 
     return (a, tau, p_f, sigma)
 
+main = do
+  [filename] <- getArgs
 
+  observed_alleles <- read_phase_file filename
 
+  mcmc $ model observed_alleles
