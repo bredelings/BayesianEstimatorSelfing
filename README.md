@@ -97,8 +97,8 @@ model.
 
 ```
 cd BayesianEstimatorSelfing
-bali-phy -m Generic Examples/outfile.001.70.001.phase1 -l tsv --test
-bali-phy -m Generic Examples/outfile.001.70.001.phase1 -l tsv
+bali-phy -m Generic Examples/outfile.001.70.001.phase1 -l tsv --test      # no MCMC
+bali-phy -m Generic Examples/outfile.001.70.001.phase1 -l tsv --iter=50   # a very short MCMC run
 ```
 
 The script `Generic.hs` is a template can be modified if you wish to adjust the priors.
