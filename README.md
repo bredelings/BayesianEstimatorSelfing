@@ -56,15 +56,12 @@ report the inbreeding coefficients:
 2. Install the BES package for bali-phy:
 
    ```
-   bali-phy --version
-   bali-phy-pkg install BES
-   bali-phy-pkg packages
-   ```
-
-3. Install the BES example scripts:
-
-   ```
    git clone https://github.com/bredelings/BayesianEstimatorSelfing.git
+   git checkout development
+   cd BayesianEstimatorSelfing
+   ./make_package
+   bali-phy --version
+   bali-phy-pkg install-archive BES_0.2.0.tar.gz
    ```
 
 For further instructions in installation and usage, see the [README.pdf](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/doc/README.pdf)
@@ -110,20 +107,6 @@ bali-phy -m Generic2 Examples/test.phase2    -l tsv --test
 
 3. If you leave off the `-l tsv` then logging will be done in JSON format.
 
-
-# Installing the development version of BES
-
-*Note:* You should probably just run `bali-phy-pkg install BES` instead of doing this!
-
-To install the unreleased development version of BES from github:
-```
-git clone https://github.com/bredelings/BayesianEstimatorSelfing.git
-git checkout development
-cd BayesianEstimatorSelfing
-./make_package
-bali-phy-pkg install-archive BES_0.2.0.tar.gz
-```
-This will require the latest (unreleased) version of bali-phy from github as well.
 
 # Contact
 
