@@ -48,7 +48,7 @@ report the inbreeding coefficients:
 
 # Install
 
-1. Install the MCMC program [BAli-Phy](https://github.com/bredelings/BAli-Phy) version 3.6.1 or higher.
+1. Install the MCMC program [BAli-Phy](https://github.com/bredelings/BAli-Phy) version 4.0-alpha7 or higher.
 
    See the [full documentation](http://bali-phy.org/README.xhtml) or
    the [quick install documentation](http://bali-phy.org/download.php).
@@ -94,8 +94,8 @@ model.
 
 ```
 cd BayesianEstimatorSelfing
-bali-phy -m Generic.hs -l tsv --test --- Examples/outfile.001.70.001.phase1
-bali-phy -m Generic.hs -l tsv        --- Examples/outfile.001.70.001.phase1
+bali-phy -m Generic Examples/outfile.001.70.001.phase1 -l tsv --test
+bali-phy -m Generic Examples/outfile.001.70.001.phase1 -l tsv
 ```
 
 The script `Generic.hs` is a template can be modified if you wish to adjust the priors.
@@ -104,8 +104,8 @@ The script `Generic.hs` is a template can be modified if you wish to adjust the 
 use the `Generic2.hs` template:
 
 ```
-bali-phy -m Generic2.hs -l tsv --test --- Examples/test.fastphase
-bali-phy -m Generic2.hs -l tsv --test --- Examples/test.phase2
+bali-phy -m Generic2 Examples/test.fastphase -l tsv --test
+bali-phy -m Generic2 Examples/test.phase2    -l tsv --test
 ```
 
 3. If you leave off the `-l tsv` then logging will be done in JSON format.
@@ -118,11 +118,12 @@ bali-phy -m Generic2.hs -l tsv --test --- Examples/test.phase2
 To install the unreleased development version of BES from github:
 ```
 git clone https://github.com/bredelings/BayesianEstimatorSelfing.git
+git checkout development
 cd BayesianEstimatorSelfing
 ./make_package
-bali-phy-pkg install-archive BES_<version>.tar.gz
+bali-phy-pkg install-archive BES_0.2.0.tar.gz
 ```
-This will probably require the latest (unreleased) version of bali-phy from github as well.
+This will require the latest (unreleased) version of bali-phy from github as well.
 
 # Contact
 
