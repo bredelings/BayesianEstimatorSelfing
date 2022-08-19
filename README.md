@@ -103,7 +103,7 @@ bali-phy -m Generic Examples/outfile.001.70.001.phase1 -l tsv
 
 The script `Generic.hs` is a template can be modified if you wish to adjust the priors.
 
-2. If you want to use a FastPhase of Phase2-formatted input file, you can
+2. If you want to use a FastPhase or Phase2-formatted input file, you can
 use the `Generic2.hs` template:
 
 ```
