@@ -46,6 +46,12 @@ report the inbreeding coefficients:
 * F[selfing] = s*/(2-s*)
 * F[total] = 1 - (1 - F[selfing]) * (1 - F[other])
 
+## The development version
+
+I am keeping the development version fixed at 0.2.0.
+The code is changing to track changes in BAli-Phy.
+You have to install it from the github repo for BES, instead of downloading it from the package archive.
+
 # Install
 
 1. Install the MCMC program [BAli-Phy](https://github.com/bredelings/BAli-Phy) version 4.0-alpha7 or higher.
