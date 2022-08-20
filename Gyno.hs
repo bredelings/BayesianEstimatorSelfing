@@ -38,7 +38,7 @@ main = do
 
     (t, afs_dist) <- random $ robust_diploid_afs n_individuals n_loci s f_other theta_effective
 
-    observe observed_alleles afs_dist
+    observe afs_dist observed_alleles
 
   --  Insert specific numbers of females and total individuals in below:
   --  observe (binomial <total> p_f) <females>
