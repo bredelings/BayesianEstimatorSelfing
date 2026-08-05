@@ -16,6 +16,8 @@ system parameters.
 
 See the [paper](https://doi.org/10.1534/genetics.115.179093) and [figures](https://www.genetics.org/content/201/3/1171.figures-only).
 
+BES 0.2.0 updates the package and model templates for BAli-Phy 4.3.
+
 
 ## A more robust estimator
 
@@ -48,7 +50,7 @@ report the inbreeding coefficients:
 
 # Install
 
-1. Install the MCMC program [BAli-Phy](https://github.com/bredelings/BAli-Phy) version 3.6.1 or higher.
+1. Install the MCMC program [BAli-Phy](https://github.com/bredelings/BAli-Phy) version 4.3 or higher.
 
    See the [full documentation](http://bali-phy.org/README.xhtml) or
    the [quick install documentation](http://bali-phy.org/download.php).
@@ -94,8 +96,8 @@ model.
 
 ```
 cd BayesianEstimatorSelfing
-bali-phy -m Generic.hs -l tsv --test --- Examples/outfile.001.70.001.phase1
-bali-phy -m Generic.hs -l tsv        --- Examples/outfile.001.70.001.phase1
+bali-phy -m Generic.hs -l tsv --test -- Examples/outfile.001.70.001.phase1
+bali-phy -m Generic.hs -l tsv        -- Examples/outfile.001.70.001.phase1
 ```
 
 The script `Generic.hs` is a template can be modified if you wish to adjust the priors.
@@ -104,8 +106,8 @@ The script `Generic.hs` is a template can be modified if you wish to adjust the 
 use the `Generic2.hs` template:
 
 ```
-bali-phy -m Generic2.hs -l tsv --test --- Examples/test.fastphase
-bali-phy -m Generic2.hs -l tsv --test --- Examples/test.phase2
+bali-phy -m Generic2.hs -l tsv --test -- Examples/test.fastphase
+bali-phy -m Generic2.hs -l tsv --test -- Examples/test.phase2
 ```
 
 3. If you leave off the `-l tsv` then logging will be done in JSON format.

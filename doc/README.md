@@ -18,6 +18,7 @@ Therefore, you might want to keep a [Unix Tutorial](http://www.ee.surrey.ac.uk/T
 
 BES runs on Linux, Mac OS X, and Windows.  BES is distributed as an extension package for the BAli-Phy inference framework.
 You might therefore wish to refer to the [BAli-Phy Documentation](http://www.bali-phy.org/README.html) as well.
+BES 0.2.0 requires BAli-Phy 4.3 or later.
 
 BES contains a number of modules that correspond to different mating system models.  Each model allows
 estimating a different set of parameters.  The generic model and the pure hermaphrodite model without
@@ -83,11 +84,11 @@ modification.
 
 First, check that the model loads correctly:
 ``` bash
-% bali-phy -m Generic.hs --test --- Examples/outfile.001.70.001.phase
+% bali-phy -m Generic.hs --test -- Examples/outfile.001.70.001.phase
 ```
 If that works, then run the MCMC using the generic model:
 ``` bash
-% bali-phy -m Generic.hs --iter=1000 --- Examples/outfile.001.70.001.phase &
+% bali-phy -m Generic.hs --iter=1000 -- Examples/outfile.001.70.001.phase &
 ```
 This should create a directory called `Generic-1/` (or `Generic-2/`, etc.) that contains the output files.
 
@@ -417,8 +418,8 @@ Additional information about a variable can be added in 3 ways.
 
 ### Introduce a variable with a prior and place observations on it.
 ``` haskell
-  tau <- random $ uniform 0.0 1.0
-  observe (binomial 20 tau) 10
+  tau <- sample $ uniform 0.0 1.0
+  observe 10 $ binomial 20 $ toProb tau
 ```
 
 ### Fix a variable to a known constant value.
@@ -435,7 +436,7 @@ cannot be estimated since its value is already known.
 This approach doesn't actually make the parameter *identifiable*,
 since this approach affects only the prior, and not the likelihood.
 ``` haskell
-  tau <- beta 2.0 8.0
+  tau <- sample $ beta 2.0 8.0
 ```
 As a result, it is not possible to compare the posterior (with data)
 and the prior (without data) to assess the impact of the data.  This
