@@ -11,19 +11,16 @@ import           System.Environment
 -- To use commented priors, remove the -- and add data on the correspond variable.
 -- Alternatively, remove the prior and set the variable to a constant using 'let'.
 
-observed_alleles = read_phase_file (getArgs !! 0)
+model observed_alleles = do
 
-n_loci = length observed_alleles
-
-n_individuals = length (observed_alleles !! 0) `div` 2
-
-main = do
+    let n_loci = length observed_alleles
+        n_individuals = length (observed_alleles !! 0) `div` 2
 
     let alpha = 0.10
 
-    theta_effective      <- random $ dp n_loci alpha (gamma 0.5 0.5)
+    theta_effective      <- dirichletProcess n_loci alpha (gamma 0.5 0.5)
 
-    (a, tau, p_f, sigma) <- random $ gyno_model
+    (a, tau, p_f, sigma) <- gyno_model
 
     let (s, h, r) = gyno_mating_system tau a p_f sigma
 
@@ -31,17 +28,17 @@ main = do
 
     let theta     = map (/ factor) theta_effective
 
-    f_other <- random $ beta 0.25 1.0
+    f_other <- sample $ beta 0.25 1.0
 
     let f_selfing = s / (2.0 - s)
         f_total   = 1.0 - (1.0 - f_selfing) * (1.0 - f_other)
 
-    (t, afs_dist) <- random $ robust_diploid_afs n_individuals n_loci s f_other theta_effective
+    (t, afs_dist) <- robust_diploid_afs n_individuals n_loci s f_other theta_effective
 
-    observe afs_dist observed_alleles
+    observe observed_alleles afs_dist
 
   --  Insert specific numbers of females and total individuals in below:
-  --  observe (binomial <total> p_f) <females>
+  --  observe <females> $ binomial <total> p_f
 
     return
         [ "t" %=% t
@@ -61,15 +58,17 @@ main = do
 
 gyno_model = do
 
---  a <- uniform 0.0 1.0
+--  a <- sample $ uniform 0.0 1.0
 
---  tau <- beta 2.0 8.0
+--  tau <- sample $ beta 2.0 8.0
 
---  p_f <- uniform 0.0 1.0
+--  p_f <- sample $ uniform 0.0 1.0
 
 --  let sigma = 1.0
 
     return (a, tau, p_f, sigma)
 
-
-
+main _ = do
+    [filename] <- getArgs
+    observed_alleles <- read_phase_file filename
+    return $ model observed_alleles

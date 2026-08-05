@@ -6,19 +6,16 @@ import           PopGen.Selfing.Androdioecy
 import           Probability
 import           System.Environment
 
-observed_alleles = read_phase_file (getArgs !! 0)
+model observed_alleles = do
 
-n_loci = length observed_alleles
-
-n_individuals = length (observed_alleles !! 0) `div` 2
-
-main = do
+    let n_loci = length observed_alleles
+        n_individuals = length (observed_alleles !! 0) `div` 2
 
     let alpha = 0.10
 
-    theta_effective <- random $ dp n_loci alpha (gamma 0.25 2.0)
+    theta_effective <- dirichletProcess n_loci alpha (gamma 0.25 2.0)
 
-    (p_m, tau, s')  <- random $ andro_model ()
+    (p_m, tau, s')  <- andro_model
 
     let (s, r) = andro_mating_system s' tau p_m
 
@@ -26,21 +23,25 @@ main = do
 
     let theta  = map (/ factor) theta_effective
 
-    (t, afs_dist) <- random $ diploid_afs n_individuals n_loci s theta_effective
+    (t, afs_dist) <- diploid_afs n_individuals n_loci s theta_effective
 
-    observe afs_dist            observed_alleles
+    observe observed_alleles afs_dist
 
-    observe (binomial 2000 p_m) 20
+    observe 20 $ binomial 2000 p_m
 
     return ["p_m" %=% p_m, "s~" %=% s', "tau" %=% tau, "s*" %=% s, "theta*" %=% theta_effective, "theta" %=% theta, "R" %=% r]
 
-andro_model _ = do
+andro_model = do
 
-    s'  <- uniform 0.0 1.0
+    s'  <- sample $ uniform 0.0 1.0
 
-    tau <- uniform 0.0 1.0
+    tau <- sample $ uniform 0.0 1.0
 
-    p_m <- uniform 0.0 1.0
+    p_m <- sample $ uniform 0.0 1.0
 
     return (p_m, tau, s')
 
+main _ = do
+    [filename] <- getArgs
+    observed_alleles <- read_phase_file filename
+    return $ model observed_alleles
