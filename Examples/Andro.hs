@@ -28,7 +28,7 @@ model observed_alleles = do
 
     observe observed_alleles afs_dist
 
-    observe 20 $ binomial 2000 p_m
+    observe 20 $ binomial 2000 $ toProb p_m
 
     return ["p_m" %=% p_m, "s*" %=% s, "theta*" %=% theta_effective, "theta" %=% theta, "R" %=% r]
 

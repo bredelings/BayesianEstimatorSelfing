@@ -27,13 +27,13 @@ afs2 theta indicators = AFS2 theta indicators
 
 -- Sample selfing times and per-locus coalescence indicators, then register their joint update.
 robust_diploid_afs n_individuals n_loci s f theta_effective = lazy $ do
-    -- A run of t selfing generations has probability (1-s)*s^t.  Passing s as
-    -- the failure probability avoids rounding the stopping probability to one.
-    t <- sample $ iid n_individuals (rgeometric s)
+    -- A run of t selfing generations has probability (1-s)*s^t. Convert s
+    -- before subtraction so the stopping probability retains a small tail.
+    t <- sample $ iid n_individuals (geometric $ 1 - toProb s)
 
     -- Update every individual's time and indicators in one transition kernel, as required by the move.
     i <- (sample $ independent
-            [ iid n_loci $ rbernoulli $ 0.5 ** fromIntegral (t !! k) * (1 - f)
+            [ iid n_loci $ bernoulli $ 1 - pow 0.5 (fromIntegral (t !! k)) * (1 - toProb f)
             | k <- [0 .. n_individuals - 1]
             ])
         `withTKEffect` (\indicators ->

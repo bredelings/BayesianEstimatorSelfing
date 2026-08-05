@@ -38,7 +38,7 @@ model observed_alleles = do
     observe observed_alleles afs_dist
 
   --  Insert specific numbers of males and total individuals in below:
-  --  observe <male_individuals> $ binomial <total_individual> male_fraction
+  --  observe <male_individuals> $ binomial <total_individual> $ toProb male_fraction
 
     return
         [ "male_fraction" %=% male_fraction

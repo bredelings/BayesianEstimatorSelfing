@@ -28,7 +28,7 @@ model observed_alleles = do
 
     observe observed_alleles afs_dist
 
-    observe 27 $ binomial 221 p_f
+    observe 27 $ binomial 221 $ toProb p_f
 
     return
         [ "s~" %=% s'

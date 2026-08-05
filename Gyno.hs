@@ -38,7 +38,7 @@ model observed_alleles = do
     observe observed_alleles afs_dist
 
   --  Insert specific numbers of females and total individuals in below:
-  --  observe <females> $ binomial <total> p_f
+  --  observe <females> $ binomial <total> $ toProb p_f
 
     return
         [ "t" %=% t
