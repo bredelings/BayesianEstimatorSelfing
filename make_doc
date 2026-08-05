@@ -4,4 +4,4 @@ CSS="pandoc.css"
 STYLE=espresso
 pandoc -s --toc -N -c "$CSS" --mathjax="$MATHJAX" -t html5 -o doc/README.html doc/README.md
 pandoc -s --toc -N -c "$CSS" --mathjax="$MATHJAX" -o doc/README.xhtml doc/README.md
-pandoc -s --toc -N --highlight-style="$STYLE" -o doc/README.pdf doc/README.md
+pandoc -s --toc -N --syntax-highlighting="$STYLE" -o doc/README.pdf doc/README.md
