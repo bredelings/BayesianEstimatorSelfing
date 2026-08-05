@@ -5,7 +5,7 @@ import           MCMC
 import           Probability
 
 foreign import bpcall "PopGen:ewens_diploid_probability"
-    ewensDiploidProbabilityNative :: Double -> EVector Int -> EVector Int -> Log Double
+    ewensDiploidProbabilityNative :: Double -> EVector Int -> EVector Int -> ProbDensity
 
 foreign import bpcall "MCMC:sum_out_coals"
     sumOutCoalsNative :: Int -> [Int] -> ContextIndex -> IO ()
@@ -21,7 +21,7 @@ instance Dist AFS2 where
 
 instance HasAnnotatedPdf AFS2 where
     annotatedDensities (AFS2 theta indicators) =
-        make_densities $ ewens_diploid_probability theta indicators
+        make_prob_densities $ ewens_diploid_probability theta indicators
 
 afs2 theta indicators = AFS2 theta indicators
 
