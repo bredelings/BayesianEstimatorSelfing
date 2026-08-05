@@ -1,25 +1,47 @@
 module PopGen.Selfing where
 
+import           Foreign.Vector (EVector, toVector)
+import           MCMC
 import           Probability
-import           Range
-import           Foreign.Pair
 
-builtin builtin_ewens_diploid_probability 3 "ewens_diploid_probability" "PopGen"
-builtin builtin_sum_out_coals 4 "sum_out_coals" "MCMC"
+foreign import bpcall "PopGen:ewens_diploid_probability"
+    ewensDiploidProbabilityNative :: Double -> EVector Int -> EVector Int -> Log Double
 
-sum_out_coals x y c = IOAction (pair_from_c . builtin_sum_out_coals x y c)
+foreign import bpcall "MCMC:sum_out_coals"
+    sumOutCoalsNative :: Int -> [Int] -> ContextIndex -> IO ()
 
-ewens_diploid_probability theta i x = builtin_ewens_diploid_probability theta (list_to_vector i) (list_to_vector x)
+ewens_diploid_probability theta indicators alleles =
+    ewensDiploidProbabilityNative theta (toVector indicators) (toVector alleles)
 
-afs2 thetas ps = Distribution (make_densities $ ewens_diploid_probability thetas ps) (error "afs2 has no quantile") () ()
+data AFS2 = AFS2 Double [Int]
 
-robust_diploid_afs n_individuals n_loci s f theta_effective = do
-    t <- iid n_individuals (rgeometric s)
+instance Dist AFS2 where
+    type Result AFS2 = [Int]
+    distName _ = "afs2"
 
-    i <-
-        (independent [ iid n_loci $ rbernoulli $ 0.5 ** t !! k * (1.0 - f) | k <- [0 .. n_individuals - 1] ])
-            `with_effect` (\i -> add_move (\c -> mapM_ (\k -> sum_out_coals (t !! k) (i !! k) c) [0 .. n_individuals - 1]))
+instance HasAnnotatedPdf AFS2 where
+    annotatedDensities (AFS2 theta indicators) =
+        make_densities $ ewens_diploid_probability theta indicators
 
-    return $ (t, plate n_loci (\l -> afs2 (theta_effective !! l) (map (!! l) i)))
+afs2 theta indicators = AFS2 theta indicators
 
-diploid_afs n_individuals n_loci s theta_effective = robust_diploid_afs n_individuals n_loci s 0.0 theta_effective
+-- Sample selfing times and per-locus coalescence indicators, then register their joint update.
+robust_diploid_afs n_individuals n_loci s f theta_effective = lazy $ do
+    -- A run of t selfing generations has probability (1-s)*s^t.  Passing s as
+    -- the failure probability avoids rounding the stopping probability to one.
+    t <- sample $ iid n_individuals (rgeometric s)
+
+    -- Update every individual's time and indicators in one transition kernel, as required by the move.
+    i <- (sample $ independent
+            [ iid n_loci $ rbernoulli $ 0.5 ** fromIntegral (t !! k) * (1 - f)
+            | k <- [0 .. n_individuals - 1]
+            ])
+        `withTKEffect` (\indicators ->
+            addMove 1 $ TransitionKernel (\context ->
+                mapM_ (\k -> sumOutCoalsNative (t !! k) (indicators !! k) context)
+                      [0 .. n_individuals - 1]))
+
+    return (t, plate n_loci (\l -> afs2 (theta_effective !! l) (map (!! l) i)))
+
+diploid_afs n_individuals n_loci s theta_effective =
+    robust_diploid_afs n_individuals n_loci s (0 :: Double) theta_effective
