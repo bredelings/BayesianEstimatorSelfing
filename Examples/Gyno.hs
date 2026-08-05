@@ -9,7 +9,7 @@ import           System.Environment
 model observed_alleles = do
 
     let n_loci = length observed_alleles
-        n_individuals = length (observed_alleles !! 0) `Gyno` 2
+        n_individuals = length (observed_alleles !! 0) `div` 2
 
     let alpha = 0.10
 
@@ -57,4 +57,3 @@ main _ = do
     [filename] <- getArgs
     observed_alleles <- read_phase_file filename
     return $ model observed_alleles
-

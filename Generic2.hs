@@ -1,4 +1,4 @@
-module Generic where
+module Generic2 where
 
 import           PopGen
 import           PopGen.Selfing

@@ -1,4 +1,4 @@
-module Andro where
+module AndroID where
 
 import           PopGen
 import           PopGen.Selfing
