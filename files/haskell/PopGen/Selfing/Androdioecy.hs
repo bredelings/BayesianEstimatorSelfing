@@ -21,4 +21,4 @@ andro_mating_system2' s p_m sigma = r  where
 -- By computing s from s', we are parameterizing the adult selfing rate in terms of the seed selfing rate and viability
 andro_mating_system2 s' tau p_m sigma = (s, r)  where
     s = (tau * s') / (tau * s' + 1.0 - s')
-    r = andro_mating_system2' s tau p_m sigma
+    r = andro_mating_system2' s p_m sigma
