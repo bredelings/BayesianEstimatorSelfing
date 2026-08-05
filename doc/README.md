@@ -211,7 +211,7 @@ Here, $R$ is given by
 where $N$ is the population size, and $N^*$ is the effective
 population size defined by the rate of parent-sharing.  The effective scaled mutation rate is
 
-* $\Theta^*_l = \Theta_l \cdot (1-s^*/2) / R$.
+* $\Theta^*_l = \Theta_l \cdot (1-s^*/2) \cdot R$.
 
 In general, $s^*$ and $R$ are composite parameters: they are
 determined from the basic mating system parameters $\Psi$.

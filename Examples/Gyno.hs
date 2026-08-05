@@ -19,7 +19,8 @@ model observed_alleles = do
 
     let (s, h, r) = gyno_mating_system tau s' p_f sigma
 
-    let factor    = (1.0 - s * 0.5) / r
+    -- Because R = N*/N, theta* = theta * (1 - s*/2) * R.
+    let factor    = (1.0 - s * 0.5) * r
 
     let theta     = map (/ factor) theta_effective
 
