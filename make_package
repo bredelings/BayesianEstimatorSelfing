@@ -1,91 +1,66 @@
-#!/usr/bin/perl -w
+#!/usr/bin/env python3
 
-use strict;
-use JSON::PP;
-use Archive::Tar;
-use File::Find;
-use Digest::SHA;
-use Digest::MD5;
-use Cwd 'abs_path';
-
-my $info = read_JSON_file("control.json");
-my $name = ${$info}{"Package"};
-my $version = ${$info}{"Version"};
-
-my $filename = "${name}_${version}.tar.gz";
-
-my @files = ("control.json");
-find({wanted => \&findstuff, no_chdir=> 1}, "files");
-
-Archive::Tar->create_archive($filename,COMPRESS_GZIP, @files);
-
-${$info}{"SHA1"} = shasum(1,$filename);
-${$info}{"SHA256"} = shasum(256,$filename);
-${$info}{"MD5sum"} = md5sum($filename);
-my $json = JSON::PP->new;
-$json->indent();
-my $json_text = $json->utf8->encode($info,1);
-print "$json_text";
+import hashlib
+import json
+from pathlib import Path
+import sys
+import tarfile
 
 
-sub shasum
-{
-    my $arg = shift;
-    my $filename = shift;
-    my $fh;
-    unless (open $fh,$filename) {
-	print STDERR "$0: open $filename: $!";
-	exit(1);
-    }
+def read_control(filename):
+    with filename.open(encoding="utf-8") as stream:
+        control = json.load(stream)
+    if not isinstance(control, dict):
+        raise ValueError(f"{filename} must contain a JSON object")
+    for field in ("Package", "Version"):
+        if field not in control:
+            raise ValueError(f"{filename} does not contain a '{field}' field")
+    return control
 
-    my $sha1 = Digest::SHA->new($arg);
-    $sha1->addfile($fh);
-    my $digest = $sha1->hexdigest;
-    close $fh;
-    return $digest;
-}
-    
-sub md5sum
-{
-    my $filename = shift;
-    my $fh;
-    unless (open $fh,$filename) {
-	print STDERR "$0: open $filename: $!";
-	exit(1);
-    }
 
-    my $md5 = Digest::MD5->new();
-    $md5->addfile($fh);
-    my $digest = $md5->hexdigest;
-    close $fh;
-    return $digest;
-}
-    
-sub findstuff
-{
-    my $file = $File::Find::name;
-    my $d = Cwd::cwd();
-    my $dir = $File::Find::dir;
-    return unless -f "$file";
-    return if (-d "$file");
-    return if ($file =~ /.*flymake.*/);
-    return if ($file =~ /\~$/);
-    push @files,$file;
-}
+def package_files():
+    files = [Path("control.json")]
+    for filename in Path("files").rglob("*"):
+        relative_name = filename.as_posix()
+        if not filename.is_file():
+            continue
+        if "flymake" in relative_name or relative_name.endswith("~"):
+            continue
+        files.append(filename)
+    return [files[0], *sorted(files[1:], key=lambda path: path.as_posix())]
 
-sub read_JSON_file
-{
-    my $filename = shift;
 
-    my $json;
-    {
-	local $/; # Enable 'slurp' mode
-	open my $fh, "<", $filename or error_exit("Can't open \"$filename\": $!");
-	$json = <$fh>;
-	close $fh;
-    };
-    
-    return decode_json($json);
-}
+def file_digest(filename, algorithm):
+    digest = hashlib.new(algorithm)
+    with filename.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
 
-    
+
+def make_package():
+    control_filename = Path("control.json")
+    control = read_control(control_filename)
+    archive_filename = Path(f"{control['Package']}_{control['Version']}.tar.gz")
+
+    with tarfile.open(archive_filename, "w:gz") as archive:
+        for filename in package_files():
+            archive.add(filename, arcname=filename.as_posix(), recursive=False)
+
+    control["SHA1"] = file_digest(archive_filename, "sha1")
+    control["SHA256"] = file_digest(archive_filename, "sha256")
+    control["MD5sum"] = file_digest(archive_filename, "md5")
+    print(json.dumps(control, indent=3, ensure_ascii=False))
+
+
+def main():
+    try:
+        make_package()
+    except (OSError, ValueError, tarfile.TarError) as error:
+        print(f"{Path(sys.argv[0]).name}: Error! {error}", file=sys.stderr)
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
