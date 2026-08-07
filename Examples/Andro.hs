@@ -4,9 +4,28 @@ import           PopGen
 import           PopGen.Selfing
 import           PopGen.Selfing.Androdioecy
 import           Probability
-import           System.Environment
+import           Options.Applicative
+import           System.Exit
+import           System.IO
 
-model observed_alleles = do
+-- Parse the genotype file and field-count observation before constructing the probabilistic model.
+options = info
+    ((,,) <$> strArgument (metavar "PHASE-FILE" <> help "PHASE genotype file")
+          <*> option auto (long "males" <> metavar "M" <> help "Number of males observed")
+          <*> option auto (long "total" <> metavar "N" <> help "Total number of individuals observed")
+          <**> helper)
+    (fullDesc <> progDesc "Estimate selfing in an androdioecious population")
+
+-- Reject impossible field counts with a controlled command-line failure before MCMC starts.
+validate_field_counts males total =
+    if 0 <= males && males <= total
+    then return ()
+    else do
+        hPutStrLn stderr $ "Invalid field counts: expected 0 <= males <= total, but males = "
+                         ++ show males ++ " and total = " ++ show total
+        exitFailure
+
+model males total observed_alleles = do
 
     let n_loci = length observed_alleles
         n_individuals = length (observed_alleles !! 0) `div` 2
@@ -28,7 +47,9 @@ model observed_alleles = do
 
     observe observed_alleles afs_dist
 
-    observe 20 $ binomial 2000 $ toProb p_m
+    -- Treat the observed number of males among all surveyed individuals as
+    -- binomial field data on the population male fraction.
+    observe males $ binomial total $ toProb p_m
 
     return ["p_m" %=% p_m, "s*" %=% s, "theta*" %=% theta_effective, "theta" %=% theta, "R" %=% r]
 
@@ -41,6 +62,7 @@ andro_model = do
     return (p_m, s)
 
 main _ = do
-    [filename] <- getArgs
+    (filename, males, total) <- execParser options
+    validate_field_counts males total
     observed_alleles <- read_phase_file filename
-    return $ model observed_alleles
+    return $ model males total observed_alleles

@@ -3,7 +3,11 @@ module Generic2 where
 import           PopGen
 import           PopGen.Selfing
 import           Probability
-import           System.Environment
+import           Options.Applicative
+
+options = info
+    (strArgument (metavar "GENOTYPE-FILE" <> help "FastPhase or Phase2 genotype file") <**> helper)
+    (fullDesc <> progDesc "Estimate selfing from FastPhase or Phase2 genotype data")
 
 model observed_alleles = do
 
@@ -47,6 +51,6 @@ model observed_alleles = do
         ]
 
 main _ = do
-    [filename] <- getArgs
+    filename <- execParser options
     observed_alleles <- read_phase2_file filename
     return $ model observed_alleles

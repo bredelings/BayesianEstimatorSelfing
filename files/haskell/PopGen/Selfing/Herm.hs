@@ -2,8 +2,12 @@ module PopGen.Selfing.Herm where
 
 import           PopGen
 import           PopGen.Selfing
+import           Options.Applicative
 import           Probability
-import           System.Environment
+
+options = info
+    (strArgument (metavar "PHASE-FILE" <> help "PHASE genotype file") <**> helper)
+    (fullDesc <> progDesc "Estimate selfing in a hermaphroditic population")
 
 model observed_alleles = do
 
@@ -30,6 +34,6 @@ model observed_alleles = do
     return ["t" %=% t, "s*" %=% s, "theta*" %=% theta_effective, "theta" %=% theta, "R" %=% r]
 
 main _ = do
-    [filename] <- getArgs
+    filename <- execParser options
     observed_alleles <- read_phase_file filename
     return $ model observed_alleles

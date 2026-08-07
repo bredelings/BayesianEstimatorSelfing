@@ -4,9 +4,28 @@ import           PopGen
 import           PopGen.Selfing
 import           PopGen.Selfing.Gynodioecy
 import           Probability
-import           System.Environment
+import           Options.Applicative
+import           System.Exit
+import           System.IO
 
-model observed_alleles = do
+-- Parse the genotype file and field-count observation before constructing the probabilistic model.
+options = info
+    ((,,) <$> strArgument (metavar "PHASE-FILE" <> help "PHASE genotype file")
+          <*> option auto (long "females" <> metavar "F" <> help "Number of females observed")
+          <*> option auto (long "total" <> metavar "N" <> help "Total number of individuals observed")
+          <**> helper)
+    (fullDesc <> progDesc "Estimate selfing in a gynodioecious population")
+
+-- Reject impossible field counts with a controlled command-line failure before MCMC starts.
+validate_field_counts females total =
+    if 0 <= females && females <= total
+    then return ()
+    else do
+        hPutStrLn stderr $ "Invalid field counts: expected 0 <= females <= total, but females = "
+                         ++ show females ++ " and total = " ++ show total
+        exitFailure
+
+model females total observed_alleles = do
 
     let n_loci = length observed_alleles
         n_individuals = length (observed_alleles !! 0) `div` 2
@@ -28,7 +47,9 @@ model observed_alleles = do
 
     observe observed_alleles afs_dist
 
-    observe 27 $ binomial 221 $ toProb p_f
+    -- Treat the observed number of females among all surveyed individuals as
+    -- binomial field data on the population female fraction.
+    observe females $ binomial total $ toProb p_f
 
     return
         [ "s~" %=% s'
@@ -55,6 +76,7 @@ gyno_model = do
     return (s', tau, p_f, sigma)
 
 main _ = do
-    [filename] <- getArgs
+    (filename, females, total) <- execParser options
+    validate_field_counts females total
     observed_alleles <- read_phase_file filename
-    return $ model observed_alleles
+    return $ model females total observed_alleles
