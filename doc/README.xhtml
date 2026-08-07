@@ -241,14 +241,14 @@ system models. Each model allows estimating a different set of
 parameters. The generic model and the pure hermaphrodite model without
 inbreeding depression can be run without modification to estimate the
 selfing rate and locus-specific mutation rates.</p>
-<p>However, the gynodioecious model and the androdiecious model require
-additional information besides the genetic data, such as (for example)
-field observations on the fraction of hermaphrodites. Therefore, the
-user must <a href="#specifying-additional-information">edit these
-modules</a> to add this information before attempting to run these
-models. This manual describes how to add information, but is not a
-substitute for understanding something about the structure of the
-model.</p>
+<p>However, the gynodioecious and androdioecious models require
+additional information besides the genetic data. The corresponding
+scripts require observed male or female counts on the command line. Some
+models also require the user to <a
+href="#specifying-additional-information">edit the module</a> to choose
+priors, fix parameters, or add other identifying information. This
+manual describes how to add information, but is not a substitute for
+understanding the structure of the model.</p>
 <h1 data-number="2" id="installation"><span
 class="header-section-number">2</span> Installation</h1>
 <h2 data-number="2.1" id="installing-bali-phy"><span
@@ -284,7 +284,8 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy-pkg uninstall BES</span></code></pre></div>
 <p>Next, download some additional modules for particular mating systems.
 These files are not installed into the package directory because they
-must be manually modified before they are used.</p>
+are model templates whose priors and other assumptions can be
+modified.</p>
 <ul>
 <li><a
 href="https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/HermID.hs">HermID.hs</a></li>
@@ -295,9 +296,11 @@ href="https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/mast
 <li><a
 href="https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Gyno.hs">Gyno.hs</a></li>
 </ul>
-<p>Keep in mind that only the generic model and the pure hermaphrodite
-model without inbreeding depression can be used to run an analysis
-without any modification.</p>
+<p>The generic model, the pure hermaphrodite model without inbreeding
+depression, and <code>Andro.hs</code> can be used without modifying
+their source. <code>Andro.hs</code> instead requires field counts as
+command-line arguments. The other mating-system templates require
+additional prior or fixed-value choices in their source.</p>
 <h1 data-number="3" id="running-the-program"><span
 class="header-section-number">3</span> Running the program</h1>
 <h2 data-number="3.1" id="quick-start"><span
@@ -717,10 +720,14 @@ locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
 </table>
-<p>Here the user must modify <code>Andro.hs</code> to add additional
-information about <span class="math inline">\(p_m\)</span>.</p>
-<p>This variant is run by specifying <code>-m Andro.hs</code> on the
-command line.</p>
+<p>The observed number of males supplies additional information about
+<span class="math inline">\(p_m\)</span> through a binomial likelihood.
+Specify the number of males and the total number of surveyed individuals
+after BAli-Phy’s <code>--</code> separator:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy <span class="at">-m</span> Andro.hs <span class="at">--</span> <span class="at">--males</span> 20 <span class="at">--total</span> 2000 data.phase</span></code></pre></div>
+<p>The priors remain specified in <code>Andro.hs</code> and must be
+edited there if different priors are desired.</p>
 <h3 data-number="7.3.2" id="variant-ii-1"><span
 class="header-section-number">7.3.2</span> Variant II</h3>
 <p>The second variant has <span
@@ -788,12 +795,14 @@ locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
 </table>
-<p>Here the user must modify <code>AndroID.hs</code> to add additional
-information about <span class="math inline">\(p_m\)</span> and also
-about <span class="math inline">\(\tilde{s}\)</span> or <span
+<p>The required <code>--males</code> and <code>--total</code> arguments
+supply additional information about <span
+class="math inline">\(p_m\)</span>. The user must still modify
+<code>AndroID.hs</code> to provide a prior or fixed value for <span
+class="math inline">\(\tilde{s}\)</span> or <span
 class="math inline">\(\tau\)</span>.</p>
-<p>This variant is run by specifying <code>-m AndroID.hs</code> on the
-command line.</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy <span class="at">-m</span> AndroID.hs <span class="at">--</span> <span class="at">--males</span> 20 <span class="at">--total</span> 2000 data.phase</span></code></pre></div>
 <h2 data-number="7.4" id="gynodioecy"><span
 class="header-section-number">7.4</span> Gynodioecy</h2>
 <p>In the gynodioecious model, the population consist of some fraction
@@ -876,22 +885,26 @@ locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
 </table>
-<p>Here the user must modify <code>Gyno.hs</code> to add additional
-information about 3 out of the 4 components of <span
+<p>The required <code>--females</code> and <code>--total</code>
+arguments supply additional information about <span
+class="math inline">\(p_f\)</span>. The user must still modify
+<code>Gyno.hs</code> to provide priors or fixed values for two of the
+remaining three components of <span
 class="math inline">\(\Psi\)</span>.</p>
-<p>This variant is run by specifying <code>-m Gyno.hs</code> on the
-command line.</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy <span class="at">-m</span> Gyno.hs <span class="at">--</span> <span class="at">--females</span> 27 <span class="at">--total</span> 221 data.phase</span></code></pre></div>
 <h1 data-number="8" id="specifying-additional-information"><span
 class="header-section-number">8</span> Specifying additional
 information</h1>
 <p>When the mating system parameters <span
 class="math inline">\(\Psi\)</span> contain more than one degree of
 freedom, the mating system parameters are not identifiable from genetic
-data alone. Therefore, the user must obtain a model-description module
-(<code>HermID.hs</code>, <code>Andro.hs</code>, <code>AndroID.hs</code>,
-or <code>Gyno.hs</code>) and modify this module to add additional
-information to make the mating system parameters identifiable. In
-general, if <span class="math inline">\(\Psi\)</span> contains <span
+data alone. The androdioecious and gynodioecious scripts incorporate
+observed sex counts supplied on the command line. Other observations,
+fixed values, and prior choices are specified by modifying the
+model-description module (<code>HermID.hs</code>, <code>Andro.hs</code>,
+<code>AndroID.hs</code>, or <code>Gyno.hs</code>). In general, if <span
+class="math inline">\(\Psi\)</span> contains <span
 class="math inline">\(n\)</span> variables, then additional information
 about <span class="math inline">\(n-1\)</span> of them must be
 incorporated.</p>
@@ -921,21 +934,26 @@ information</h2>
 <li>Fix the variable to a known constant value.</li>
 <li>Place a subjective prior on the variable.</li>
 </ol>
+<p>The supplied androdioecious and gynodioecious scripts already
+implement the common case of a binomial observation on the number of
+males or females. These counts are required command-line arguments and
+should not also be added to the source. The following source
+modifications apply to other observations and parameters.</p>
 <h3 data-number="8.2.1"
 id="introduce-a-variable-with-a-prior-and-place-observations-on-it."><span
 class="header-section-number">8.2.1</span> Introduce a variable with a
 prior and place observations on it.</h3>
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>  tau <span class="ot">&lt;-</span> sample <span class="op">$</span> uniform <span class="fl">0.0</span> <span class="fl">1.0</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  observe <span class="dv">10</span> <span class="op">$</span> binomial <span class="dv">20</span> <span class="op">$</span> toProb tau</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>  tau <span class="ot">&lt;-</span> sample <span class="op">$</span> uniform <span class="fl">0.0</span> <span class="fl">1.0</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  observe <span class="dv">10</span> <span class="op">$</span> binomial <span class="dv">20</span> <span class="op">$</span> toProb tau</span></code></pre></div>
 <h3 data-number="8.2.2"
 id="fix-a-variable-to-a-known-constant-value."><span
 class="header-section-number">8.2.2</span> Fix a variable to a known
 constant value.</h3>
 <p>If you know the value of a variable, you can fix it to a
 constant:</p>
-<div class="sourceCode" id="cb15"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> tau <span class="ot">=</span> <span class="fl">1.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> tau <span class="ot">=</span> <span class="fl">1.0</span></span></code></pre></div>
 <p>If you have observations about a variable (e.g. <span
 class="math inline">\(p_m\)</span>) then do not fix that variable to a
 constant. If you fix a variable to a constant, then that variable cannot
@@ -947,8 +965,8 @@ variable</h3>
 <p>This approach doesn’t actually make the parameter
 <em>identifiable</em>, since this approach affects only the prior, and
 not the likelihood.</p>
-<div class="sourceCode" id="cb16"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>  tau <span class="ot">&lt;-</span> sample <span class="op">$</span> beta <span class="fl">2.0</span> <span class="fl">8.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>  tau <span class="ot">&lt;-</span> sample <span class="op">$</span> beta <span class="fl">2.0</span> <span class="fl">8.0</span></span></code></pre></div>
 <p>As a result, it is not possible to compare the posterior (with data)
 and the prior (without data) to assess the impact of the data. This
 approach is therefore not recommended.</p>

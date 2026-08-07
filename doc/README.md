@@ -24,11 +24,11 @@ BES contains a number of modules that correspond to different mating system mode
 estimating a different set of parameters.  The generic model and the pure hermaphrodite model without
 inbreeding depression can be run without modification to estimate the selfing rate and locus-specific mutation rates.
 
-However, the gynodioecious model and the androdiecious model require additional information besides the genetic data,
-such as (for example) field observations on the fraction of hermaphrodites.  Therefore,
-the user must [edit these modules](#specifying-additional-information) to add this information before attempting to run these models.  This manual
-describes how to add information, but is not a substitute for understanding something about the structure of the
-model.
+However, the gynodioecious and androdioecious models require additional information besides the genetic data.
+The corresponding scripts require observed male or female counts on the command line. Some models also require the
+user to [edit the module](#specifying-additional-information) to choose priors, fix parameters, or add other identifying
+information. This manual describes how to add information, but is not a substitute for understanding the structure
+of the model.
 
 # Installation
 
@@ -66,17 +66,17 @@ You can uninstall the package by running:
 % bali-phy-pkg uninstall BES
 ```
 
-Next, download some additional modules for particular mating systems.  These files are not installed
-into the package directory because they must be manually modified before they are used.
+Next, download some additional modules for particular mating systems. These files are not installed
+into the package directory because they are model templates whose priors and other assumptions can be modified.
 
 * [HermID.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/HermID.hs)
 * [Andro.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Andro.hs)
 * [AndroID.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/AndroID.hs)
 * [Gyno.hs](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Gyno.hs)
 
-Keep in mind that only the generic model and the pure hermaphrodite
-model without inbreeding depression can be used to run an analysis without any
-modification.
+The generic model, the pure hermaphrodite model without inbreeding depression, and `Andro.hs` can be used without
+modifying their source. `Andro.hs` instead requires field counts as command-line arguments. The other mating-system
+templates require additional prior or fixed-value choices in their source.
 
 # Running the program
 
@@ -323,11 +323,14 @@ The following variables are estimated, with the field names given:
 | ${\Theta^*_l}$ | theta\*[$l$]       | *Effective* scaled mutation rate for locus $l$. |
 | ${\Theta_l}$ | theta\[$l$]       | Scaled mutation rate $4Nu$ for locus $l$. |
 
-Here the user must modify `Andro.hs` to add additional information
-about $p_m$.
+The observed number of males supplies additional information about $p_m$ through a binomial likelihood. Specify the
+number of males and the total number of surveyed individuals after BAli-Phy's `--` separator:
 
-This variant is run by specifying `-m Andro.hs` on the
-command line.
+``` bash
+% bali-phy -m Andro.hs -- --males 20 --total 2000 data.phase
+```
+
+The priors remain specified in `Andro.hs` and must be edited there if different priors are desired.
 
 ### Variant II
 The second variant has $\Psi=\{\tilde{s},\tau,p_m\}$.  This variant treats
@@ -346,11 +349,12 @@ The following variables are estimated, with the field names given:
 | ${\Theta^*_l}$ | theta\*[$l$]       | *Effective* scaled mutation rate for locus $l$. |
 | ${\Theta_l}$ | theta\[$l$]       | Scaled mutation rate $4Nu$ for locus $l$. |
 
-Here the user must modify `AndroID.hs` to add additional information
-about $p_m$ and also about $\tilde{s}$ or $\tau$.
+The required `--males` and `--total` arguments supply additional information about $p_m$. The user must still modify
+`AndroID.hs` to provide a prior or fixed value for $\tilde{s}$ or $\tau$.
 
-This variant is run by specifying `-m AndroID.hs` on the
-command line.
+``` bash
+% bali-phy -m AndroID.hs -- --males 20 --total 2000 data.phase
+```
 
 ## Gynodioecy
 
@@ -377,23 +381,22 @@ The following variables are estimated, with the field names given:
 | ${\Theta^*_l}$ | theta\*[$l$]       | *Effective* scaled mutation rate for locus $l$. |
 | ${\Theta_l}$ | theta\[$l$]       | Scaled mutation rate $4Nu$ for locus $l$. |
 
-Here the user must modify `Gyno.hs` to add additional information
-about 3 out of the 4 components of $\Psi$.
+The required `--females` and `--total` arguments supply additional information about $p_f$. The user must still
+modify `Gyno.hs` to provide priors or fixed values for two of the remaining three components of $\Psi$.
 
-This variant is run by specifying `-m Gyno.hs` on the
-command line.
+``` bash
+% bali-phy -m Gyno.hs -- --females 27 --total 221 data.phase
+```
 
 
 # Specifying additional information
 
 When the mating system parameters $\Psi$ contain more than one degree
 of freedom, the mating system parameters are not identifiable from
-genetic data alone.  Therefore, the user must obtain a
-model-description module (`HermID.hs`, `Andro.hs`, `AndroID.hs`, or
-`Gyno.hs`) and modify this module to add additional information to
-make the mating system parameters identifiable.  In general, if $\Psi$
-contains $n$ variables, then additional information about $n-1$ of
-them must be incorporated.
+genetic data alone. The androdioecious and gynodioecious scripts incorporate observed sex counts supplied on the
+command line. Other observations, fixed values, and prior choices are specified by modifying the model-description
+module (`HermID.hs`, `Andro.hs`, `AndroID.hs`, or `Gyno.hs`). In general, if $\Psi$ contains $n$ variables, then
+additional information about $n-1$ of them must be incorporated.
 
 ## Modifying model-description modules
 
@@ -415,6 +418,10 @@ Additional information about a variable can be added in 3 ways.
 1. Add observations that depends on that variable.
 2. Fix the variable to a known constant value.
 3. Place a subjective prior on the variable.
+
+The supplied androdioecious and gynodioecious scripts already implement the common case of a binomial observation
+on the number of males or females. These counts are required command-line arguments and should not also be added to
+the source. The following source modifications apply to other observations and parameters.
 
 ### Introduce a variable with a prior and place observations on it.
 ``` haskell

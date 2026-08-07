@@ -84,11 +84,11 @@ BES contains a number of modules that correspond to different mating system mode
 estimating a different set of parameters.  The generic model and the pure hermaphrodite model without
 inbreeding depression can be run without modification to estimate the selfing rate and locus-specific mutation rates.
 
-However, the gynodioecious model and the androdiecious model require additional information besides the genetic data,
-such as (for example) field observations on the fraction of hermaphrodites.  Therefore,
-the user must [edit these modules](#specifying-additional-information) to add this information before attempting to run these models.  This manual
-describes how to add information, but is not a substitute for understanding something about the structure of the
-model.
+However, the gynodioecious and androdioecious models require additional information besides the genetic data.
+The corresponding scripts require observed male or female counts on the command line. Some models also require the
+user to [edit the module](#specifying-additional-information) to choose priors, fix parameters, or add other identifying
+information. This manual describes how to add information, but is not a substitute for understanding the structure
+of the model.
 
 # Usage
 
@@ -111,6 +111,22 @@ bali-phy -m Generic2.hs -l tsv --test -- Examples/test.phase2
 ```
 
 3. If you leave off the `-l tsv` then logging will be done in JSON format.
+
+4. The included runnable androdioecious example requires the observed number of males and the total number of
+   surveyed individuals:
+
+```
+bali-phy -m Examples/Andro.hs -l tsv -- --males 20 --total 2000 Examples/outfile.001.70.001.phase1
+```
+
+   The runnable gynodioecious example similarly requires the observed number of females:
+
+```
+bali-phy -m Examples/Gyno.hs -l tsv -- --females 27 --total 221 Examples/outfile.001.70.001.phase1
+```
+
+   These observations no longer require editing the source file. Changing priors, fixing parameters, or adding
+   another kind of identifying information still requires editing the model template.
 
 
 # Installing the development version of BES
