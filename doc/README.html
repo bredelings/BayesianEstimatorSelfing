@@ -307,10 +307,10 @@ class="header-section-number">3</span> Running the program</h1>
 class="header-section-number">3.1</span> Quick Start</h2>
 <p>First, check that the model loads correctly:</p>
 <div class="sourceCode" id="cb6"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Generic.hs <span class="at">--</span> <span class="at">--test</span> Examples/outfile.001.70.001.phase</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Generic.hs <span class="at">--test</span> Examples/outfile.001.70.001.phase</span></code></pre></div>
 <p>If that works, then run the MCMC using the generic model:</p>
 <div class="sourceCode" id="cb7"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Generic.hs <span class="at">--</span> <span class="at">--iterations</span><span class="op">=</span>1000 Examples/outfile.001.70.001.phase <span class="kw">&amp;</span></span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Generic.hs <span class="at">--iterations</span><span class="op">=</span>1000 Examples/outfile.001.70.001.phase <span class="kw">&amp;</span></span></code></pre></div>
 <p>This should create a directory called <code>Generic-1/</code> (or
 <code>Generic-2/</code>, etc.) that contains the output files.</p>
 <p>Second, load the output file <code>Generic-1/C1.log</code> using the
@@ -720,10 +720,10 @@ locus <span class="math inline">\(l\)</span>.</td>
 </table>
 <p>The observed number of males supplies additional information about
 <span class="math inline">\(p_m\)</span> through a binomial likelihood.
-Specify the number of males and the total number of surveyed individuals
-after BAli-Phy’s <code>--</code> separator:</p>
+Supply the number of males and the total number of surveyed individuals
+as required model arguments:</p>
 <div class="sourceCode" id="cb14"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Andro.hs <span class="at">--</span> <span class="at">--males</span> 20 <span class="at">--total</span> 2000 data.phase</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Andro.hs <span class="at">--males</span> 20 <span class="at">--total</span> 2000 data.phase</span></code></pre></div>
 <p>The priors remain specified in <code>Andro.hs</code> and must be
 edited there if different priors are desired.</p>
 <h3 data-number="7.3.2" id="variant-ii-1"><span
@@ -800,7 +800,7 @@ class="math inline">\(p_m\)</span>. The user must still modify
 class="math inline">\(\tilde{s}\)</span> or <span
 class="math inline">\(\tau\)</span>.</p>
 <div class="sourceCode" id="cb15"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run AndroID.hs <span class="at">--</span> <span class="at">--males</span> 20 <span class="at">--total</span> 2000 data.phase</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run AndroID.hs <span class="at">--males</span> 20 <span class="at">--total</span> 2000 data.phase</span></code></pre></div>
 <h2 data-number="7.4" id="gynodioecy"><span
 class="header-section-number">7.4</span> Gynodioecy</h2>
 <p>In the gynodioecious model, the population consist of some fraction
@@ -890,7 +890,7 @@ class="math inline">\(p_f\)</span>. The user must still modify
 remaining three components of <span
 class="math inline">\(\Psi\)</span>.</p>
 <div class="sourceCode" id="cb16"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Gyno.hs <span class="at">--</span> <span class="at">--females</span> 27 <span class="at">--total</span> 221 data.phase</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Gyno.hs <span class="at">--females</span> 27 <span class="at">--total</span> 221 data.phase</span></code></pre></div>
 <h1 data-number="8" id="specifying-additional-information"><span
 class="header-section-number">8</span> Specifying additional
 information</h1>

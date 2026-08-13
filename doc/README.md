@@ -84,11 +84,11 @@ templates require additional prior or fixed-value choices in their source.
 
 First, check that the model loads correctly:
 ``` bash
-% bali-phy run Generic.hs -- --test Examples/outfile.001.70.001.phase
+% bali-phy run Generic.hs --test Examples/outfile.001.70.001.phase
 ```
 If that works, then run the MCMC using the generic model:
 ``` bash
-% bali-phy run Generic.hs -- --iterations=1000 Examples/outfile.001.70.001.phase &
+% bali-phy run Generic.hs --iterations=1000 Examples/outfile.001.70.001.phase &
 ```
 This should create a directory called `Generic-1/` (or `Generic-2/`, etc.) that contains the output files.
 
@@ -320,11 +320,11 @@ The following variables are estimated, with the field names given:
 | ${\Theta^*_l}$ | theta\*[$l$]       | *Effective* scaled mutation rate for locus $l$. |
 | ${\Theta_l}$ | theta\[$l$]       | Scaled mutation rate $4Nu$ for locus $l$. |
 
-The observed number of males supplies additional information about $p_m$ through a binomial likelihood. Specify the
-number of males and the total number of surveyed individuals after BAli-Phy's `--` separator:
+The observed number of males supplies additional information about $p_m$ through a binomial likelihood. Supply the
+number of males and the total number of surveyed individuals as required model arguments:
 
 ``` bash
-% bali-phy run Andro.hs -- --males 20 --total 2000 data.phase
+% bali-phy run Andro.hs --males 20 --total 2000 data.phase
 ```
 
 The priors remain specified in `Andro.hs` and must be edited there if different priors are desired.
@@ -350,7 +350,7 @@ The required `--males` and `--total` arguments supply additional information abo
 `AndroID.hs` to provide a prior or fixed value for $\tilde{s}$ or $\tau$.
 
 ``` bash
-% bali-phy run AndroID.hs -- --males 20 --total 2000 data.phase
+% bali-phy run AndroID.hs --males 20 --total 2000 data.phase
 ```
 
 ## Gynodioecy
@@ -382,7 +382,7 @@ The required `--females` and `--total` arguments supply additional information a
 modify `Gyno.hs` to provide priors or fixed values for two of the remaining three components of $\Psi$.
 
 ``` bash
-% bali-phy run Gyno.hs -- --females 27 --total 221 data.phase
+% bali-phy run Gyno.hs --females 27 --total 221 data.phase
 ```
 
 
