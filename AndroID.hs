@@ -80,7 +80,7 @@ andro_model = do
 
 --  tau <- sample $ uniform 0.0 1.0
 
---  p_m <- sample $ uniform 0.0 1.0
+    p_m <- sample $ uniform 0.0 1.0
 
     return (p_m, tau, s')
 

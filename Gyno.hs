@@ -82,7 +82,7 @@ gyno_model = do
 
 --  tau <- sample $ beta 2.0 8.0
 
---  p_f <- sample $ uniform 0.0 1.0
+    p_f <- sample $ uniform 0.0 1.0
 
 --  let sigma = 1.0
 
