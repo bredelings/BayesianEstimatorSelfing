@@ -96,8 +96,8 @@ of the model.
 
 ```
 cd BayesianEstimatorSelfing
-bali-phy -m Generic.hs -l tsv --test -- Examples/outfile.001.70.001.phase1
-bali-phy -m Generic.hs -l tsv        -- Examples/outfile.001.70.001.phase1
+bali-phy run Generic.hs -- -l tsv --test Examples/outfile.001.70.001.phase1
+bali-phy run Generic.hs -- -l tsv        Examples/outfile.001.70.001.phase1
 ```
 
 The script `Generic.hs` is a template can be modified if you wish to adjust the priors.
@@ -106,8 +106,8 @@ The script `Generic.hs` is a template can be modified if you wish to adjust the 
 use the `Generic2.hs` template:
 
 ```
-bali-phy -m Generic2.hs -l tsv --test -- Examples/test.fastphase
-bali-phy -m Generic2.hs -l tsv --test -- Examples/test.phase2
+bali-phy run Generic2.hs -- -l tsv --test Examples/test.fastphase
+bali-phy run Generic2.hs -- -l tsv --test Examples/test.phase2
 ```
 
 3. If you leave off the `-l tsv` then logging will be done in JSON format.
@@ -116,13 +116,13 @@ bali-phy -m Generic2.hs -l tsv --test -- Examples/test.phase2
    surveyed individuals:
 
 ```
-bali-phy -m Examples/Andro.hs -l tsv -- --males 20 --total 2000 Examples/outfile.001.70.001.phase1
+bali-phy run Examples/Andro.hs -- -l tsv --males 20 --total 2000 Examples/outfile.001.70.001.phase1
 ```
 
    The runnable gynodioecious example similarly requires the observed number of females:
 
 ```
-bali-phy -m Examples/Gyno.hs -l tsv -- --females 27 --total 221 Examples/outfile.001.70.001.phase1
+bali-phy run Examples/Gyno.hs -- -l tsv --females 27 --total 221 Examples/outfile.001.70.001.phase1
 ```
 
    These observations no longer require editing the source file. Changing priors, fixing parameters, or adding

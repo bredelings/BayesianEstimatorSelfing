@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="pandoc 3.10" />
+  <meta name="generator" content="pandoc 3.10.1" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Bayesian Estimator of Selfing (BES)</title>
   <style>
@@ -307,10 +307,10 @@ class="header-section-number">3</span> Running the program</h1>
 class="header-section-number">3.1</span> Quick Start</h2>
 <p>First, check that the model loads correctly:</p>
 <div class="sourceCode" id="cb6"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy <span class="at">-m</span> Generic.hs <span class="at">--test</span> <span class="at">--</span> Examples/outfile.001.70.001.phase</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Generic.hs <span class="at">--</span> <span class="at">--test</span> Examples/outfile.001.70.001.phase</span></code></pre></div>
 <p>If that works, then run the MCMC using the generic model:</p>
 <div class="sourceCode" id="cb7"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy <span class="at">-m</span> Generic.hs <span class="at">--iter</span><span class="op">=</span>1000 <span class="at">--</span> Examples/outfile.001.70.001.phase <span class="kw">&amp;</span></span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Generic.hs <span class="at">--</span> <span class="at">--iterations</span><span class="op">=</span>1000 Examples/outfile.001.70.001.phase <span class="kw">&amp;</span></span></code></pre></div>
 <p>This should create a directory called <code>Generic-1/</code> (or
 <code>Generic-2/</code>, etc.) that contains the output files.</p>
 <p>Second, load the output file <code>Generic-1/C1.log</code> using the
@@ -521,8 +521,7 @@ class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
 </table>
-<p>This variant is run by specifying <code>-m Generic.hs</code> on the
-command line.</p>
+<p>This variant is implemented by <code>Generic.hs</code>.</p>
 <h2 data-number="7.2" id="pure-hermaphrodite"><span
 class="header-section-number">7.2</span> Pure Hermaphrodite</h2>
 <p>In the pure hermaphrodite model, each individual contributes both
@@ -587,8 +586,8 @@ locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
 </table>
-<p>This variant is run by specifying <code>-m HermID.hs</code> on the
-command line.</p>
+<p>This variant is implemented by the installed
+<code>PopGen.Selfing.Herm</code> model.</p>
 <h3 data-number="7.2.2" id="variant-ii"><span
 class="header-section-number">7.2.2</span> Variant II</h3>
 <p>The second variant has <span
@@ -654,8 +653,7 @@ locus <span class="math inline">\(l\)</span>.</td>
 <p>Here the user must modify <code>HermID.hs</code> to add additional
 information about <span class="math inline">\(\tilde{s}\)</span> or
 <span class="math inline">\(\tau\)</span>.</p>
-<p>This variant is run by specifying <code>-m HermID.hs</code> on the
-command line.</p>
+<p>This variant is implemented by <code>HermID.hs</code>.</p>
 <h2 data-number="7.3" id="androdioecy"><span
 class="header-section-number">7.3</span> Androdioecy</h2>
 <p>In the androdioecious model, the population consists of some fraction
@@ -725,7 +723,7 @@ locus <span class="math inline">\(l\)</span>.</td>
 Specify the number of males and the total number of surveyed individuals
 after BAli-Phy’s <code>--</code> separator:</p>
 <div class="sourceCode" id="cb14"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy <span class="at">-m</span> Andro.hs <span class="at">--</span> <span class="at">--males</span> 20 <span class="at">--total</span> 2000 data.phase</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Andro.hs <span class="at">--</span> <span class="at">--males</span> 20 <span class="at">--total</span> 2000 data.phase</span></code></pre></div>
 <p>The priors remain specified in <code>Andro.hs</code> and must be
 edited there if different priors are desired.</p>
 <h3 data-number="7.3.2" id="variant-ii-1"><span
@@ -802,7 +800,7 @@ class="math inline">\(p_m\)</span>. The user must still modify
 class="math inline">\(\tilde{s}\)</span> or <span
 class="math inline">\(\tau\)</span>.</p>
 <div class="sourceCode" id="cb15"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy <span class="at">-m</span> AndroID.hs <span class="at">--</span> <span class="at">--males</span> 20 <span class="at">--total</span> 2000 data.phase</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run AndroID.hs <span class="at">--</span> <span class="at">--males</span> 20 <span class="at">--total</span> 2000 data.phase</span></code></pre></div>
 <h2 data-number="7.4" id="gynodioecy"><span
 class="header-section-number">7.4</span> Gynodioecy</h2>
 <p>In the gynodioecious model, the population consist of some fraction
@@ -892,7 +890,7 @@ class="math inline">\(p_f\)</span>. The user must still modify
 remaining three components of <span
 class="math inline">\(\Psi\)</span>.</p>
 <div class="sourceCode" id="cb16"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy <span class="at">-m</span> Gyno.hs <span class="at">--</span> <span class="at">--females</span> 27 <span class="at">--total</span> 221 data.phase</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Gyno.hs <span class="at">--</span> <span class="at">--females</span> 27 <span class="at">--total</span> 221 data.phase</span></code></pre></div>
 <h1 data-number="8" id="specifying-additional-information"><span
 class="header-section-number">8</span> Specifying additional
 information</h1>

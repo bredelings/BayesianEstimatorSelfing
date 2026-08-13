@@ -84,11 +84,11 @@ templates require additional prior or fixed-value choices in their source.
 
 First, check that the model loads correctly:
 ``` bash
-% bali-phy -m Generic.hs --test -- Examples/outfile.001.70.001.phase
+% bali-phy run Generic.hs -- --test Examples/outfile.001.70.001.phase
 ```
 If that works, then run the MCMC using the generic model:
 ``` bash
-% bali-phy -m Generic.hs --iter=1000 -- Examples/outfile.001.70.001.phase &
+% bali-phy run Generic.hs -- --iterations=1000 Examples/outfile.001.70.001.phase &
 ```
 This should create a directory called `Generic-1/` (or `Generic-2/`, etc.) that contains the output files.
 
@@ -245,8 +245,7 @@ The following variables are estimated, with the field names given:
 | ${T_k}$ | t[$k$] | Number of generations of selfing for individual $k$. |
 | ${\Theta^*_l}$ | theta\*[$l$]       | *Effective* scaled mutation rate for locus $l$. |
 
-This variant is run by specifying `-m Generic.hs` on the
-command line.
+This variant is implemented by `Generic.hs`.
 
 ## Pure Hermaphrodite
 
@@ -274,8 +273,7 @@ The following variables are estimated, with the field names given:
 | ${\Theta^*_l}$ | theta\*[$l$]       | *Effective* scaled mutation rate for locus $l$. |
 | ${\Theta_l}$ | theta\[$l$]       | Scaled mutation rate $4Nu$ for locus $l$. |
 
-This variant is run by specifying `-m HermID.hs` on the
-command line.
+This variant is implemented by the installed `PopGen.Selfing.Herm` model.
 
 ### Variant II
 The second variant has $\Psi=\{\tilde{s},\tau\}$.  This variant treats
@@ -296,8 +294,7 @@ The following variables are estimated, with the field names given:
 Here the user must modify `HermID.hs` to add additional information
 about $\tilde{s}$ or $\tau$.
 
-This variant is run by specifying `-m HermID.hs` on the
-command line.
+This variant is implemented by `HermID.hs`.
 
 ## Androdioecy
 
@@ -327,7 +324,7 @@ The observed number of males supplies additional information about $p_m$ through
 number of males and the total number of surveyed individuals after BAli-Phy's `--` separator:
 
 ``` bash
-% bali-phy -m Andro.hs -- --males 20 --total 2000 data.phase
+% bali-phy run Andro.hs -- --males 20 --total 2000 data.phase
 ```
 
 The priors remain specified in `Andro.hs` and must be edited there if different priors are desired.
@@ -353,7 +350,7 @@ The required `--males` and `--total` arguments supply additional information abo
 `AndroID.hs` to provide a prior or fixed value for $\tilde{s}$ or $\tau$.
 
 ``` bash
-% bali-phy -m AndroID.hs -- --males 20 --total 2000 data.phase
+% bali-phy run AndroID.hs -- --males 20 --total 2000 data.phase
 ```
 
 ## Gynodioecy
@@ -385,7 +382,7 @@ The required `--females` and `--total` arguments supply additional information a
 modify `Gyno.hs` to provide priors or fixed values for two of the remaining three components of $\Psi$.
 
 ``` bash
-% bali-phy -m Gyno.hs -- --females 27 --total 221 data.phase
+% bali-phy run Gyno.hs -- --females 27 --total 221 data.phase
 ```
 
 
