@@ -1,13 +1,13 @@
 module PopGen.Selfing.Herm where
 
+import           BAliPhy.Run
+import           MCMC (runMCMC)
+import           Options.Applicative
 import           PopGen
 import           PopGen.Selfing
-import           Options.Applicative
 import           Probability
 
-options = info
-    (strArgument (metavar "PHASE-FILE" <> help "PHASE genotype file") <**> helper)
-    (fullDesc <> progDesc "Estimate selfing in a hermaphroditic population")
+inputs = strArgument (metavar "PHASE-FILE" <> help "PHASE genotype file")
 
 model observed_alleles = do
 
@@ -33,7 +33,20 @@ model observed_alleles = do
 
     return ["t" %=% t, "s*" %=% s, "theta*" %=% theta_effective, "theta" %=% theta, "R" %=% r]
 
-main _ = do
-    filename <- execParser options
+-- Parse the model inputs, construct its logged state, and either inspect it or run MCMC.
+main = do
+    (options, filename) <- execParser $
+        withModelDescription "Estimate selfing in a hermaphroditic population" $
+            modelRunParserWith "Herm" 200000 inputs
+
+    runInfo <- initializeModelRun (testMode options) (outputName options)
+
     observed_alleles <- read_phase_file filename
-    return $ model observed_alleles
+
+    mcmcState <- makeLoggedMCMCState runInfo (logFormats options) $ model observed_alleles
+
+    case runInfo of
+        TestRun -> printInitialModel (logFormats options) mcmcState
+        MCMCRun directory -> do
+            reportModelRun (iterations options) (logFormats options) directory
+            runMCMC (iterations options) mcmcState

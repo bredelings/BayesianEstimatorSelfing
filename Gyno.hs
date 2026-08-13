@@ -1,20 +1,19 @@
 module Gyno where
 
+import           BAliPhy.Run
+import           MCMC (runMCMC)
+import           Options.Applicative
 import           PopGen
 import           PopGen.Selfing
 import           PopGen.Selfing.Gynodioecy
 import           Probability
-import           Options.Applicative
 import           System.Exit
 import           System.IO
 
 -- Parse the genotype file and field-count observation before constructing the probabilistic model.
-options = info
-    ((,,) <$> strArgument (metavar "PHASE-FILE" <> help "PHASE genotype file")
-          <*> option auto (long "females" <> metavar "F" <> help "Number of females observed")
-          <*> option auto (long "total" <> metavar "N" <> help "Total number of individuals observed")
-          <**> helper)
-    (fullDesc <> progDesc "Estimate selfing in a gynodioecious population")
+inputs = (,,) <$> strArgument (metavar "PHASE-FILE" <> help "PHASE genotype file")
+              <*> option auto (long "females" <> metavar "F" <> help "Number of females observed")
+              <*> option auto (long "total" <> metavar "N" <> help "Total number of individuals observed")
 
 -- Reject impossible field counts with a controlled command-line failure before MCMC starts.
 validate_field_counts females total =
@@ -88,8 +87,22 @@ gyno_model = do
 
     return (a, tau, p_f, sigma)
 
-main _ = do
-    (filename, females, total) <- execParser options
+-- Parse the model inputs, construct its logged state, and either inspect it or run MCMC.
+main = do
+    (options, (filename, females, total)) <- execParser $
+        withModelDescription "Estimate selfing in a gynodioecious population" $
+            modelRunParserWith "Gyno" 200000 inputs
+
     validate_field_counts females total
+
+    runInfo <- initializeModelRun (testMode options) (outputName options)
+
     observed_alleles <- read_phase_file filename
-    return $ model females total observed_alleles
+
+    mcmcState <- makeLoggedMCMCState runInfo (logFormats options) $ model females total observed_alleles
+
+    case runInfo of
+        TestRun -> printInitialModel (logFormats options) mcmcState
+        MCMCRun directory -> do
+            reportModelRun (iterations options) (logFormats options) directory
+            runMCMC (iterations options) mcmcState

@@ -1,20 +1,19 @@
 module AndroID where
 
+import           BAliPhy.Run
+import           MCMC (runMCMC)
+import           Options.Applicative
 import           PopGen
 import           PopGen.Selfing
 import           PopGen.Selfing.Androdioecy
 import           Probability
-import           Options.Applicative
 import           System.Exit
 import           System.IO
 
 -- Parse the genotype file and field-count observation before constructing the probabilistic model.
-options = info
-    ((,,) <$> strArgument (metavar "PHASE-FILE" <> help "PHASE genotype file")
-          <*> option auto (long "males" <> metavar "M" <> help "Number of males observed")
-          <*> option auto (long "total" <> metavar "N" <> help "Total number of individuals observed")
-          <**> helper)
-    (fullDesc <> progDesc "Estimate selfing and inbreeding depression in an androdioecious population")
+inputs = (,,) <$> strArgument (metavar "PHASE-FILE" <> help "PHASE genotype file")
+              <*> option auto (long "males" <> metavar "M" <> help "Number of males observed")
+              <*> option auto (long "total" <> metavar "N" <> help "Total number of individuals observed")
 
 -- Reject impossible field counts with a controlled command-line failure before MCMC starts.
 validate_field_counts males total =
@@ -63,8 +62,22 @@ andro_model = do
 
     return (p_m, tau, s')
 
-main _ = do
-    (filename, males, total) <- execParser options
+-- Parse the model inputs, construct its logged state, and either inspect it or run MCMC.
+main = do
+    (options, (filename, males, total)) <- execParser $
+        withModelDescription "Estimate selfing and inbreeding depression in an androdioecious population" $
+            modelRunParserWith "AndroID" 200000 inputs
+
     validate_field_counts males total
+
+    runInfo <- initializeModelRun (testMode options) (outputName options)
+
     observed_alleles <- read_phase_file filename
-    return $ model males total observed_alleles
+
+    mcmcState <- makeLoggedMCMCState runInfo (logFormats options) $ model males total observed_alleles
+
+    case runInfo of
+        TestRun -> printInitialModel (logFormats options) mcmcState
+        MCMCRun directory -> do
+            reportModelRun (iterations options) (logFormats options) directory
+            runMCMC (iterations options) mcmcState

@@ -1,13 +1,13 @@
 module Generic2 where
 
+import           BAliPhy.Run
+import           MCMC (runMCMC)
+import           Options.Applicative
 import           PopGen
 import           PopGen.Selfing
 import           Probability
-import           Options.Applicative
 
-options = info
-    (strArgument (metavar "GENOTYPE-FILE" <> help "FastPhase or Phase2 genotype file") <**> helper)
-    (fullDesc <> progDesc "Estimate selfing from FastPhase or Phase2 genotype data")
+inputs = strArgument (metavar "GENOTYPE-FILE" <> help "FastPhase or Phase2 genotype file")
 
 model observed_alleles = do
 
@@ -50,7 +50,20 @@ model observed_alleles = do
         , "theta*" %=% theta_effective
         ]
 
-main _ = do
-    filename <- execParser options
+-- Parse the model inputs, construct its logged state, and either inspect it or run MCMC.
+main = do
+    (options, filename) <- execParser $
+        withModelDescription "Estimate selfing from FastPhase or Phase2 genotype data" $
+            modelRunParserWith "Generic2" 200000 inputs
+
+    runInfo <- initializeModelRun (testMode options) (outputName options)
+
     observed_alleles <- read_phase2_file filename
-    return $ model observed_alleles
+
+    mcmcState <- makeLoggedMCMCState runInfo (logFormats options) $ model observed_alleles
+
+    case runInfo of
+        TestRun -> printInitialModel (logFormats options) mcmcState
+        MCMCRun directory -> do
+            reportModelRun (iterations options) (logFormats options) directory
+            runMCMC (iterations options) mcmcState
