@@ -68,7 +68,7 @@ main = do
 
     validate_field_counts males total
 
-    runInfo <- initializeModelRun (testMode options) (outputName options)
+    runInfo <- initializeModelRun (runMode options)
 
     observed_alleles <- read_phase_file filename
 

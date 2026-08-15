@@ -56,7 +56,7 @@ main = do
         withModelDescription "Estimate selfing from PHASE genotype data" $
             modelRunParserWith "Generic" 200000 inputs
 
-    runInfo <- initializeModelRun (testMode options) (outputName options)
+    runInfo <- initializeModelRun (runMode options)
 
     observed_alleles <- read_phase_file filename
 
