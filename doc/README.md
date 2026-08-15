@@ -131,12 +131,14 @@ sample.2	23	20	1	1	4	5
 
 ## Output directory
 
-BAli-Phy creates a new directory to store its output files each time it is run.  By default, the directory
-name is the name of the model file, with a number added to the end to make it unique.  BAli-Phy first checks
-if there is already a directory called *file*-1/, and then moves on to *file*-2/, etc. until it find an unused
-directory name.
+For an MCMC run, BAli-Phy creates a new directory to store its output files.  By default, its base name is
+the name of the model, with a number added to make the directory unique.  For example, the `Generic` model
+uses `Generic-1/`, then `Generic-2/`, and so on.
 
-You can specify a different name to use instead of the model file name by using the `--name` option.
+The `--name` option selects a different base name while retaining automatic unique-directory creation.
+Alternatively, `--output-dir` writes into the exact directory specified; that directory must already exist.
+If both options are supplied, `--output-dir` takes precedence.  A run with `--test` does not create an output
+directory.
 
 ## Output files
 
