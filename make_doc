@@ -34,6 +34,6 @@ if [ "$format" != pdf ]; then
 fi
 if [ "$format" != html ]; then
     pandoc --standalone --toc --number-sections --pdf-engine=pdflatex \
-        --syntax-highlighting=espresso \
+        --syntax-highlighting=tango \
         --output="$DOC_ROOT/doc/README.pdf" "$DOC_ROOT/doc/README.md"
 fi

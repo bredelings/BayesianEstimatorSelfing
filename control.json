@@ -1,6 +1,6 @@
 {
     "Package": "BES",
-    "Version": "0.2.0",
+    "Version": "0.2.1",
     "Maintainer": "Ben Redelings <benjamin.redelings@gmail.com>",
     "Description": "Estimate self-fertilization rates and other mating system parameters",
     "Homepage": "https://github.com/bredelings/BayesianEstimatorSelfing"
