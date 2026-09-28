@@ -42,7 +42,13 @@ model males total observed_alleles = do
 
     let theta  = map (/ factor) theta_effective
 
-    (t, afs_dist) <- diploid_afs n_individuals n_loci s theta_effective
+    -- Estimate additional loss of heterozygosity shared across individuals, beyond selfing.
+    f_other <- sample $ beta 0.25 1.0
+
+    let f_selfing = s / (2.0 - s)
+        f_total   = 1.0 - (1.0 - f_selfing) * (1.0 - f_other)
+
+    (t, afs_dist) <- robust_diploid_afs n_individuals n_loci s f_other theta_effective
 
     observe observed_alleles afs_dist
 
@@ -50,7 +56,16 @@ model males total observed_alleles = do
     -- binomial field data on the population male fraction.
     observe males $ binomial total $ toProb p_m
 
-    return ["p_m" %=% p_m, "s*" %=% s, "theta*" %=% theta_effective, "theta" %=% theta, "R" %=% r]
+    return
+        [ "p_m" %=% p_m
+        , "s*" %=% s
+        , "F[other]" %=% f_other
+        , "F[selfing]" %=% f_selfing
+        , "F[total]" %=% f_total
+        , "theta*" %=% theta_effective
+        , "theta" %=% theta
+        , "R" %=% r
+        ]
 
 andro_model = do
 
