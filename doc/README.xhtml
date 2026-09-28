@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="pandoc 3.10.1" />
+  <meta name="generator" content="pandoc 3.11" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Bayesian Estimator of Selfing (BES)</title>
   <style>
@@ -146,26 +146,29 @@ class="toc-section-number">6.2</span> Using <code>tracer</code></a></li>
 <li><a href="#mating-system-models" id="toc-mating-system-models"><span
 class="toc-section-number">7</span> Mating system models</a>
 <ul>
+<li><a href="#non-selfing-inbreeding"
+id="toc-non-selfing-inbreeding"><span
+class="toc-section-number">7.1</span> Non-selfing inbreeding</a></li>
 <li><a href="#generic-model" id="toc-generic-model"><span
-class="toc-section-number">7.1</span> Generic model</a></li>
+class="toc-section-number">7.2</span> Generic model</a></li>
 <li><a href="#pure-hermaphrodite" id="toc-pure-hermaphrodite"><span
-class="toc-section-number">7.2</span> Pure Hermaphrodite</a>
+class="toc-section-number">7.3</span> Pure Hermaphrodite</a>
 <ul>
 <li><a href="#variant-i" id="toc-variant-i"><span
-class="toc-section-number">7.2.1</span> Variant I</a></li>
-<li><a href="#variant-ii" id="toc-variant-ii"><span
-class="toc-section-number">7.2.2</span> Variant II</a></li>
-</ul></li>
-<li><a href="#androdioecy" id="toc-androdioecy"><span
-class="toc-section-number">7.3</span> Androdioecy</a>
-<ul>
-<li><a href="#variant-i-1" id="toc-variant-i-1"><span
 class="toc-section-number">7.3.1</span> Variant I</a></li>
-<li><a href="#variant-ii-1" id="toc-variant-ii-1"><span
+<li><a href="#variant-ii" id="toc-variant-ii"><span
 class="toc-section-number">7.3.2</span> Variant II</a></li>
 </ul></li>
+<li><a href="#androdioecy" id="toc-androdioecy"><span
+class="toc-section-number">7.4</span> Androdioecy</a>
+<ul>
+<li><a href="#variant-i-1" id="toc-variant-i-1"><span
+class="toc-section-number">7.4.1</span> Variant I</a></li>
+<li><a href="#variant-ii-1" id="toc-variant-ii-1"><span
+class="toc-section-number">7.4.2</span> Variant II</a></li>
+</ul></li>
 <li><a href="#gynodioecy" id="toc-gynodioecy"><span
-class="toc-section-number">7.4</span> Gynodioecy</a></li>
+class="toc-section-number">7.5</span> Gynodioecy</a></li>
 </ul></li>
 <li><a href="#specifying-additional-information"
 id="toc-specifying-additional-information"><span
@@ -226,16 +229,10 @@ estimating selfing rates and mutation rates independent of a mating
 system. Additional non-genetic information, such as field observations
 of the number of females or males, is required for estimating parameters
 under the gynodioecious model and the androdioecious model.</p>
-<p>BES is run as a Unix command line program. It is not a GUI program;
-instead you must run it in a terminal. Therefore, you might want to keep
-a <a href="http://www.ee.surrey.ac.uk/Teaching/Unix">Unix Tutorial</a>
-or <a href="http://www.rain.org/~mkummel/unix.html">Unix cheat sheet</a>
-handy while you work.</p>
-<p>BES runs on Linux, Mac OS X, and Windows. BES is distributed as an
-extension package for the BAli-Phy inference framework. You might
-therefore wish to refer to the <a
-href="http://www.bali-phy.org/README.html">BAli-Phy Documentation</a> as
-well. BES 0.2.0 requires BAli-Phy 4.3 or later.</p>
+<p>BES runs through BAli-Phy in a terminal on Linux, macOS, and Windows.
+It is an extension package for BAli-Phy and requires version 4.3 or
+later. See also the <a
+href="https://www.bali-phy.org/README.html">BAli-Phy user guide</a>.</p>
 <p>BES contains a number of modules that correspond to different mating
 system models. Each model allows estimating a different set of
 parameters. The generic model and the pure hermaphrodite model without
@@ -253,14 +250,15 @@ understanding the structure of the model.</p>
 class="header-section-number">2</span> Installation</h1>
 <h2 data-number="2.1" id="installing-bali-phy"><span
 class="header-section-number">2.1</span> Installing BAli-Phy</h2>
-<p>Since BES is an extension package for BALi-Phy, you must first
+<p>Since BES is an extension package for BAli-Phy, you must first
 install BAli-Phy before you can use BES. To install BAli-Phy, follow the
-<a href="http://www.bali-phy.org/README.html#installation">installation
+<a href="https://www.bali-phy.org/README.html#installation">installation
 instructions for BAli-Phy</a>.</p>
 <h2 data-number="2.2" id="installing-additional-software"><span
 class="header-section-number">2.2</span> Installing additional
 software</h2>
-<p>You should also install the following software:</p>
+<p>For graphical inspection of TSV parameter logs, optionally
+install:</p>
 <ul>
 <li><a href="http://tree.bio.ed.ac.uk/software/tracer/">Tracer</a> helps
 to visualize the results of MCMC runs.</li>
@@ -282,51 +280,65 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="
 <p>You can uninstall the package by running:</p>
 <div class="sourceCode" id="cb5"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy-pkg uninstall BES</span></code></pre></div>
-<p>Next, download some additional modules for particular mating systems.
-These files are not installed into the package directory because they
-are model templates whose priors and other assumptions can be
-modified.</p>
-<ul>
-<li><a
-href="https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/HermID.hs">HermID.hs</a></li>
-<li><a
-href="https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Andro.hs">Andro.hs</a></li>
-<li><a
-href="https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/AndroID.hs">AndroID.hs</a></li>
-<li><a
-href="https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/Gyno.hs">Gyno.hs</a></li>
-</ul>
-<p>The generic model, the pure hermaphrodite model without inbreeding
-depression, and <code>Andro.hs</code> can be used without modifying
-their source. <code>Andro.hs</code> instead requires field counts as
-command-line arguments. The other mating-system templates require
-additional prior or fixed-value choices in their source.</p>
+<p>The package supplies reusable modules. Clone the repository to obtain
+the editable model templates and example data, then run the examples
+from that directory:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/bredelings/BayesianEstimatorSelfing.git</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> BayesianEstimatorSelfing</span></code></pre></div>
+<p>All supplied models estimate the additional non-selfing inbreeding
+component described below. The ready-to-run models are
+<code>Generic.hs</code>, <code>Generic2.hs</code>,
+<code>Andro.hs</code>, <code>Examples/Andro.hs</code>,
+<code>Examples/Gyno.hs</code>, and the installed
+<code>PopGen.Selfing.Herm</code> model. The androdioecious and
+gynodioecious models require observed sex counts as command-line
+arguments.</p>
+<p><code>HermID.hs</code>, <code>AndroID.hs</code>, and top-level
+<code>Gyno.hs</code> deliberately leave parameter definitions commented
+out. They must be edited before execution: supply priors, fixed values,
+or observations appropriate to the analysis.
+<code>Examples/Gyno.hs</code> supplies an illustrative prior on relative
+selfed-seed viability and fixes relative female seed production to 1.
+Review these assumptions before using it for your data. The two runnable
+androdioecy scripts also contain different prior choices.</p>
 <h1 data-number="3" id="running-the-program"><span
 class="header-section-number">3</span> Running the program</h1>
 <h2 data-number="3.1" id="quick-start"><span
 class="header-section-number">3.1</span> Quick Start</h2>
-<p>First, check that the model loads correctly:</p>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Generic.hs <span class="at">--test</span> Examples/outfile.001.70.001.phase</span></code></pre></div>
-<p>If that works, then run the MCMC using the generic model:</p>
+<p>First, inspect the initial model values without starting MCMC or
+creating an output directory:</p>
 <div class="sourceCode" id="cb7"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Generic.hs <span class="at">--iterations</span><span class="op">=</span>1000 Examples/outfile.001.70.001.phase <span class="kw">&amp;</span></span></code></pre></div>
-<p>This should create a directory called <code>Generic-1/</code> (or
-<code>Generic-2/</code>, etc.) that contains the output files.</p>
-<p>Second, load the output file <code>Generic-1/C1.log</code> using the
-GUI program Tracer. On Unix, you can run this from the command line as
-follows:</p>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bali-phy</span> run Generic.hs <span class="at">-l</span> tsv <span class="at">--test</span> Examples/outfile.001.70.001.phase1</span></code></pre></div>
+<p>Then run a short demonstration analysis using the generic model:</p>
 <div class="sourceCode" id="cb8"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> tracer Generic-1/C1.log <span class="kw">&amp;</span></span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bali-phy</span> run Generic.hs <span class="at">-l</span> tsv <span class="at">--iterations</span><span class="op">=</span>1000 Examples/outfile.001.70.001.phase1</span></code></pre></div>
+<p>These 1,000 iterations demonstrate execution; they do not establish
+convergence. Assess mixing and convergence before interpreting results.
+The run creates a directory called <code>Generic-1/</code> (or
+<code>Generic-2/</code>, etc.) that contains the output files.</p>
+<p>After the run finishes, load the output file
+<code>Generic-1/C1.log</code> using the GUI program Tracer. On Unix, you
+can run this from the command line as follows:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> tracer Generic-1/C1.log <span class="kw">&amp;</span></span></code></pre></div>
 <p>It is also possible to use a non-graphical program statreport to view
 the estimates of the selfing rate</p>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> statreport <span class="at">--select</span><span class="op">=</span><span class="st">&quot;s*&quot;</span> Generic-1/C1.log</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> statreport <span class="at">--select</span><span class="op">=</span><span class="st">&quot;s*&quot;</span> Generic-1/C1.log</span></code></pre></div>
 <p>This can be useful when analyzing data in a terminal.</p>
 <h1 data-number="4" id="input"><span
 class="header-section-number">4</span> Input</h1>
-<p>Input files must be in PHASE format. Both alleles for each locus
-should be specified, with NA given to indicate missing data.</p>
+<p><code>Generic.hs</code> and the mating-system models read the PHASE
+layout described below. Specify both alleles for each locus, using
+<code>NA</code> for missing data.</p>
+<p><code>Generic2.hs</code> instead reads FastPhase or Phase2 files. The
+supplied examples can be inspected with:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bali-phy</span> run Generic2.hs <span class="at">-l</span> tsv <span class="at">--test</span> Examples/test.fastphase</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bali-phy</span> run Generic2.hs <span class="at">-l</span> tsv <span class="at">--test</span> Examples/test.phase2</span></code></pre></div>
+<p>Use <code>--iterations</code> instead of <code>--test</code> to
+sample from these models. The files in <code>Examples/</code> illustrate
+the accepted layouts.</p>
 <p>A PHASE file contains a 3-line header, followed by a single line for
 each observed individual. The header consists of</p>
 <ol type="1">
@@ -364,8 +376,7 @@ that directory must already exist. If both options are supplied,
 <code>--test</code> does not create an output directory.</p>
 <h2 data-number="5.2" id="output-files"><span
 class="header-section-number">5.2</span> Output files</h2>
-<p>BAli-Phy writes the following output files inside the directory that
-it creates:</p>
+<p>The selected logging format determines the parameter files:</p>
 <table>
 <thead>
 <tr>
@@ -375,23 +386,25 @@ it creates:</p>
 </thead>
 <tbody>
 <tr>
-<td>C1.out</td>
-<td>General information: command line, start time, etc.</td>
+<td><code>C1.log.json</code></td>
+<td>JSON parameter samples, written by default.</td>
 </tr>
 <tr>
-<td>C1.err</td>
-<td>May contain error messages.</td>
-</tr>
-<tr>
-<td>C1.log</td>
-<td>MCMC samples for different variables.</td>
+<td><code>C1.log</code></td>
+<td>Tab-separated parameter samples, written with
+<code>-l tsv</code>.</td>
 </tr>
 </tbody>
 </table>
-<p>The <code>C1.log</code> file contains MCMC samples for the variables
-that are being estimated. For example, the variable <code>s*</code>
-indicates the fraction of uniparental individuals at the time of
-breeding.</p>
+<p>Use <code>-l json,tsv</code> to write both formats. The scripts print
+progress and diagnostics to the terminal; they do not automatically
+create <code>C1.out</code> or <code>C1.err</code>. A <code>--test</code>
+invocation prints initial values rather than creating parameter
+logs.</p>
+<p>The logs contain samples of model parameters and derived quantities.
+For example, <code>s*</code> is the fraction of uniparental individuals
+at the time of breeding. Use TSV output for Tracer and the
+<code>statreport</code> commands below.</p>
 <p>Since each mating system has a unique set of parameters, the
 variables for each model will be described in the section for that
 model.</p>
@@ -402,27 +415,27 @@ class="header-section-number">6.1</span> Using
 <code>statreport</code></h2>
 <p>In order to determine estimates of parameters, you can use the
 program <code>statreport</code>:</p>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> statreport C1.log</span></code></pre></div>
-<p>You can plot the posterior distribution for specific parameters by
-using the select option:</p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> statreport <span class="at">--select</span> <span class="st">&quot;s*&quot;</span> C1.log</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> statreport C1.log</span></code></pre></div>
+<p>To select particular parameters for numerical summaries, use:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> statreport <span class="at">--select</span> <span class="st">&quot;s*&quot;</span> C1.log</span></code></pre></div>
 <p>Here quotes are necessary to make sure that the <code>*</code> is not
 interpreted by the command line shell, but is passed in to the
 <code>statreport</code> program unchanged.</p>
 <p>You can also use the arguments <code>--mean</code>,
-<code>--mode</code>, and <code>--median</code> (the default) to exime
+<code>--mode</code>, and <code>--median</code> (the default) to examine
 different properties of the posterior distribution.</p>
 <h2 data-number="6.2" id="using-tracer"><span
 class="header-section-number">6.2</span> Using <code>tracer</code></h2>
 <p>Tracer is a graphical program for exploring posterior
 distributions.</p>
-<p>Load the <code>C1.log</code> file using <code>tracer</code>. On Unix,
-if <code>tracer</code> is in your <code>PATH</code>, you can do this by
+<p>Run the model with <code>-l tsv</code>, then load the resulting
+<code>C1.log</code> file using <code>tracer</code>. On Unix, if
+<code>tracer</code> is in your <code>PATH</code>, you can do this by
 typing</p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> tracer C1.log <span class="kw">&amp;</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> tracer C1.log <span class="kw">&amp;</span></span></code></pre></div>
 <h1 data-number="7" id="mating-system-models"><span
 class="header-section-number">7</span> Mating system models</h1>
 <p>The stochastic process that generates the genetic data is described
@@ -432,7 +445,7 @@ rates <span class="math inline">\(\Theta^*_l\)</span> for each locus
 <span class="math inline">\(l\)</span>. The set of variables <span
 class="math inline">\(\Psi\)</span> is specific for each mating
 system.</p>
-<p>Some quantites are of interest for each mating system</p>
+<p>Some quantities are of interest for each mating system</p>
 <ul>
 <li><span class="math inline">\(s^*\)</span> is the fraction of
 uniparental adults (selfing rate).</li>
@@ -466,27 +479,79 @@ class="math inline">\(R\)</span> are composite parameters: they are
 determined from the basic mating system parameters <span
 class="math inline">\(\Psi\)</span>.</p>
 <p>It is important to note that the genetic data contain information
-directly only about <span class="math inline">\(s^*\)</span> and <span
-class="math inline">\({\Theta^*_l}\)</span>. Therefore, the basic mating
-system parameters <span class="math inline">\(\Psi\)</span> may be
+about <span class="math inline">\(s^*\)</span>, <span
+class="math inline">\({\Theta^*_l}\)</span>, and the additional
+inbreeding component described below. Therefore, the basic mating system
+parameters <span class="math inline">\(\Psi\)</span> may be
 unidentifiable on the basis of genetic data alone. This can be solved by
-introducing additional data in the form on field observations on, for
+introducing additional data in the form of field observations on, for
 example, the fraction of males or the fraction of females in the
 population. When such information is unavailable, the generic model
 should be used.</p>
-<h2 data-number="7.1" id="generic-model"><span
-class="header-section-number">7.1</span> Generic model</h2>
+<h2 data-number="7.1" id="non-selfing-inbreeding"><span
+class="header-section-number">7.1</span> Non-selfing inbreeding</h2>
+<p>All supplied model scripts use the robust estimator, which estimates
+<code>F[other]</code> alongside selfing. This allows decreased
+heterozygosity to have sources other than selfing. The model uses a
+shared <code>F[other]</code> across individuals, while individual
+selfing histories vary. Information across loci helps distinguish these
+components, subject to the data and model assumptions.</p>
+<p>For an individual without recent selfing, its two alleles are
+independent draws from the gene pool with probability <span
+class="math inline">\(1-F_{\mathrm{other}}\)</span>, or identical by
+descent with probability <span
+class="math inline">\(F_{\mathrm{other}}\)</span>. The latter case
+assumes rapid coalescence compared with an ordinary coalescent event,
+without specifying its mechanism. The supplied prior on
+<code>F[other]</code> is <code>beta 0.25 1.0</code>.</p>
+<p>The following fields supplement each model’s parameter table
+below:</p>
+<table>
+<colgroup>
+<col style="width: 41%" />
+<col style="width: 58%" />
+</colgroup>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>F[other]</code></td>
+<td>Additional loss of heterozygosity, estimated from the model.</td>
+</tr>
+<tr>
+<td><code>F[selfing]</code></td>
+<td>Selfing component: <span
+class="math inline">\(s^*/(2-s^*)\)</span>.</td>
+</tr>
+<tr>
+<td><code>F[total]</code></td>
+<td>Combined component: <span
+class="math inline">\(1-(1-F_{\mathrm{selfing}})(1-F_{\mathrm{other}})\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p>The mating-system parameter sets <span
+class="math inline">\(\Psi\)</span> below describe reproduction.
+<code>F[other]</code> is an additional parameter of the genetic
+observation model; the two other inbreeding coefficients are
+derived.</p>
+<h2 data-number="7.2" id="generic-model"><span
+class="header-section-number">7.2</span> Generic model</h2>
 <p>The generic model is agnostic about the particular mating system, and
-simply reports <span class="math inline">\(s^*\)</span>, <span
-class="math inline">\({T_k}\)</span> and <span
-class="math inline">\({\Theta^*_l}\)</span> as estimated from the
-genetic data. Since the mating system is not known, <span
-class="math inline">\(R\)</span> cannot be calculated. This means that
-it is not possible to calculate <span
+reports <span class="math inline">\(s^*\)</span>, <span
+class="math inline">\({T_k}\)</span>, <span
+class="math inline">\({\Theta^*_l}\)</span>, and the common inbreeding
+fields as estimated from the genetic data. Since the mating system is
+not known, <span class="math inline">\(R\)</span> cannot be calculated.
+This means that it is not possible to calculate <span
 class="math inline">\({\Theta_l}\)</span> from <span
 class="math inline">\({\Theta^*_l}\)</span>.</p>
-<p>The generic model characterizes the mating system simply in terms of
-the selfing rate <span class="math inline">\(s^*\)</span>. Thus, <span
+<p>The generic model characterizes reproduction in terms of the selfing
+rate <span class="math inline">\(s^*\)</span>. Thus, <span
 class="math inline">\(\Psi=\{s^*\}\)</span>, and so <span
 class="math inline">\(s^*\)</span> is a basic parameter, instead of
 being calculated from other parameters.</p>
@@ -494,9 +559,9 @@ being calculated from other parameters.</p>
 given:</p>
 <table>
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 21%" />
-<col style="width: 47%" />
+<col style="width: 9%" />
+<col style="width: 19%" />
+<col style="width: 71%" />
 </colgroup>
 <thead>
 <tr>
@@ -525,14 +590,15 @@ class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
 </table>
-<p>This variant is implemented by <code>Generic.hs</code>.</p>
-<h2 data-number="7.2" id="pure-hermaphrodite"><span
-class="header-section-number">7.2</span> Pure Hermaphrodite</h2>
+<p>This variant is implemented by <code>Generic.hs</code> and
+<code>Generic2.hs</code>, which differ in their input format.</p>
+<h2 data-number="7.3" id="pure-hermaphrodite"><span
+class="header-section-number">7.3</span> Pure Hermaphrodite</h2>
 <p>In the pure hermaphrodite model, each individual contributes both
 male and female gametes to the gene pool. There are two variants of this
 model.</p>
-<h3 data-number="7.2.1" id="variant-i"><span
-class="header-section-number">7.2.1</span> Variant I</h3>
+<h3 data-number="7.3.1" id="variant-i"><span
+class="header-section-number">7.3.1</span> Variant I</h3>
 <p>The first variant has <span
 class="math inline">\(\Psi=\{s^*\}\)</span>. This variant treats <span
 class="math inline">\(s^*\)</span> as a basic parameter, and does not
@@ -548,9 +614,9 @@ model.</p>
 given:</p>
 <table>
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 21%" />
-<col style="width: 47%" />
+<col style="width: 9%" />
+<col style="width: 19%" />
+<col style="width: 71%" />
 </colgroup>
 <thead>
 <tr>
@@ -592,8 +658,8 @@ locus <span class="math inline">\(l\)</span>.</td>
 </table>
 <p>This variant is implemented by the installed
 <code>PopGen.Selfing.Herm</code> model.</p>
-<h3 data-number="7.2.2" id="variant-ii"><span
-class="header-section-number">7.2.2</span> Variant II</h3>
+<h3 data-number="7.3.2" id="variant-ii"><span
+class="header-section-number">7.3.2</span> Variant II</h3>
 <p>The second variant has <span
 class="math inline">\(\Psi=\{\tilde{s},\tau\}\)</span>. This variant
 treats <span class="math inline">\(s^*\)</span> as a composite
@@ -602,9 +668,9 @@ parameter.</p>
 given:</p>
 <table>
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 21%" />
-<col style="width: 47%" />
+<col style="width: 9%" />
+<col style="width: 19%" />
+<col style="width: 71%" />
 </colgroup>
 <thead>
 <tr>
@@ -658,15 +724,15 @@ locus <span class="math inline">\(l\)</span>.</td>
 information about <span class="math inline">\(\tilde{s}\)</span> or
 <span class="math inline">\(\tau\)</span>.</p>
 <p>This variant is implemented by <code>HermID.hs</code>.</p>
-<h2 data-number="7.3" id="androdioecy"><span
-class="header-section-number">7.3</span> Androdioecy</h2>
+<h2 data-number="7.4" id="androdioecy"><span
+class="header-section-number">7.4</span> Androdioecy</h2>
 <p>In the androdioecious model, the population consists of some fraction
 <span class="math inline">\(p_m\)</span> of males, with the rest of the
-individuals being hermaphrodites. Hermaphrodites produce males gametes,
+individuals being hermaphrodites. Hermaphrodites produce male gametes,
 but only fertilize their own eggs. There are two variants of this
 model.</p>
-<h3 data-number="7.3.1" id="variant-i-1"><span
-class="header-section-number">7.3.1</span> Variant I</h3>
+<h3 data-number="7.4.1" id="variant-i-1"><span
+class="header-section-number">7.4.1</span> Variant I</h3>
 <p>The first variant has <span
 class="math inline">\(\Psi=\{s^*,p_m\}\)</span>. This variant treats
 <span class="math inline">\(s^*\)</span> as a basic parameter, and does
@@ -675,9 +741,9 @@ not model inbreeding depression.</p>
 given:</p>
 <table>
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 21%" />
-<col style="width: 47%" />
+<col style="width: 9%" />
+<col style="width: 19%" />
+<col style="width: 71%" />
 </colgroup>
 <thead>
 <tr>
@@ -726,12 +792,13 @@ locus <span class="math inline">\(l\)</span>.</td>
 <span class="math inline">\(p_m\)</span> through a binomial likelihood.
 Supply the number of males and the total number of surveyed individuals
 as required model arguments:</p>
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Andro.hs <span class="at">--males</span> 20 <span class="at">--total</span> 2000 data.phase</span></code></pre></div>
-<p>The priors remain specified in <code>Andro.hs</code> and must be
-edited there if different priors are desired.</p>
-<h3 data-number="7.3.2" id="variant-ii-1"><span
-class="header-section-number">7.3.2</span> Variant II</h3>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Andro.hs <span class="at">--males</span> 20 <span class="at">--total</span> 2000 data.phase</span></code></pre></div>
+<p>These commands assume that the named input file exists. The priors
+remain specified in <code>Andro.hs</code> and must be edited there if
+different priors are desired.</p>
+<h3 data-number="7.4.2" id="variant-ii-1"><span
+class="header-section-number">7.4.2</span> Variant II</h3>
 <p>The second variant has <span
 class="math inline">\(\Psi=\{\tilde{s},\tau,p_m\}\)</span>. This variant
 treats <span class="math inline">\(s^*\)</span> as a composite
@@ -740,9 +807,9 @@ parameter.</p>
 given:</p>
 <table>
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 21%" />
-<col style="width: 47%" />
+<col style="width: 9%" />
+<col style="width: 19%" />
+<col style="width: 71%" />
 </colgroup>
 <thead>
 <tr>
@@ -803,11 +870,11 @@ class="math inline">\(p_m\)</span>. The user must still modify
 <code>AndroID.hs</code> to provide a prior or fixed value for <span
 class="math inline">\(\tilde{s}\)</span> or <span
 class="math inline">\(\tau\)</span>.</p>
-<div class="sourceCode" id="cb15"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run AndroID.hs <span class="at">--males</span> 20 <span class="at">--total</span> 2000 data.phase</span></code></pre></div>
-<h2 data-number="7.4" id="gynodioecy"><span
-class="header-section-number">7.4</span> Gynodioecy</h2>
-<p>In the gynodioecious model, the population consist of some fraction
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run AndroID.hs <span class="at">--males</span> 20 <span class="at">--total</span> 2000 data.phase</span></code></pre></div>
+<h2 data-number="7.5" id="gynodioecy"><span
+class="header-section-number">7.5</span> Gynodioecy</h2>
+<p>In the gynodioecious model, the population consists of some fraction
 <span class="math inline">\(p_f\)</span> of females, with the rest of
 the individuals being hermaphrodites. Hermaphrodites produce pollen, and
 so can contribute male gametes to females, other hermaphrodites, and
@@ -819,9 +886,9 @@ class="math inline">\(\Psi=\{\tilde{s},\tau,p_f,\sigma\}\)</span>. Here
 given:</p>
 <table>
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 21%" />
-<col style="width: 47%" />
+<col style="width: 9%" />
+<col style="width: 19%" />
+<col style="width: 71%" />
 </colgroup>
 <thead>
 <tr>
@@ -887,14 +954,16 @@ locus <span class="math inline">\(l\)</span>.</td>
 </tr>
 </tbody>
 </table>
-<p>The required <code>--females</code> and <code>--total</code>
-arguments supply additional information about <span
-class="math inline">\(p_f\)</span>. The user must still modify
-<code>Gyno.hs</code> to provide priors or fixed values for two of the
-remaining three components of <span
+<p>For a ready-to-run illustration, use <code>Examples/Gyno.hs</code>;
+it specifies the additional choices in its source. Top-level
+<code>Gyno.hs</code> is an incomplete template. The required
+<code>--females</code> and <code>--total</code> arguments supply
+additional information about <span class="math inline">\(p_f\)</span>.
+The user must still modify <code>Gyno.hs</code> to provide priors or
+fixed values for two of the remaining three components of <span
 class="math inline">\(\Psi\)</span>.</p>
-<div class="sourceCode" id="cb16"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Gyno.hs <span class="at">--females</span> 27 <span class="at">--total</span> 221 data.phase</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">%</span> bali-phy run Gyno.hs <span class="at">--females</span> 27 <span class="at">--total</span> 221 data.phase</span></code></pre></div>
 <h1 data-number="8" id="specifying-additional-information"><span
 class="header-section-number">8</span> Specifying additional
 information</h1>
@@ -932,7 +1001,7 @@ class="header-section-number">8.2</span> Methods for adding additional
 information</h2>
 <p>Additional information about a variable can be added in 3 ways.</p>
 <ol type="1">
-<li>Add observations that depends on that variable.</li>
+<li>Add observations that depend on that variable.</li>
 <li>Fix the variable to a known constant value.</li>
 <li>Place a subjective prior on the variable.</li>
 </ol>
@@ -945,17 +1014,17 @@ modifications apply to other observations and parameters.</p>
 id="introduce-a-variable-with-a-prior-and-place-observations-on-it."><span
 class="header-section-number">8.2.1</span> Introduce a variable with a
 prior and place observations on it.</h3>
-<div class="sourceCode" id="cb17"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>  tau <span class="ot">&lt;-</span> sample <span class="op">$</span> uniform <span class="fl">0.0</span> <span class="fl">1.0</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  observe <span class="dv">10</span> <span class="op">$</span> binomial <span class="dv">20</span> <span class="op">$</span> toProb tau</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>  tau <span class="ot">&lt;-</span> sample <span class="op">$</span> uniform <span class="fl">0.0</span> <span class="fl">1.0</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  observe <span class="dv">10</span> <span class="op">$</span> binomial <span class="dv">20</span> <span class="op">$</span> toProb tau</span></code></pre></div>
 <h3 data-number="8.2.2"
 id="fix-a-variable-to-a-known-constant-value."><span
 class="header-section-number">8.2.2</span> Fix a variable to a known
 constant value.</h3>
 <p>If you know the value of a variable, you can fix it to a
 constant:</p>
-<div class="sourceCode" id="cb18"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> tau <span class="ot">=</span> <span class="fl">1.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> tau <span class="ot">=</span> <span class="fl">1.0</span></span></code></pre></div>
 <p>If you have observations about a variable (e.g. <span
 class="math inline">\(p_m\)</span>) then do not fix that variable to a
 constant. If you fix a variable to a constant, then that variable cannot
@@ -967,8 +1036,8 @@ variable</h3>
 <p>This approach doesn’t actually make the parameter
 <em>identifiable</em>, since this approach affects only the prior, and
 not the likelihood.</p>
-<div class="sourceCode" id="cb19"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>  tau <span class="ot">&lt;-</span> sample <span class="op">$</span> beta <span class="fl">2.0</span> <span class="fl">8.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>  tau <span class="ot">&lt;-</span> sample <span class="op">$</span> beta <span class="fl">2.0</span> <span class="fl">8.0</span></span></code></pre></div>
 <p>As a result, it is not possible to compare the posterior (with data)
 and the prior (without data) to assess the impact of the data. This
 approach is therefore not recommended.</p>
@@ -997,7 +1066,7 @@ plausible outcome <em>a priori</em>.</p>
 <h2 data-number="9.2" id="comparing-the-posterior-and-the-prior"><span
 class="header-section-number">9.2</span> Comparing the posterior and the
 prior</h2>
-<p>The posterior distribution combines information the prior
+<p>The posterior distribution combines information from the prior
 distribution and the likelihood. In order to determine if the shape of
 the posterior is being largely driven by the prior, or largely driven by
 the likelihood, one should compare the posterior and the prior

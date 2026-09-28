@@ -1,148 +1,134 @@
 # Bayesian Estimator of Selfing (BES)
-BES is a software package for estimating self-fertilization (selfing)
-rates and other mating system parameters from genotype data.  BES
-estimates parameters in a Bayesian framework using Markov chain Monte
-Carlo (MCMC).
 
-BES contains a _generic_ model for estimating selfing rates and mutation
-rates independent of a mating system. BES also contains models of
+BES estimates self-fertilization (selfing) rates and other mating-system parameters from genotype
+data, using Bayesian inference and Markov chain Monte Carlo (MCMC). It provides a generic model
+that estimates selfing and effective mutation rates without specifying a mating system, as well as
+models of:
+
 * pure hermaphroditism
 * androdioecy (hermaphrodites + males)
 * gynodioecy (hermaphrodites + females)
 
-Additional *non-genetic* information, such as field observations of
-the number of females or males, is required to estimate mating
-system parameters.
+Estimating the underlying mating-system parameters can require additional information, such as
+observed male or female counts, fixed parameter values, or informative priors.
+See the [paper](https://doi.org/10.1534/genetics.115.179093) for the mating-system models.
 
-See the [paper](https://doi.org/10.1534/genetics.115.179093) and [figures](https://www.genetics.org/content/201/3/1171.figures-only).
+## Robust estimation
 
-BES 0.2.0 updates the package and model templates for BAli-Phy 4.3.
+All supplied model scripts estimate loss of heterozygosity from sources other than selfing
+(`F[other]`) alongside the selfing rate (`s*`). Allowing this additional component avoids attributing
+all decreased heterozygosity to selfing, which can otherwise inflate estimates of the selfing rate.
 
+The model uses a shared `F[other]` across individuals, while the number of consecutive generations of
+selfing varies among individuals. Information across loci helps distinguish these components; how
+well they can be separated depends on the data and model assumptions.
 
-## A more robust estimator
+For an individual without recent selfing, the model treats the two alleles as independent draws
+from the gene pool with probability `1 - F[other]`, or as identical by descent (IBD) with probability
+`F[other]`. It does not specify a mechanism for the latter case, but assumes that the IBD alleles
+coalesced quickly compared with an ordinary coalescent event.
 
-BES version 0.1.3 has been changed to be more robust by estimating the
-loss-of-heterozygosity (`F[other`]) that is not due to selfing as well as the
-selfing rate (`s` or `s*`).  Without allowing other sources of inbreeding,
-the estimates of the selfing rate can be too high, since they assume
-that selfing is the _only_ source of decreased heterozygosity.
+The scripts report:
 
-With enough loci, it is easy to separate the loss of heterozygosity
-that comes from selfing versus loss of heterozygosity that comes from
-other sources.  This is because selfing affects different individuals
-in different ways, having no effect on non-selfed individuals and a
-large effect on individuals with many generations of selfing. Other
-sources of inbreeding cause a loss of heterozygosity in all
-individuals alike.  
+* `F[other]`: loss of heterozygosity from sources other than selfing.
+* `F[selfing] = s*/(2-s*)`: the selfing component.
+* `F[total] = 1 - (1 - F[selfing]) * (1 - F[other])`: the combined component.
 
-The model of non-selfing inbreeding assumes that the two alleles in an outbred
-individual have probability (`1 - F[other]`) of being drawn independently from the
-gene pool, and probability `F[other]` of being identical-by-descent (IBD).  No
-mechanism is specified for the IBD case, except that the two IBD alleles are
-assumed to have coalesced quickly compared to a normal coalesent event.
+## Installation
 
-In addition to `s*` (the selfing rate), the example scripts now
-report the inbreeding coefficients:
+1. Install [BAli-Phy](https://github.com/bredelings/BAli-Phy) version 4.3 or later, following its
+   [installation instructions](https://www.bali-phy.org/README.html#installation).
 
-* F[other]
-* F[selfing] = s*/(2-s*)
-* F[total] = 1 - (1 - F[selfing]) * (1 - F[other])
+2. Install the BES package, which supplies the reusable model modules:
 
-# Install
-
-1. Install the MCMC program [BAli-Phy](https://github.com/bredelings/BAli-Phy) version 4.3 or higher.
-
-   See the [full documentation](http://bali-phy.org/README.xhtml) or
-   the [quick install documentation](http://bali-phy.org/download.php).
-
-2. Install the BES package for bali-phy:
-
-   ```
+   ```sh
    bali-phy --version
    bali-phy-pkg install BES
    bali-phy-pkg packages
    ```
 
-3. Install the BES example scripts:
+3. Clone this repository to obtain the editable model templates and example data:
 
-   ```
+   ```sh
    git clone https://github.com/bredelings/BayesianEstimatorSelfing.git
+   cd BayesianEstimatorSelfing
    ```
 
-For further instructions in installation and usage, see the [README.pdf](https://raw.githubusercontent.com/bredelings/BayesianEstimatorSelfing/master/doc/README.pdf)
+BES runs through BAli-Phy in a terminal on Linux, macOS, or Windows. For more detail, see the
+[BAli-Phy user guide](https://www.bali-phy.org/README.html) and the BES
+[full manual](doc/README.md) ([PDF](doc/README.pdf)).
 
-# Overview
+## Choosing a model
 
-BES is run as a Unix command line program.  It is not a GUI program; instead you must run it in a terminal.
-Therefore, you might want to keep a [Unix Tutorial](http://www.ee.surrey.ac.uk/Teaching/Unix) or
-[Unix cheat sheet](http://www.rain.org/~mkummel/unix.html) handy while you work.
+All models below include `F[other]`. Ready-to-run examples contain particular prior choices;
+review those choices before using them for your own data.
 
-BES runs on Linux, Mac OS X, and Windows.  BES is distributed as an extension package for the BAli-Phy inference framework.
-You might therefore wish to refer to the [BAli-Phy Documentation](http://www.bali-phy.org/README.html) as well.
+| Model | Use |
+| ----- | --- |
+| `Generic.hs` | Ready-to-run generic model for PHASE data. |
+| `Generic2.hs` | Ready-to-run generic model for FastPhase or Phase2 data. |
+| `Andro.hs` | Ready-to-run androdioecy model; requires `--males` and `--total`. |
+| `Examples/Andro.hs` | Runnable androdioecy example with its own prior choices; requires sex counts. |
+| `Examples/Gyno.hs` | Runnable gynodioecy example with specified priors and relative female seed production fixed at 1; requires `--females` and `--total`. |
+| `PopGen.Selfing.Herm` | Installed, ready-to-run pure-hermaphrodite model without inbreeding depression. |
+| `HermID.hs`, `AndroID.hs`, `Gyno.hs` | Templates requiring parameter/prior definitions before execution. |
 
-BES contains a number of modules that correspond to different mating system models.  Each model allows
-estimating a different set of parameters.  The generic model and the pure hermaphrodite model without
-inbreeding depression can be run without modification to estimate the selfing rate and locus-specific mutation rates.
+The last three templates intentionally leave some definitions commented out. Supply appropriate
+priors, fixed values, or observations before running them. Sex counts are command-line arguments;
+other identifying information requires editing the template. See
+[specifying additional information](doc/README.md#specifying-additional-information).
 
-However, the gynodioecious and androdioecious models require additional information besides the genetic data.
-The corresponding scripts require observed male or female counts on the command line. Some models also require the
-user to [edit the module](#specifying-additional-information) to choose priors, fix parameters, or add other identifying
-information. This manual describes how to add information, but is not a substitute for understanding the structure
-of the model.
+## Usage
 
-# Usage
+Run these commands from the cloned repository. First inspect the generic model's initial values
+without starting MCMC or creating an output directory:
 
-1. To try a test run, do
-
-```
-cd BayesianEstimatorSelfing
+```sh
 bali-phy run Generic.hs -l tsv --test Examples/outfile.001.70.001.phase1
-bali-phy run Generic.hs -l tsv        Examples/outfile.001.70.001.phase1
 ```
 
-The script `Generic.hs` is a template can be modified if you wish to adjust the priors.
+Then run a short demonstration analysis:
 
-2. If you want to use a FastPhase of Phase2-formatted input file, you can
-use the `Generic2.hs` template:
-
+```sh
+bali-phy run Generic.hs -l tsv --iterations=1000 Examples/outfile.001.70.001.phase1
 ```
+
+This creates `Generic-1/` (or the next available numbered directory). The 1,000 iterations are a
+demonstration, not a convergence criterion; assess mixing and convergence before interpreting an
+analysis. With `-l tsv`, parameter samples are written to `C1.log`, which can be examined with
+Tracer or summarized with:
+
+```sh
+statreport --select="s*" Generic-1/C1.log
+```
+
+Without `-l tsv`, the default is JSON logging to `C1.log.json`. To write both formats, use
+`-l json,tsv`. The `Generic.hs` template can be edited to change its priors.
+
+For FastPhase or Phase2 input, use `Generic2.hs`:
+
+```sh
 bali-phy run Generic2.hs -l tsv --test Examples/test.fastphase
 bali-phy run Generic2.hs -l tsv --test Examples/test.phase2
 ```
 
-3. If you leave off the `-l tsv` then logging will be done in JSON format.
+For androdioecy, supply the observed number of males and the total surveyed population sample:
 
-4. The included runnable androdioecious example requires the observed number of males and the total number of
-   surveyed individuals:
-
-```
-bali-phy run Examples/Andro.hs -l tsv --males 20 --total 2000 Examples/outfile.001.70.001.phase1
+```sh
+bali-phy run Andro.hs -l tsv --iterations=1000 --males 20 --total 2000 Examples/outfile.001.70.001.phase1
 ```
 
-   The runnable gynodioecious example similarly requires the observed number of females:
+The runnable gynodioecy example similarly requires the observed number of females:
 
+```sh
+bali-phy run Examples/Gyno.hs -l tsv --iterations=1000 --females 27 --total 221 Examples/outfile.001.70.001.phase1
 ```
-bali-phy run Examples/Gyno.hs -l tsv --females 27 --total 221 Examples/outfile.001.70.001.phase1
-```
 
-   These observations no longer require editing the source file. Changing priors, fixing parameters, or adding
-   another kind of identifying information still requires editing the model template.
+These counts are illustrative; replace them with your observations. The top-level `Gyno.hs` is an
+editable template rather than a ready-to-run example.
 
+## Contact
 
-# Installing the development version of BES
-
-*Note:* You should probably just run `bali-phy-pkg install BES` instead of doing this!
-
-To install the unreleased development version of BES from github:
-```
-git clone https://github.com/bredelings/BayesianEstimatorSelfing.git
-cd BayesianEstimatorSelfing
-./make_package
-bali-phy-pkg install-archive BES_<version>.tar.gz
-```
-This will probably require the latest (unreleased) version of bali-phy from github as well.
-
-# Contact
-
-You can send questions to the mailing list [https://groups.google.com/forum/#!forum/bayesian-estimator-selfing].
-If you don't join the group first, your question will be held until I have a chance to check that it is not spam.
+Questions can be sent to the
+[BES mailing list](https://groups.google.com/g/bayesian-estimator-selfing).
+Join the group before posting to avoid having your question held for moderation.

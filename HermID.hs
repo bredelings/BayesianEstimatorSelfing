@@ -10,10 +10,9 @@ import           Probability
 
 inputs = strArgument (metavar "PHASE-FILE" <> help "PHASE genotype file")
 
--- This file is a template.  It using Haskell syntax to describe a model.
--- Lines beginning with -- are comments.
--- To use commented priors, remove the -- and add data on the correspond variable.
--- Alternatively, remove the prior and set the variable to a constant using 'let'.
+-- This template requires parameter definitions before it can run.
+-- Uncomment and choose the priors below, or define parameters with 'let'.
+-- Supply observations or other identifying information appropriate for your data.
 
 herm_model = do
 
