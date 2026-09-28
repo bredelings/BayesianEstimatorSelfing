@@ -1,5 +1,6 @@
 ---
 title: Bayesian Estimator of Selfing (BES)
+lang: en
 geometry: margin=1in
 ---
 

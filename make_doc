@@ -1,8 +1,39 @@
 #!/bin/sh
 set -e
-MATHJAX="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-CSS="pandoc.css"
-STYLE=espresso
-pandoc -s --toc -N -c "$CSS" --mathjax="$MATHJAX" -t html5 -o doc/README.html doc/README.md
-pandoc -s --toc -N -c "$CSS" --mathjax="$MATHJAX" -o doc/README.xhtml doc/README.md
-pandoc -s --toc -N --syntax-highlighting="$STYLE" -o doc/README.pdf doc/README.md
+
+# Resolve all source and output paths relative to this script, not the caller's directory.
+DOC_ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+
+if [ "$#" -gt 1 ]; then
+    echo "Usage: $0 [html|pdf|--help]" >&2
+    exit 2
+fi
+case "${1:-}" in
+    "") format=all ;;
+    html|pdf) format=$1 ;;
+    --help)
+        echo "Usage: $0 [html|pdf|--help]"
+        echo "With no argument, build both HTML and PDF in doc/."
+        exit 0 ;;
+    *) echo "Usage: $0 [html|pdf|--help]" >&2; exit 2 ;;
+esac
+
+if ! command -v pandoc >/dev/null 2>&1; then
+    echo "make_doc: pandoc is required to build the manual." >&2
+    exit 1
+fi
+if [ "$format" != html ] && ! command -v pdflatex >/dev/null 2>&1; then
+    echo "make_doc: pdflatex is required for PDF; use '$0 html' to build HTML only." >&2
+    exit 1
+fi
+
+if [ "$format" != pdf ]; then
+    pandoc --standalone --toc --number-sections --to=html5 --math-method=mathml \
+        --embed-resources --resource-path="$DOC_ROOT/doc" --css=pandoc.css \
+        --output="$DOC_ROOT/doc/README.html" "$DOC_ROOT/doc/README.md"
+fi
+if [ "$format" != html ]; then
+    pandoc --standalone --toc --number-sections --pdf-engine=pdflatex \
+        --syntax-highlighting=espresso \
+        --output="$DOC_ROOT/doc/README.pdf" "$DOC_ROOT/doc/README.md"
+fi
