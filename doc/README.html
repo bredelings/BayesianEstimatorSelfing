@@ -89,93 +89,101 @@ code span.va { color: #19177c; }
 code span.vs { color: #4070a0; } 
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
-  <style type="text/css">body {
-margin: auto;
-padding-right: 1em;
-padding-left: 1em;
-max-width: 44em; border-left: 1px solid black;
-border-right: 1px solid black;
-color: black;
-font-family: Verdana, sans-serif;
-font-size: 100%;
-line-height: 140%;
-color: #333; }
-pre {
-border: 1px dotted gray;
-background-color: #ececec;
-color: #1111111;
-padding: 0.5em;
+  <style type="text/css">:root {
+color-scheme: light;
+font-family: system-ui, sans-serif;
+line-height: 1.65;
+color: #25313d;
+background: #fff;
 }
+body {
+max-width: 48rem;
+margin: 0 auto;
+padding: 2rem clamp(1rem, 4vw, 3rem) 4rem;
+}
+h1, h2, h3, h4, h5, h6 {
+line-height: 1.25;
+color: #163a50;
+margin: 1.8em 0 0.65em;
+scroll-margin-top: 1rem;
+}
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.45rem; }
+h3 { font-size: 1.2rem; }
+h4, h5, h6 { font-size: 1rem; }
+h1.title { font-size: clamp(1.9rem, 5vw, 2.6rem); margin-top: 0; }
+p, ul, ol, dl { margin: 0 0 1rem; }
+ul, ol { padding-left: 1.5rem; }
+li > ul, li > ol { margin-bottom: 0; }
+a { color: #075d91; text-underline-offset: 0.15em; }
+a:hover { text-decoration-thickness: 0.15em; }
+a:focus-visible {
+outline: 3px solid #b64e00;
+outline-offset: 3px;
+border-radius: 2px;
+}
+#TOC {
+padding: 1rem 1.25rem;
+margin: 2rem 0;
+background: #f3f6f8;
+border-left: 3px solid #52778c;
+}
+#TOC > ul { margin-bottom: 0; }
+#TOC a { text-decoration: none; }
+#TOC a:hover { text-decoration: underline; }
 code {
-font-family: monospace;
+font-family: ui-monospace, "DejaVu Sans Mono", monospace;
+font-size: 0.9em;
 }
-h1 a, h2 a, h3 a, h4 a, h5 a { text-decoration: none;
-color: #7a5ada; }
-h1, h2, h3, h4, h5 { font-family: verdana;
-font-weight: bold;
-border-bottom: 1px dotted black;
-color: #7a5ada; }
-h1 {
-font-size: 130%;
+pre {
+padding: 0.85rem 1rem;
+border: 1px solid #d7e0e6;
+border-radius: 0.3rem;
+background: #f6f8fa;
+color: #25313d;
+line-height: 1.5;
+overflow-x: auto;
 }
-h2 {
-font-size: 110%;
-}
-h3 {
-font-size: 95%;
-}
-h4 {
-font-size: 90%;
-font-style: italic;
-}
-h5 {
-font-size: 90%;
-font-style: italic;
-}
-h1.title {
-font-size: 200%;
-font-weight: bold;
-padding-top: 0.2em;
-padding-bottom: 0.2em;
-text-align: left;
-border: none;
-}
-dt code {
-font-weight: bold;
-}
-dd p {
-margin-top: 0;
-}
-#footer {
-padding-top: 1em;
-font-size: 70%;
-color: gray;
-text-align: center;
-}
+pre code { white-space: pre; }
+div.sourceCode { overflow-x: auto; }
+div.sourceCode pre { margin: 0; }
+
 table {
 display: block;
-width: 100%;
-overflow: auto;
-word-break: normal;
-word-break: keep-all;
+max-width: 100%;
+overflow-x: auto;
 border-collapse: collapse;
+margin: 1.25rem 0;
+font-size: 0.95rem;
 }
-table th {
-font-weight: bold;
+th, td {
+padding: 0.55rem 0.75rem;
+min-width: 5rem;
+vertical-align: top;
+text-align: left;
+border-bottom: 1px solid #d7e0e6;
 }
-table th,
-table td {
-padding: 6px 13px;
-// border: 1px solid #ddd;
+th { background: #edf2f5; }
+td:last-child { min-width: 16rem; }
+tbody tr:nth-child(even) { background: #f8fafb; }
+caption { text-align: left; margin-bottom: 0.5rem; }
+img { max-width: 100%; height: auto; }
+math[display="block"] { max-width: 100%; overflow-x: auto; }
+@media print {
+:root { color: #000; font-size: 10pt; }
+body { max-width: none; margin: 0; padding: 0; }
+h1, h2, h3, h4, h5, h6 { color: #000; break-after: avoid; }
+a { color: inherit; }
+a:focus-visible { outline: none; }
+#TOC { background: none; border: 0; padding: 0; }
+pre, th, tbody tr:nth-child(even) { background: none; }
+pre, tr { break-inside: avoid; }
+pre, pre code, pre > code.sourceCode { white-space: pre-wrap; overflow-wrap: anywhere; }
+div.sourceCode, pre, math[display="block"] { overflow: visible; }
+table { display: table; width: 100%; overflow: visible; font-size: inherit; }
+th, td, td:last-child { min-width: 0; }
+code { overflow-wrap: anywhere; }
 }
-table tr {
-background-color: #fff;
-border-top: 1px solid #ccc;
-}
-table tr:nth-child(2n) {
-background-color: #f8f8f8;
-}
-th, td {padding-left:0.5em;padding-right:0.5em}
 </style>
 </head>
 <body>
