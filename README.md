@@ -127,6 +127,26 @@ bali-phy run Examples/Gyno.hs -l tsv --iterations=1000 --females 27 --total 221 
 These counts are illustrative; replace them with your observations. The top-level `Gyno.hs` is an
 editable template rather than a ready-to-run example.
 
+## Building the manual
+
+Edit `doc/README.md` for manual content and `doc/pandoc.css` for its HTML styling. Mathematical
+notation stays in LaTeX-style `$...$` expressions in the Markdown source. The generated files are
+`doc/README.html` and `doc/README.pdf`; regenerate them rather than editing them directly.
+
+The build uses Pandoc (validated with version 3.11). PDF generation also requires `pdflatex` and
+the LaTeX packages used by Pandoc's default template, such as those supplied by a TeX Live installation.
+
+```sh
+./make_doc       # build HTML and PDF
+./make_doc html  # build HTML only; no TeX installation needed
+./make_doc pdf   # build PDF only
+./make_doc --help
+```
+
+The script locates its inputs relative to itself, so it can also be invoked by path from another
+directory. The HTML embeds its stylesheet and uses native MathML for equations; it can be opened
+offline in a modern browser without fetching rendering resources. PDF equations are typeset by LaTeX.
+
 ## Contact
 
 Questions can be sent to the
